@@ -1,0 +1,24 @@
+{
+  "name": "ng-image-slider",
+  "version": "1.0.0",
+  "description": "Image slider with image lightbox in angular 6.",
+  "peerDependencies": {
+    "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
+    "@angular/core": "^6.0.0-rc.0 || ^6.0.0"
+  },
+  "keywords": [
+    "angular",
+    "angular6",
+    "angular 6"
+  ],
+  "author": "Sanjay V <skumarverma45@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sanjayV/ng-image-slider.git"
+  },
+  "homepage": "https://github.com/sanjayV/ng-image-slider",
+  "bugs": {
+    "url": "https://github.com/sanjayV/ng-image-slider/issues"
+  }
+}
