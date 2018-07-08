@@ -2,7 +2,7 @@
 
 An Angular 6 responsive image slider with image lightbox popup.
 
-Demo : http://revolunet.github.io/angular-carousel
+Demo : https://ng-image-slider.herokuapp.com/
 
 Comments and contributions welcome :)
 
