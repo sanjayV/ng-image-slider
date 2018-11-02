@@ -37,9 +37,10 @@ export class ISliderComponent implements OnInit, AfterViewInit {
     set animationSpeed(data: number) {
         if (data
             && typeof (data) === 'number'
-            && data >= 1
+            && data >= 0.1
             && data <= 5) {
-            this.speed = Math.floor(data);
+            this.speed = data;
+            this.effectStyle = `all ${this.speed}s ease-in-out`;
         }
     }
     @Input() set images(imgObj) {
@@ -70,6 +71,7 @@ export class ISliderComponent implements OnInit, AfterViewInit {
         if (this.sliderMain.nativeElement.offsetWidth) {
             this.sliderMainDivWidth = this.sliderMain.nativeElement.offsetWidth;
         }
+        this.nextPrevSliderButtonDisable();
     }
     @HostListener('document:keyup', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
@@ -120,23 +122,27 @@ export class ISliderComponent implements OnInit, AfterViewInit {
     }
 
     prev() {
-        if (this.infinite) {
-            this.infinitePrevImg();
-        } else {
-            this.prevImg();
-        }
+        if (!this.sliderPrevDisable) {
+            if (this.infinite) {
+                this.infinitePrevImg();
+            } else {
+                this.prevImg();
+            }
 
-        this.nextPrevSliderButtonDisable();
+            this.sliderArrowDisableTeam();
+        }
     }
 
     next() {
-        if (this.infinite) {
-            this.infiniteNextImg();
-        } else {
-            this.nextImg();
-        }
+        if (!this.sliderNextDisable) {
+            if (this.infinite) {
+                this.infiniteNextImg();
+            } else {
+                this.nextImg();
+            }
 
-        this.nextPrevSliderButtonDisable();
+            this.sliderArrowDisableTeam();
+        }
     }
 
     prevImg() {
@@ -152,7 +158,6 @@ export class ISliderComponent implements OnInit, AfterViewInit {
     }
 
     infinitePrevImg() {
-        this.effectStyle = `all ${this.speed}s ease-in-out`;
         this.leftPos = 0;
 
         setTimeout(() => {
@@ -165,7 +170,6 @@ export class ISliderComponent implements OnInit, AfterViewInit {
 
     infiniteNextImg() {
         const firstImageIndex = 1;
-        this.effectStyle = `all ${this.speed}s ease-in-out`;
         this.leftPos = -2 * this.imageSize;
 
         setTimeout(() => {
@@ -173,6 +177,17 @@ export class ISliderComponent implements OnInit, AfterViewInit {
             this.imageObj.push(this.imageObj[firstImageIndex]);
             this.imageObj.shift();
             this.leftPos = -1 * this.imageSize;
+        }, this.speed * 1000);
+    }
+
+    /**
+     * Disable slider left/right arrow when image moving
+     */
+    sliderArrowDisableTeam() {
+        this.sliderNextDisable = true;
+        this.sliderPrevDisable = true;
+        setTimeout(() => {
+            this.nextPrevSliderButtonDisable();
         }, this.speed * 1000);
     }
 
