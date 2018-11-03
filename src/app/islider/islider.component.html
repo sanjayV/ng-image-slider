@@ -1,7 +1,10 @@
 <div class="img-slider">
     <div class="container">
         <div class="main" #sliderMain>
-            <div class="main-inner" [ngStyle]="{'margin-left':leftPos+'px', 'width':imageParentDivWidth+'px', 'transition': effectStyle}">
+            <div class="main-inner" 
+                [ngStyle]="{'margin-left':leftPos+'px', 'width':imageParentDivWidth+'px', 'transition': effectStyle}"
+                (touchstart)="swipe($event, 'start')"
+                (touchend)="swipe($event, 'end')">
                 <div [ngClass]="{'image-popup': imagePopup}" class="img-div" *ngFor="let img of imageObj; let i = index" (click)="imageOnClick(i)" #imageDiv>
                     <img class="img-fluid" [src]="img.thumbImage" />
                 </div>

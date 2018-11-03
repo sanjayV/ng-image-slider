@@ -28,6 +28,11 @@ export class ISliderComponent implements OnInit, AfterViewInit {
     speed: number = 1; // default speed in second
     sliderPrevDisable: boolean = false;
     sliderNextDisable: boolean = false;
+
+    // for swipe event
+    private swipeCoord?: [number, number];
+    private swipeTime?: number;
+
     @ViewChild('sliderMain') sliderMain;
     @Input() imageSize: number = 211;
     @Input() imageShowCount: number = 3;
@@ -158,6 +163,7 @@ export class ISliderComponent implements OnInit, AfterViewInit {
     }
 
     infinitePrevImg() {
+        this.effectStyle = `all ${this.speed}s ease-in-out`;
         this.leftPos = 0;
 
         setTimeout(() => {
@@ -169,6 +175,7 @@ export class ISliderComponent implements OnInit, AfterViewInit {
     }
 
     infiniteNextImg() {
+        this.effectStyle = `all ${this.speed}s ease-in-out`;
         const firstImageIndex = 1;
         this.leftPos = -2 * this.imageSize;
 
@@ -279,6 +286,33 @@ export class ISliderComponent implements OnInit, AfterViewInit {
                 }, 0);
             };
             image.src = url;
+        }
+    }
+
+    /**
+     * Swipe event handler
+     * Reference from https://stackoverflow.com/a/44511007/2067646
+     */
+    swipe(e: TouchEvent, when: string): void {
+        const coord: [number, number] = [e.changedTouches[0].pageX, e.changedTouches[0].pageY];
+        const time = new Date().getTime();
+
+        if (when === 'start') {
+            this.swipeCoord = coord;
+            this.swipeTime = time;
+        } else if (when === 'end') {
+            const direction = [coord[0] - this.swipeCoord[0], coord[1] - this.swipeCoord[1]];
+            const duration = time - this.swipeTime;
+
+            if (duration < 1000 //
+                && Math.abs(direction[0]) > 30 // Long enough
+                && Math.abs(direction[0]) > Math.abs(direction[1] * 3)) { // Horizontal enough
+                if (direction[0] < 0) {
+                    this.next();
+                } else {
+                    this.prev();
+                }
+            }
         }
     }
 }
