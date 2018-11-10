@@ -19,7 +19,9 @@ import {
             <div class="main" #sliderMain>
                 <div
                     class="main-inner"
-                    [ngStyle]="{'margin-left':leftPos+'px', 'width':imageParentDivWidth+'px', 'transition': effectStyle}">
+                    [ngStyle]="{'margin-left':leftPos+'px', 'width':imageParentDivWidth+'px', 'transition': effectStyle}"
+                    (touchstart)="swipe($event, 'start')"
+                    (touchend)="swipe($event, 'end')">
                     <div
                         [ngClass]="{'image-popup': imagePopup}"
                         class="img-div"
@@ -49,7 +51,7 @@ import {
     `,
     styleUrls: ['./ng-image-slider.component.scss']
 })
-export class NgImageSliderComponent implements OnInit {
+export class NgImageSliderComponent implements OnInit, AfterViewInit {
     // for slider
     sliderMainDivWidth: number = 0;
     imageParentDivWidth: number = 0;
@@ -60,6 +62,11 @@ export class NgImageSliderComponent implements OnInit {
     speed: number = 1; // default speed in second
     sliderPrevDisable: boolean = false;
     sliderNextDisable: boolean = false;
+
+    // for swipe event
+    private swipeCoord?: [number, number];
+    private swipeTime?: number;
+
     @ViewChild('sliderMain') sliderMain;
     @Input() imageSize: number = 211;
     @Input() imageShowCount: number = 3;
@@ -69,9 +76,10 @@ export class NgImageSliderComponent implements OnInit {
     set animationSpeed(data: number) {
         if (data
             && typeof (data) === 'number'
-            && data >= 1
+            && data >= 0.1
             && data <= 5) {
-            this.speed = Math.floor(data);
+            this.speed = data;
+            this.effectStyle = `all ${this.speed}s ease-in-out`;
         }
     }
     @Input() set images(imgObj) {
@@ -102,6 +110,7 @@ export class NgImageSliderComponent implements OnInit {
         if (this.sliderMain.nativeElement.offsetWidth) {
             this.sliderMainDivWidth = this.sliderMain.nativeElement.offsetWidth;
         }
+        this.nextPrevSliderButtonDisable();
     }
     @HostListener('document:keyup', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
@@ -152,23 +161,27 @@ export class NgImageSliderComponent implements OnInit {
     }
 
     prev() {
-        if (this.infinite) {
-            this.infinitePrevImg();
-        } else {
-            this.prevImg();
-        }
+        if (!this.sliderPrevDisable) {
+            if (this.infinite) {
+                this.infinitePrevImg();
+            } else {
+                this.prevImg();
+            }
 
-        this.nextPrevSliderButtonDisable();
+            this.sliderArrowDisableTeam();
+        }
     }
 
     next() {
-        if (this.infinite) {
-            this.infiniteNextImg();
-        } else {
-            this.nextImg();
-        }
+        if (!this.sliderNextDisable) {
+            if (this.infinite) {
+                this.infiniteNextImg();
+            } else {
+                this.nextImg();
+            }
 
-        this.nextPrevSliderButtonDisable();
+            this.sliderArrowDisableTeam();
+        }
     }
 
     prevImg() {
@@ -196,8 +209,8 @@ export class NgImageSliderComponent implements OnInit {
     }
 
     infiniteNextImg() {
-        const firstImageIndex = 1;
         this.effectStyle = `all ${this.speed}s ease-in-out`;
+        const firstImageIndex = 1;
         this.leftPos = -2 * this.imageSize;
 
         setTimeout(() => {
@@ -205,6 +218,17 @@ export class NgImageSliderComponent implements OnInit {
             this.imageObj.push(this.imageObj[firstImageIndex]);
             this.imageObj.shift();
             this.leftPos = -1 * this.imageSize;
+        }, this.speed * 1000);
+    }
+
+    /**
+     * Disable slider left/right arrow when image moving
+     */
+    sliderArrowDisableTeam() {
+        this.sliderNextDisable = true;
+        this.sliderPrevDisable = true;
+        setTimeout(() => {
+            this.nextPrevSliderButtonDisable();
         }, this.speed * 1000);
     }
 
@@ -296,6 +320,33 @@ export class NgImageSliderComponent implements OnInit {
                 }, 0);
             };
             image.src = url;
+        }
+    }
+
+    /**
+     * Swipe event handler
+     * Reference from https://stackoverflow.com/a/44511007/2067646
+     */
+    swipe(e: TouchEvent, when: string): void {
+        const coord: [number, number] = [e.changedTouches[0].pageX, e.changedTouches[0].pageY];
+        const time = new Date().getTime();
+
+        if (when === 'start') {
+            this.swipeCoord = coord;
+            this.swipeTime = time;
+        } else if (when === 'end') {
+            const direction = [coord[0] - this.swipeCoord[0], coord[1] - this.swipeCoord[1]];
+            const duration = time - this.swipeTime;
+
+            if (duration < 1000 //
+                && Math.abs(direction[0]) > 30 // Long enough
+                && Math.abs(direction[0]) > Math.abs(direction[1] * 3)) { // Horizontal enough
+                if (direction[0] < 0) {
+                    this.next();
+                } else {
+                    this.prev();
+                }
+            }
         }
     }
 }

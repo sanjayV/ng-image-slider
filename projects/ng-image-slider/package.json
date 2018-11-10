@@ -1,6 +1,6 @@
 {
   "name": "ng-image-slider",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Image slider with image lightbox in angular 6.",
   "peerDependencies": {
     "@angular/common": "^6.0.0-rc.0 || ^6.0.0",

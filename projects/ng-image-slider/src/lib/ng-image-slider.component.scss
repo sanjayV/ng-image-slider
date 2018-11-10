@@ -243,7 +243,16 @@
         .lightbox-wrapper {
             width: calc(100% - 40px);
             height: calc(100% - 40px);
-            margin: 20px;
+            margin: 10px;
+            .lightbox-div {
+                .close {
+                    top: -5px;
+                    right: -5px;
+                    line-height: 30px;
+                    height: 30px;
+                    width: 30px;
+                }
+            }
         }
     }
 }
