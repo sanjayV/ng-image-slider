@@ -2,14 +2,20 @@
 
 An Angular 6 responsive image slider with image lightbox popup.
 
-Demo : https://ng-image-slider.herokuapp.com/
+## Features!
 
-Comments and contributions welcome :)
+  - Responsive and captures swipes from phones and tablets
+  - Compatible with Angular Universal
+  - Image lightbox popup
 
-## Install :
+### Demo: https://ng-image-slider.herokuapp.com/
+
+### Installation
+
 `npm install ng-image-slider`
 
-## Usage :
+### Usage :
+
  - Import module in your `app.module.ts`:
 ```js
 import { NgImageSliderModule } from 'ng-image-slider';
@@ -41,10 +47,13 @@ imageObject: Array<object> = [{
 ];
 ```
 
-## Other options :
- - `[infinite]`: (type: `boolean`) (default: `false`): Slide image slider infinite if value is `true`.
- - `imagePopup`: (type: `boolean`) (default: `true`): Show original image in lightBox pop-up on slider image click if value is true.
- - `animationSpeed`: (type: `number`) (default: `1` second) By this user can set slider animation speed. Minimum value is `1` second and Maximum value is `5` second.
+## Other options (optional) :
+ - `[infinite]`: (type: `boolean`) (default: `false`): Slide image slider infinite if value is **true**.
+ - `[imagePopup]`: (type: `boolean`) (default: `true`): Show original image in lightBox pop-up on slider image click if value is **true**.
+ - `[animationSpeed]`: (type: `number`) (default: `1` second): By this user can set slider animation speed. Minimum value is `0.1` second and Maximum value is `5` second.
+ - `[imageSize]`: (type: `number`): Slider images width
 
 ## License
-As Angular itself, this module is released under the permissive [MIT license](http://revolunet.mit-license.org). Your contributions are always welcome.
+As Angular itself, this module is released under the permissive [MIT license](http://revolunet.mit-license.org). 
+
+Your contributions are always welcome :)
