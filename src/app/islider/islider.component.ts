@@ -28,12 +28,15 @@ export class ISliderComponent implements OnInit, AfterViewInit {
     speed: number = 1; // default speed in second
     sliderPrevDisable: boolean = false;
     sliderNextDisable: boolean = false;
+    slideImageCount: number = 1;
 
     // for swipe event
     private swipeCoord?: [number, number];
     private swipeTime?: number;
 
     @ViewChild('sliderMain') sliderMain;
+
+    // @inputs
     @Input() imageSize: number = 211;
     @Input() imageShowCount: number = 3;
     @Input() infinite: boolean = false;
@@ -55,6 +58,13 @@ export class ISliderComponent implements OnInit, AfterViewInit {
             this.imageParentDivWidth = imgObj.length * this.imageSize;
         }
     }
+    @Input() set slideImage(count) {
+        if (count && typeof count === 'number') {
+            this.slideImageCount = count;
+        }
+    }
+
+    // @Outputs
     @Output() imageClick = new EventEmitter<number>();
 
     // for lightbox
@@ -151,14 +161,18 @@ export class ISliderComponent implements OnInit, AfterViewInit {
     }
 
     prevImg() {
-        if (0 > this.leftPos) {
-            this.leftPos += this.imageSize;
+        if (0 >= this.leftPos + (this.imageSize * this.slideImageCount)) {
+            this.leftPos += this.imageSize * this.slideImageCount;
+        } else {
+            this.leftPos = 0;
         }
     }
 
     nextImg() {
-        if (this.imageParentDivWidth + this.leftPos > this.sliderMainDivWidth) {
-            this.leftPos -= this.imageSize;
+        if ((this.imageParentDivWidth + this.leftPos) - this.sliderMainDivWidth > this.imageSize * this.slideImageCount) {
+            this.leftPos -= this.imageSize * this.slideImageCount;
+        } else if ((this.imageParentDivWidth + this.leftPos) - this.sliderMainDivWidth > 0) {
+            this.leftPos -= (this.imageParentDivWidth + this.leftPos) - this.sliderMainDivWidth;
         }
     }
 
