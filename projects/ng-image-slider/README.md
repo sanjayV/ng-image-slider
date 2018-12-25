@@ -51,9 +51,10 @@ imageObject: Array<object> = [{
  - `[infinite]`: (type: `boolean`) (default: `false`): Slide image slider infinite if value is **true**.
  - `[imagePopup]`: (type: `boolean`) (default: `true`): Show original image in lightBox pop-up on slider image click if value is **true**.
  - `[animationSpeed]`: (type: `number`) (default: `1` second): By this user can set slider animation speed. Minimum value is `0.1` second and Maximum value is `5` second.
+ - `[slideImage]`: (type: `number`) (default: `1`): Slide image count on left/right arrow click.
  - `[imageSize]`: (type: `number`): Slider images width
 
 ## License
 As Angular itself, this module is released under the permissive [MIT license](http://revolunet.mit-license.org). 
 
-Your contributions are always welcome :)
+Your contributions and suggestions are always welcome :)
