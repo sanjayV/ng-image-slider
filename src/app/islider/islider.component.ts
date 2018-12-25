@@ -60,7 +60,7 @@ export class ISliderComponent implements OnInit, AfterViewInit {
     }
     @Input() set slideImage(count) {
         if (count && typeof count === 'number') {
-            this.slideImageCount = count;
+            this.slideImageCount = Math.round(count);
         }
     }
 
@@ -109,8 +109,10 @@ export class ISliderComponent implements OnInit, AfterViewInit {
         // for slider
         if (this.infinite) {
             this.effectStyle = 'none';
-            this.leftPos = -1 * this.imageSize;
-            this.imageObj.unshift(this.imageObj[this.imageObj.length - 1]);
+            this.leftPos = -1 * this.imageSize * this.slideImageCount;
+            for (let i = 1; i <= this.slideImageCount; i++) {
+                this.imageObj.unshift(this.imageObj[this.imageObj.length - i]);
+            }
         }
     }
 
@@ -118,7 +120,7 @@ export class ISliderComponent implements OnInit, AfterViewInit {
     ngAfterViewInit() {
         if (this.imageDiv.nativeElement.offsetWidth) {
             this.imageSize = +this.imageDiv.nativeElement.offsetWidth + 6; // addeing padding with image width
-            this.leftPos = this.infinite ? -1 * this.imageSize : 0;
+            this.leftPos = this.infinite ? -1 * this.imageSize * this.slideImageCount : 0;
             this.imageParentDivWidth = this.imageObj.length * this.imageSize;
         }
         if (this.sliderMain.nativeElement.offsetWidth) {
@@ -182,22 +184,24 @@ export class ISliderComponent implements OnInit, AfterViewInit {
 
         setTimeout(() => {
             this.effectStyle = 'none';
-            this.leftPos = -1 * this.imageSize;
-            this.imageObj.unshift(this.imageObj[this.imageObj.length - 2]);
-            this.imageObj.pop();
+            this.leftPos = -1 * this.imageSize * this.slideImageCount;
+            for (let i = 0; i < this.slideImageCount; i++) {
+                this.imageObj.unshift(this.imageObj[this.imageObj.length - this.slideImageCount - 1]);
+                this.imageObj.pop();
+            }
         }, this.speed * 1000);
     }
 
     infiniteNextImg() {
         this.effectStyle = `all ${this.speed}s ease-in-out`;
-        const firstImageIndex = 1;
-        this.leftPos = -2 * this.imageSize;
-
+        this.leftPos = -2 * this.imageSize * this.slideImageCount;
         setTimeout(() => {
             this.effectStyle = 'none';
-            this.imageObj.push(this.imageObj[firstImageIndex]);
-            this.imageObj.shift();
-            this.leftPos = -1 * this.imageSize;
+            for (let i = 0; i < this.slideImageCount; i++) {
+                this.imageObj.push(this.imageObj[this.slideImageCount]);
+                this.imageObj.shift();
+            }
+            this.leftPos = -1 * this.imageSize * this.slideImageCount;
         }, this.speed * 1000);
     }
 
