@@ -24,8 +24,6 @@
                         cursor: pointer;
                     }
                     img {
-                        max-width: 100%;
-                        max-height: 100%;
                         position: absolute;
                         top: 0px;
                         bottom: 0px;
@@ -121,9 +119,9 @@
                     .img-div{
                         width: 350px;
                         max-width: 100%;
-                        img{
+                        /* img{
                             width: 280px;
-                        }
+                        } */
                     }
                 }
             }

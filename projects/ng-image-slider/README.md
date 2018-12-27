@@ -52,7 +52,7 @@ imageObject: Array<object> = [{
  - `[imagePopup]`: (type: `boolean`) (default: `true`): Show original image in lightBox pop-up on slider image click if value is **true**.
  - `[animationSpeed]`: (type: `number`) (default: `1` second): By this user can set slider animation speed. Minimum value is `0.1` second and Maximum value is `5` second.
  - `[slideImage]`: (type: `number`) (default: `1`): Slide image count on left/right arrow click.
- - `[imageSize]`: (type: `number`): Slider images width
+ - `[imageSize]`: (type: `object`) (default: `{width: 205, height: 200}`): Set slider images width and height. Pass object like `{width: 400, height: 300}`
 
 ## License
 As Angular itself, this module is released under the permissive [MIT license](http://revolunet.mit-license.org). 

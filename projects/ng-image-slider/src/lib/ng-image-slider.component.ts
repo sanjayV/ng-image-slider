@@ -16,16 +16,18 @@ import {
     template: `
     <div class="ng-image-slider">
         <div class="container">
-            <div class="main" #sliderMain>
-                <div
-                    class="main-inner"
+            <div class="main"
+                [ngStyle]="{'height':sliderImageHeight+'px'}"
+                #sliderMain>
+                <div class="main-inner"
                     [ngStyle]="{'margin-left':leftPos+'px', 'width':imageParentDivWidth+'px', 'transition': effectStyle}"
                     (touchstart)="swipe($event, 'start')"
                     (touchend)="swipe($event, 'end')">
-                    <div
-                        [ngClass]="{'image-popup': imagePopup}"
+                    <div [ngClass]="{'image-popup': imagePopup}"
+                        [ngStyle]="{'width':sliderImageWidth+'px', 'height':sliderImageHeight+'px'}"
                         class="img-div"
-                        *ngFor="let img of imageObj; let i = index" (click)="imageOnClick(i)" 
+                        *ngFor="let img of imageObj; let i = index"
+                        (click)="imageOnClick(i)"
                         #imageDiv>
                         <img class="img-fluid" [src]="img.thumbImage" />
                     </div>
@@ -63,6 +65,9 @@ export class NgImageSliderComponent implements OnInit, AfterViewInit {
     sliderPrevDisable: boolean = false;
     sliderNextDisable: boolean = false;
     slideImageCount: number = 1;
+    sliderImageWidth: number = 205;
+    sliderImageHeight: number = 200;
+    sliderImageSizeWithPadding = 211;
 
     // for swipe event
     private swipeCoord?: [number, number];
@@ -71,7 +76,19 @@ export class NgImageSliderComponent implements OnInit, AfterViewInit {
     @ViewChild('sliderMain') sliderMain;
 
     // @inputs
-    @Input() imageSize: number = 211;
+    @Input()
+    set imageSize(data) {
+        if (data
+            && typeof (data) === 'object') {
+            if (data.hasOwnProperty('width') && typeof (data['width']) === 'number') {
+                this.sliderImageWidth = data['width'];
+                this.sliderImageSizeWithPadding = data['width'] + 6; // addeing padding with image width
+            }
+            if (data.hasOwnProperty('height') && typeof (data['height']) === 'number') {
+                this.sliderImageHeight = data['height'];
+            }
+        }
+    }
     @Input() imageShowCount: number = 3;
     @Input() infinite: boolean = false;
     @Input() imagePopup: boolean = true;
@@ -89,7 +106,7 @@ export class NgImageSliderComponent implements OnInit, AfterViewInit {
         if (imgObj && imgObj.length) {
             this.imageObj = imgObj;
             this.totalImageCount = imgObj.length - this.imageShowCount; // total image - total showing image
-            this.imageParentDivWidth = imgObj.length * this.imageSize;
+            this.imageParentDivWidth = imgObj.length * this.sliderImageSizeWithPadding;
         }
     }
     @Input() set slideImage(count) {
@@ -113,9 +130,8 @@ export class NgImageSliderComponent implements OnInit, AfterViewInit {
     @HostListener('window:resize', ['$event'])
     onResize(event) {
         if (this.imageDiv.nativeElement.offsetWidth) {
-            this.imageSize = +this.imageDiv.nativeElement.offsetWidth + 6; // addeing padding with image width
-            this.imageParentDivWidth = this.imageObj.length * this.imageSize;
-            this.leftPos = this.infinite ? -1 * this.imageSize : 0;
+            this.imageParentDivWidth = this.imageObj.length * this.sliderImageSizeWithPadding;
+            this.leftPos = this.infinite ? -1 * this.sliderImageSizeWithPadding : 0;
         }
         if (this.sliderMain.nativeElement.offsetWidth) {
             this.sliderMainDivWidth = this.sliderMain.nativeElement.offsetWidth;
@@ -143,7 +159,7 @@ export class NgImageSliderComponent implements OnInit, AfterViewInit {
         // for slider
         if (this.infinite) {
             this.effectStyle = 'none';
-            this.leftPos = -1 * this.imageSize * this.slideImageCount;
+            this.leftPos = -1 * this.sliderImageSizeWithPadding * this.slideImageCount;
             for (let i = 1; i <= this.slideImageCount; i++) {
                 this.imageObj.unshift(this.imageObj[this.imageObj.length - i]);
             }
@@ -153,9 +169,8 @@ export class NgImageSliderComponent implements OnInit, AfterViewInit {
     // for slider
     ngAfterViewInit() {
         if (this.imageDiv.nativeElement.offsetWidth) {
-            this.imageSize = +this.imageDiv.nativeElement.offsetWidth + 6; // addeing padding with image width
-            this.leftPos = this.infinite ? -1 * this.imageSize * this.slideImageCount : 0;
-            this.imageParentDivWidth = this.imageObj.length * this.imageSize;
+            this.leftPos = this.infinite ? -1 * this.sliderImageSizeWithPadding * this.slideImageCount : 0;
+            this.imageParentDivWidth = this.imageObj.length * this.sliderImageSizeWithPadding;
         }
         if (this.sliderMain.nativeElement.offsetWidth) {
             this.sliderMainDivWidth = this.sliderMain.nativeElement.offsetWidth;
@@ -197,16 +212,16 @@ export class NgImageSliderComponent implements OnInit, AfterViewInit {
     }
 
     prevImg() {
-        if (0 >= this.leftPos + (this.imageSize * this.slideImageCount)) {
-            this.leftPos += this.imageSize * this.slideImageCount;
+        if (0 >= this.leftPos + (this.sliderImageSizeWithPadding * this.slideImageCount)) {
+            this.leftPos += this.sliderImageSizeWithPadding * this.slideImageCount;
         } else {
             this.leftPos = 0;
         }
     }
 
     nextImg() {
-        if ((this.imageParentDivWidth + this.leftPos) - this.sliderMainDivWidth > this.imageSize * this.slideImageCount) {
-            this.leftPos -= this.imageSize * this.slideImageCount;
+        if ((this.imageParentDivWidth + this.leftPos) - this.sliderMainDivWidth > this.sliderImageSizeWithPadding * this.slideImageCount) {
+            this.leftPos -= this.sliderImageSizeWithPadding * this.slideImageCount;
         } else if ((this.imageParentDivWidth + this.leftPos) - this.sliderMainDivWidth > 0) {
             this.leftPos -= (this.imageParentDivWidth + this.leftPos) - this.sliderMainDivWidth;
         }
@@ -218,7 +233,7 @@ export class NgImageSliderComponent implements OnInit, AfterViewInit {
 
         setTimeout(() => {
             this.effectStyle = 'none';
-            this.leftPos = -1 * this.imageSize * this.slideImageCount;
+            this.leftPos = -1 * this.sliderImageSizeWithPadding * this.slideImageCount;
             for (let i = 0; i < this.slideImageCount; i++) {
                 this.imageObj.unshift(this.imageObj[this.imageObj.length - this.slideImageCount - 1]);
                 this.imageObj.pop();
@@ -228,14 +243,14 @@ export class NgImageSliderComponent implements OnInit, AfterViewInit {
 
     infiniteNextImg() {
         this.effectStyle = `all ${this.speed}s ease-in-out`;
-        this.leftPos = -2 * this.imageSize * this.slideImageCount;
+        this.leftPos = -2 * this.sliderImageSizeWithPadding * this.slideImageCount;
         setTimeout(() => {
             this.effectStyle = 'none';
             for (let i = 0; i < this.slideImageCount; i++) {
                 this.imageObj.push(this.imageObj[this.slideImageCount]);
                 this.imageObj.shift();
             }
-            this.leftPos = -1 * this.imageSize * this.slideImageCount;
+            this.leftPos = -1 * this.sliderImageSizeWithPadding * this.slideImageCount;
         }, this.speed * 1000);
     }
 
