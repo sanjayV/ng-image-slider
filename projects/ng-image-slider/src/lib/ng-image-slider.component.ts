@@ -28,12 +28,22 @@ import {
                         class="img-div"
                         *ngFor="let img of imageObj; let i = index"
                         (click)="imageOnClick(i)"
+                        (mouseenter)="imageMouseEnterHandler()"
+                        (mouseleave)="imageAutoSlide()"
                         #imageDiv>
                         <img class="img-fluid" [src]="img.thumbImage" />
                     </div>
                 </div>
-                <a [ngClass]="{'disable': sliderPrevDisable}" class="prev icons prev-icon" (click)="prev()">&lsaquo;</a>
-                <a [ngClass]="{'disable': sliderNextDisable}" class="next icons next-icon" (click)="next()">&rsaquo;</a>
+                <a [ngClass]="{'disable': sliderPrevDisable}"
+                    class="prev icons prev-icon"
+                    (click)="prev()"
+                    (mouseenter)="imageMouseEnterHandler()"
+                    (mouseleave)="imageAutoSlide()">&lsaquo;</a>
+                <a [ngClass]="{'disable': sliderNextDisable}"
+                    class="next icons next-icon"
+                    (click)="next()"
+                    (mouseenter)="imageMouseEnterHandler()"
+                    (mouseleave)="imageAutoSlide()">&rsaquo;</a>
             </div>
         </div>
     </div>
@@ -68,6 +78,8 @@ export class NgImageSliderComponent implements OnInit, AfterViewInit {
     sliderImageWidth: number = 205;
     sliderImageHeight: number = 200;
     sliderImageSizeWithPadding = 211;
+    autoSlideCount: number = 0;
+    autoSlideInterval;
 
     // for swipe event
     private swipeCoord?: [number, number];
@@ -112,6 +124,11 @@ export class NgImageSliderComponent implements OnInit, AfterViewInit {
     @Input() set slideImage(count) {
         if (count && typeof count === 'number') {
             this.slideImageCount = Math.round(count);
+        }
+    }
+    @Input() set autoSlide(count) {
+        if (count && typeof count === 'number' && count >= 1 && count <= 5) {
+            this.autoSlideCount = Math.round(count) * 1000;
         }
     }
 
@@ -177,6 +194,7 @@ export class NgImageSliderComponent implements OnInit, AfterViewInit {
         }
         this.nextPrevSliderButtonDisable();
         this.cdRef.detectChanges();
+        this.imageAutoSlide();
     }
 
     imageOnClick(index) {
@@ -185,6 +203,20 @@ export class NgImageSliderComponent implements OnInit, AfterViewInit {
             this.showLightbox();
         }
         this.imageClick.emit(index);
+    }
+
+    imageAutoSlide() {
+        if (this.infinite && this.autoSlideCount) {
+            this.autoSlideInterval = setInterval(() => {
+                this.next();
+            }, this.autoSlideCount);
+        }
+    }
+
+    imageMouseEnterHandler() {
+        if (this.infinite && this.autoSlideCount && this.autoSlideInterval) {
+            clearInterval(this.autoSlideInterval);
+        }
     }
 
     prev() {

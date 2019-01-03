@@ -53,6 +53,7 @@ imageObject: Array<object> = [{
  - `[animationSpeed]`: (type: `number`) (default: `1` second): By this user can set slider animation speed. Minimum value is `0.1` second and Maximum value is `5` second.
  - `[slideImage]`: (type: `number`) (default: `1`): Slide image count on left/right arrow click.
  - `[imageSize]`: (type: `object`) (default: `{width: 205, height: 200}`): Set slider images width and height. Pass object like `{width: 400, height: 300}`
+ - `[autoSlide]`: (type: `number`) (default: `0`): Auto slide images only if `infinite` option is **true**. Minimum value is `1` second and Maximum value is `5` second.
 
 ## License
 As Angular itself, this module is released under the permissive [MIT license](http://revolunet.mit-license.org). 

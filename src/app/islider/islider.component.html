@@ -12,12 +12,22 @@
                     class="img-div"
                     *ngFor="let img of imageObj;let i = index"
                     (click)="imageOnClick(i)"
+                    (mouseenter)="imageMouseEnterHandler()"
+                    (mouseleave)="imageAutoSlide()"
                     #imageDiv>
                     <img class="img-fluid" [src]="img.thumbImage" />
                 </div>
             </div>
-            <a [ngClass]="{'disable': sliderPrevDisable}" class="prev icons prev-icon" (click)="prev()">&lsaquo;</a>
-            <a [ngClass]="{'disable': sliderNextDisable}" class="next icons next-icon" (click)="next()">&rsaquo;</a>
+            <a [ngClass]="{'disable': sliderPrevDisable}"
+                class="prev icons prev-icon"
+                (click)="prev()"
+                (mouseenter)="imageMouseEnterHandler()"
+                (mouseleave)="imageAutoSlide()">&lsaquo;</a>
+            <a [ngClass]="{'disable': sliderNextDisable}"
+                class="next icons next-icon"
+                (click)="next()"
+                (mouseenter)="imageMouseEnterHandler()"
+                (mouseleave)="imageAutoSlide()">&rsaquo;</a>
         </div>
     </div>
 </div>
