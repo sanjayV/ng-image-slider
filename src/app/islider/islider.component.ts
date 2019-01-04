@@ -3,13 +3,17 @@ import {
     Component,
     OnInit,
     AfterViewInit,
+    OnDestroy,
     Input,
     Output,
     EventEmitter,
     ViewEncapsulation,
     ViewChild,
-    HostListener
+    HostListener,
+    PLATFORM_ID,
+    Inject
 } from '@angular/core';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 
 @Component({
     selector: 'app-islider',
@@ -17,7 +21,7 @@ import {
     styleUrls: ['./islider.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class ISliderComponent implements OnInit, AfterViewInit {
+export class ISliderComponent implements OnInit, AfterViewInit, OnDestroy {
     // for slider
     sliderMainDivWidth: number = 0;
     imageParentDivWidth: number = 0;
@@ -124,7 +128,8 @@ export class ISliderComponent implements OnInit, AfterViewInit {
         }
     }
 
-    constructor(private cdRef: ChangeDetectorRef) { }
+    constructor(private cdRef: ChangeDetectorRef, @Inject(PLATFORM_ID) private platformId: Object) {
+    }
 
     ngOnInit() {
         // for slider
@@ -148,7 +153,15 @@ export class ISliderComponent implements OnInit, AfterViewInit {
         }
         this.nextPrevSliderButtonDisable();
         this.cdRef.detectChanges();
-        this.imageAutoSlide();
+        if (isPlatformBrowser(this.platformId)) {
+            this.imageAutoSlide();
+        }
+    }
+
+    ngOnDestroy() {
+        if (this.autoSlideInterval) {
+            clearInterval(this.autoSlideInterval);
+        }
     }
 
     imageOnClick(index) {
@@ -327,15 +340,15 @@ export class ISliderComponent implements OnInit, AfterViewInit {
     }
 
     getImage(url) {
-        const _this = this;
+        const self = this;
         // this.currentImageSrc = '';
         this.showImage = false;
         if (url) {
             const image = new Image();
             image.onload = function () {
                 setTimeout(() => {
-                    _this.currentImageSrc = url;
-                    _this.showImage = true;
+                    self.currentImageSrc = url;
+                    self.showImage = true;
                 }, 0);
             };
             image.src = url;
