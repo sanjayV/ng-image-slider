@@ -33,6 +33,15 @@
                         left: 0;
                         right: 0;
                     }
+                    .caption {
+                        position: absolute;
+                        bottom: 0;
+                        padding: 5px;
+                        color: rgb(255, 255, 255);
+                        background-color: rgba(0, 0, 0, 0.35);
+                        width: 100%;
+                        text-align: left;
+                    }
                 }
             }
 
@@ -188,6 +197,19 @@
                 margin: auto;
                 left: 0px;
                 right: 0px;
+            }
+            .caption {
+                position: absolute;
+                z-index: 11;
+                bottom: 0px;
+                margin: auto;
+                padding: 10px;
+                color: rgb(255, 255, 255);
+                background-color: rgba(0, 0, 0, 0.35);
+                max-width: 100%;
+                left: 0px;
+                right: 0px;
+                border-radius: 0px 0px 10px 10px;
             }
             .close {
                 position: absolute;

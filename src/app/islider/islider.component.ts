@@ -11,9 +11,13 @@ import {
     ViewChild,
     HostListener,
     PLATFORM_ID,
-    Inject
+    Inject,
+    ElementRef
 } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+
+const NEXT_ARROW_CLICK_MESSAGE = 'next',
+    PREV_ARROW_CLICK_MESSAGE = 'previous';
 
 @Component({
     selector: 'app-islider',
@@ -38,6 +42,7 @@ export class ISliderComponent implements OnInit, AfterViewInit, OnDestroy {
     sliderImageSizeWithPadding = 211;
     autoSlideCount: number = 0;
     autoSlideInterval;
+    showArrowButton: boolean = true;
 
     // for swipe event
     private swipeCoord?: [number, number];
@@ -89,12 +94,19 @@ export class ISliderComponent implements OnInit, AfterViewInit, OnDestroy {
             this.autoSlideCount = Math.round(count) * 1000;
         }
     }
+    @Input() set showArrow(flag) {
+        if (flag !== undefined && typeof flag === 'boolean') {
+            this.showArrowButton = flag;
+        }
+    }
 
     // @Outputs
     @Output() imageClick = new EventEmitter<number>();
+    @Output() arrowClick = new EventEmitter<string>();
 
     // for lightbox
     currentImageSrc: string;
+    currentImageTitle = '';
     ligthboxShow: boolean = false;
     activeImageIndex: number = 0;
     lightboxNextDisable: boolean = false;
@@ -128,10 +140,17 @@ export class ISliderComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    constructor(private cdRef: ChangeDetectorRef, @Inject(PLATFORM_ID) private platformId: Object) {
+    constructor(
+        private cdRef: ChangeDetectorRef,
+        @Inject(PLATFORM_ID) private platformId: Object,
+        // @Inject(ElementRef) private _elementRef: ElementRef
+    ) {
     }
 
     ngOnInit() {
+        // @TODO: for future use
+        // console.log(this._elementRef)
+
         // for slider
         if (this.infinite) {
             this.effectStyle = 'none';
@@ -194,6 +213,7 @@ export class ISliderComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.prevImg();
             }
 
+            this.arrowClick.emit(PREV_ARROW_CLICK_MESSAGE);
             this.sliderArrowDisableTeam();
         }
     }
@@ -206,6 +226,7 @@ export class ISliderComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.nextImg();
             }
 
+            this.arrowClick.emit(NEXT_ARROW_CLICK_MESSAGE);
             this.sliderArrowDisableTeam();
         }
     }
@@ -281,11 +302,13 @@ export class ISliderComponent implements OnInit, AfterViewInit, OnDestroy {
     // for lightbox
     showLightbox() {
         if (this.imageObj.length && this.imageObj[0]['image']) {
-            let imageSrc = this.imageObj[0]['image'];
+            let imageSrc = this.imageObj[0]['image'],
+                imageTitle = this.imageObj[0]['title'] || '';
             if (this.imageObj[this.activeImageIndex]) {
                 imageSrc = this.imageObj[this.activeImageIndex]['image'];
+                imageTitle = this.imageObj[this.activeImageIndex]['title'] || '';
             }
-            this.getImage(imageSrc);
+            this.getImage(imageSrc, imageTitle);
             this.nextPrevLigthboxButtonDisable();
             this.ligthboxShow = true;
         }
@@ -301,7 +324,8 @@ export class ISliderComponent implements OnInit, AfterViewInit, OnDestroy {
             && this.imageObj[this.activeImageIndex + 1]['image']) {
             this.activeImageIndex++;
             const imageSrc = this.imageObj[this.activeImageIndex]['image'];
-            this.getImage(imageSrc);
+            const imageTitle = this.imageObj[this.activeImageIndex]['title'] || '';
+            this.getImage(imageSrc, imageTitle);
             this.nextPrevLigthboxButtonDisable();
         }
     }
@@ -316,7 +340,8 @@ export class ISliderComponent implements OnInit, AfterViewInit, OnDestroy {
             && this.imageObj[this.activeImageIndex - 1]['image']) {
             this.activeImageIndex--;
             const imageSrc = this.imageObj[this.activeImageIndex]['image'];
-            this.getImage(imageSrc);
+            const imageTitle = this.imageObj[this.activeImageIndex]['title'] || '';
+            this.getImage(imageSrc, imageTitle);
             this.nextPrevLigthboxButtonDisable();
         }
     }
@@ -339,7 +364,7 @@ export class ISliderComponent implements OnInit, AfterViewInit, OnDestroy {
         this.ligthboxShow = false;
     }
 
-    getImage(url) {
+    getImage(url, title = '') {
         const self = this;
         // this.currentImageSrc = '';
         this.showImage = false;
@@ -348,6 +373,7 @@ export class ISliderComponent implements OnInit, AfterViewInit, OnDestroy {
             image.onload = function () {
                 setTimeout(() => {
                     self.currentImageSrc = url;
+                    self.currentImageTitle = title;
                     self.showImage = true;
                 }, 0);
             };
