@@ -1,0 +1,4 @@
+<div *ngIf="fileUrl">
+    <img [ngClass]="{'image': type === IMAGE, 'youtube': type === YOUTUBE}" *ngIf="type === IMAGE || type === YOUTUBE" [src]="fileUrl">
+    <span *ngIf="type === YOUTUBE" class="youtube-icon"></span>
+</div>

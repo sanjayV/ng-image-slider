@@ -15,7 +15,8 @@
                     (mouseenter)="imageMouseEnterHandler()"
                     (mouseleave)="imageAutoSlide()"
                     #imageDiv>
-                    <img class="img-fluid" [src]="img.thumbImage" />
+                    <!-- <img class="img-fluid" [src]="img.thumbImage" /> -->
+                    <custom-img [imageUrl]="img.thumbImage"></custom-img>
                     <div class="caption" *ngIf="img.title">{{ img.title }}</div>
                 </div>
             </div>
@@ -34,17 +35,13 @@
     </div>
 </div>
 
-<div class="img-lightbox" *ngIf="ligthboxShow">
-    <div class="lightbox-wrapper">
-        <div class="lightbox-div" >
-            <div class="pre-loader">
-                <div class="mnml-spinner"></div>
-            </div>
-            <a class="close" (click)="close()">&times;</a>
-            <img *ngIf="currentImageSrc" [ngClass]="{'show': showImage, 'hide': !showImage}" [src]="currentImageSrc">
-            <div *ngIf="currentImageTitle" [ngClass]="{'show': showImage, 'hide': !showImage}" class="caption" >{{ currentImageTitle }}</div>
-            <a [ngClass]="{'disable': lightboxPrevDisable}" class="prev icons prev-icon" (click)="prevImage()">&lsaquo;</a>
-            <a [ngClass]="{'disable': lightboxNextDisable}" class="next icons next-icon" (click)="nextImage()">&rsaquo;</a>
-        </div>
-    </div>
-</div>
+<slider-lightbox *ngIf="ligthboxShow"
+    [currentImageSrc]="currentImageSrc"
+    [currentImageTitle]="currentImageTitle"
+    [showImage]="showImage"
+    [lightboxPrevDisable]="lightboxPrevDisable"
+    [lightboxNextDisable]="lightboxNextDisable"
+    (close)="close()"
+    (prevImage)="prevImage()"
+    (nextImage)="nextImage()">
+</slider-lightbox>

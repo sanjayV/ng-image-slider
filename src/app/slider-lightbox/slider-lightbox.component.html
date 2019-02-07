@@ -1,0 +1,26 @@
+<div class="img-lightbox">
+    <div class="lightbox-wrapper">
+        <div class="lightbox-div" #lightboxDiv>
+            <div class="pre-loader">
+                <div class="mnml-spinner"></div>
+            </div>
+            <a class="close" (click)="closeLightbox()">&times;</a>
+            <!-- Image type -->
+            <img *ngIf="type === IMAGE && fileUrl" [ngClass]="{'show': showImage, 'hide': !showImage}" [src]="fileUrl">
+            <!-- Youtube type -->
+            <iframe *ngIf="type === YOUTUBE && fileUrl"
+                [ngClass]="{'show': showImage, 'hide': !showImage}"
+                [src]="fileUrl"
+                frameborder="0" allowfullscreen
+                style="position: absolute;top: 0;left: 0;right: 0;bottom: 0; margin: auto;width: 98%;height: 98%;border: 0;"></iframe>
+            <!-- Video type -->
+            <video *ngIf="type === VIDEO && fileUrl" controls>
+                <source [src]="fileUrl" type="video/mp4"> Your browser does not support the video tag.
+            </video>
+            <div *ngIf="!fileUrl">Invalid file format</div>
+            <div *ngIf="currentImageTitle" [ngClass]="{'show': showImage, 'hide': !showImage}" class="caption">{{ currentImageTitle }}</div>
+            <a [ngClass]="{'disable': lightboxPrevDisable}" class="prev icons prev-icon" (click)="prevImageLightbox()">&lsaquo;</a>
+            <a [ngClass]="{'disable': lightboxNextDisable}" class="next icons next-icon" (click)="nextImageLightbox()">&rsaquo;</a>
+        </div>
+    </div>
+</div>

@@ -17,7 +17,10 @@ import {
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 
 const NEXT_ARROW_CLICK_MESSAGE = 'next',
-    PREV_ARROW_CLICK_MESSAGE = 'previous';
+    PREV_ARROW_CLICK_MESSAGE = 'previous',
+    youtubeRegExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/,
+    validFileExtensions = ['jpeg', 'jpg', 'gif', 'png'],
+    validVideoExtensions = ['mp4'];
 
 @Component({
     selector: 'app-islider',
@@ -55,11 +58,11 @@ export class ISliderComponent implements OnInit, AfterViewInit, OnDestroy {
     set imageSize(data) {
         if (data
             && typeof (data) === 'object') {
-            if (data.hasOwnProperty('width') && typeof(data['width']) === 'number') {
+            if (data.hasOwnProperty('width') && typeof (data['width']) === 'number') {
                 this.sliderImageWidth = data['width'];
                 this.sliderImageSizeWithPadding = data['width'] + 6; // addeing padding with image width
             }
-            if (data.hasOwnProperty('height') && typeof(data['height']) === 'number') {
+            if (data.hasOwnProperty('height') && typeof (data['height']) === 'number') {
                 this.sliderImageHeight = data['height'];
             }
         }
@@ -369,15 +372,25 @@ export class ISliderComponent implements OnInit, AfterViewInit, OnDestroy {
         // this.currentImageSrc = '';
         this.showImage = false;
         if (url) {
-            const image = new Image();
-            image.onload = function () {
-                setTimeout(() => {
-                    self.currentImageSrc = url;
-                    self.currentImageTitle = title;
-                    self.showImage = true;
-                }, 0);
-            };
-            image.src = url;
+            const fileExtension = url.replace(/^.*\./, '');
+            // verify for youtube url
+            const match = url.match(youtubeRegExp);
+            if ((match && match[2].length === 11)
+                || (fileExtension && validVideoExtensions.indexOf(fileExtension.toLowerCase()) > -1)) {
+                this.currentImageSrc = url;
+                this.currentImageTitle = title;
+                this.showImage = true;
+            } else if (fileExtension && validFileExtensions.indexOf(fileExtension.toLowerCase()) > -1) {
+                const image = new Image();
+                image.onload = function () {
+                    setTimeout(() => {
+                        self.currentImageSrc = url;
+                        self.currentImageTitle = title;
+                        self.showImage = true;
+                    }, 0);
+                };
+                image.src = url;
+            }
         }
     }
 
