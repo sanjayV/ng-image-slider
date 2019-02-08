@@ -1,10 +1,10 @@
 <div class="img-lightbox">
     <div class="lightbox-wrapper">
+        <a class="close" (click)="closeLightbox()">&times;</a>
         <div class="lightbox-div" #lightboxDiv>
             <div class="pre-loader">
                 <div class="mnml-spinner"></div>
             </div>
-            <a class="close" (click)="closeLightbox()">&times;</a>
             <!-- Image type -->
             <img *ngIf="type === IMAGE && fileUrl" [ngClass]="{'show': showImage, 'hide': !showImage}" [src]="fileUrl">
             <!-- Youtube type -->

@@ -35,14 +35,22 @@ export class SliderLightboxComponent implements OnInit, AfterViewInit, OnDestroy
             // verify for youtube url
             const match = url.match(youtubeRegExp);
             if (match && match[2].length === 11) {
-                this.type = this.YOUTUBE;
-                url = `${'//www.youtube.com/embed/'}${match[2]}`;
+                this.type = '';
+                setTimeout(() => {
+                    this.type = this.YOUTUBE;
+                    url = `${'//www.youtube.com/embed/'}${match[2]}`;
+                    this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+                }, 50);
             } else if (this.fileExtension && validFileExtensions.indexOf(this.fileExtension.toLowerCase()) > -1) {
                 this.type = this.IMAGE;
+                this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
             } else if (this.fileExtension && validVideoExtensions.indexOf(this.fileExtension.toLowerCase()) > -1) {
-                this.type = this.VIDEO;
+                this.type = '';
+                setTimeout(() => {
+                    this.type = this.VIDEO;
+                    this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+                }, 50);
             }
-            this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
         }
     }
     @Input() currentImageTitle;

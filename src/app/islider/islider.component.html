@@ -16,7 +16,7 @@
                     (mouseleave)="imageAutoSlide()"
                     #imageDiv>
                     <!-- <img class="img-fluid" [src]="img.thumbImage" /> -->
-                    <custom-img [imageUrl]="img.thumbImage"></custom-img>
+                    <custom-img [imageUrl]="img.thumbImage || img.posterImage || img.video" [isVideo]="!!(img.posterImage || img.video)"></custom-img>
                     <div class="caption" *ngIf="img.title">{{ img.title }}</div>
                 </div>
             </div>

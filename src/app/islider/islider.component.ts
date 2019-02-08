@@ -304,11 +304,11 @@ export class ISliderComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // for lightbox
     showLightbox() {
-        if (this.imageObj.length && this.imageObj[0]['image']) {
-            let imageSrc = this.imageObj[0]['image'],
+        if (this.imageObj.length && (this.imageObj[0]['image'] || this.imageObj[0]['video'])) {
+            let imageSrc = this.imageObj[0]['image'] || this.imageObj[0]['video'],
                 imageTitle = this.imageObj[0]['title'] || '';
             if (this.imageObj[this.activeImageIndex]) {
-                imageSrc = this.imageObj[this.activeImageIndex]['image'];
+                imageSrc = this.imageObj[this.activeImageIndex]['image'] || this.imageObj[this.activeImageIndex]['video'];
                 imageTitle = this.imageObj[this.activeImageIndex]['title'] || '';
             }
             this.getImage(imageSrc, imageTitle);
@@ -324,9 +324,10 @@ export class ISliderComponent implements OnInit, AfterViewInit, OnDestroy {
 
         if (this.activeImageIndex + 1 < this.imageObj.length
             && this.imageObj[this.activeImageIndex + 1]
-            && this.imageObj[this.activeImageIndex + 1]['image']) {
+            && (this.imageObj[this.activeImageIndex + 1]['image']
+            || this.imageObj[this.activeImageIndex + 1]['video'])) {
             this.activeImageIndex++;
-            const imageSrc = this.imageObj[this.activeImageIndex]['image'];
+            const imageSrc = this.imageObj[this.activeImageIndex]['image'] || this.imageObj[this.activeImageIndex]['video'];
             const imageTitle = this.imageObj[this.activeImageIndex]['title'] || '';
             this.getImage(imageSrc, imageTitle);
             this.nextPrevLigthboxButtonDisable();
@@ -340,9 +341,10 @@ export class ISliderComponent implements OnInit, AfterViewInit, OnDestroy {
 
         if (this.activeImageIndex - 1 > -1
             && this.imageObj[this.activeImageIndex - 1]
-            && this.imageObj[this.activeImageIndex - 1]['image']) {
+            && (this.imageObj[this.activeImageIndex - 1]['image']
+            || this.imageObj[this.activeImageIndex - 1]['video'])) {
             this.activeImageIndex--;
-            const imageSrc = this.imageObj[this.activeImageIndex]['image'];
+            const imageSrc = this.imageObj[this.activeImageIndex]['image'] || this.imageObj[this.activeImageIndex]['video'];
             const imageTitle = this.imageObj[this.activeImageIndex]['title'] || '';
             this.getImage(imageSrc, imageTitle);
             this.nextPrevLigthboxButtonDisable();

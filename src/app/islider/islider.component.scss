@@ -34,8 +34,8 @@
                         right: 0;
                     }
                     .youtube-icon {
-                        background: url('/assets/img/play-button_custom.png');
-                        background-size: 50px 50px;
+                        background: url('/assets/img/play-button-overlay.png');
+                        background-size: 140px 80px;
                         background-repeat: no-repeat;
                         position: absolute;
                         z-index: 6;
@@ -46,12 +46,12 @@
                         left: 0;
                         background-position: center center;
                     }
-                    .youtube-icon:hover {
+                    /* .youtube-icon:hover {
                         background: url('/assets/img/play-button.png');
                         background-size: 57px 55px;
                         background-repeat: no-repeat;
                         background-position: center center;
-                    }
+                    } */
                     .caption {
                         position: absolute;
                         bottom: 0;
@@ -192,6 +192,11 @@
         .lightbox-div {
             width: 100%;
             height: 100%;
+            border: 1px solid;
+            border-color: rgba(0, 0, 0, 0.35);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
             .pre-loader{
                 background-color: inherit;
             }
@@ -207,9 +212,9 @@
                 &.hide {
                     opacity: 0;
                 }
-                max-width: 98%;
-                max-height: 98%;
-                position: absolute;
+                max-width: 100%;
+                max-height: 100%;
+                /* position: absolute; */
                 z-index: 11;
                 top: 0px;
                 bottom: 0px;
@@ -218,25 +223,25 @@
                 right: 0px;
             }
             iframe {
-                position: absolute;
+                /* position: absolute; */
                 top: 0;
                 left: 0;
                 right: 0;
                 bottom: 0;
                 margin: auto;
-                width: 98%;
-                height: 98%;
+                width: 100%;
+                height: 100%;
                 border: 0;
             }
             video {
-                position: absolute;
+                /* position: absolute; */
                 top: 0;
                 left: 0;
                 right: 0;
                 bottom: 0;
                 margin: auto;
-                width: 98%;
-                height: 98%;
+                width: 100%;
+                height: 100%;
                 border: 0;
             }
             .caption {
@@ -251,23 +256,6 @@
                 left: 0px;
                 right: 0px;
                 border-radius: 10px 10px 0px 0px;
-            }
-            .close {
-                position: absolute;
-                top: -10px;
-                right: -10px;
-                color: #EA0A3F;
-                background-color: #fff;
-                padding: 0px 0px;
-                opacity: 1;
-                border-radius: 50%;
-                line-height: 25px;
-                height: 25px;
-                width: 25px;
-                z-index: 12;
-                font-size: 25px;
-                font-weight: bold;
-                cursor: pointer;
             }
             .next, .prev {
                 position: absolute;
@@ -296,6 +284,23 @@
             .prev {
                 left: 10px;
             }
+        }
+        .close {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            color: #EA0A3F;
+            background-color: #fff;
+            padding: 0px 0px;
+            opacity: 1;
+            border-radius: 50%;
+            line-height: 25px;
+            height: 25px;
+            width: 25px;
+            z-index: 12;
+            font-size: 25px;
+            font-weight: bold;
+            cursor: pointer;
         }
     }
 }
