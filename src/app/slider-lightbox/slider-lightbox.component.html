@@ -11,10 +11,9 @@
             <iframe *ngIf="type === YOUTUBE && fileUrl"
                 [ngClass]="{'show': showImage, 'hide': !showImage}"
                 [src]="fileUrl"
-                frameborder="0" allowfullscreen
-                style="position: absolute;top: 0;left: 0;right: 0;bottom: 0; margin: auto;width: 98%;height: 98%;border: 0;"></iframe>
+                frameborder="0" allowfullscreen></iframe>
             <!-- Video type -->
-            <video *ngIf="type === VIDEO && fileUrl" controls>
+            <video [ngClass]="{'show': showImage, 'hide': !showImage}" *ngIf="type === VIDEO && fileUrl" controls  controlsList="nodownload">
                 <source [src]="fileUrl" type="video/mp4"> Your browser does not support the video tag.
             </video>
             <div *ngIf="!fileUrl">Invalid file format</div>

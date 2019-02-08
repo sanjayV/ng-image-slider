@@ -23,7 +23,7 @@
                     &.image-popup {
                         cursor: pointer;
                     }
-                    img {
+                    img, video {
                         position: absolute;
                         top: 0px;
                         bottom: 0px;
@@ -217,18 +217,40 @@
                 left: 0px;
                 right: 0px;
             }
+            iframe {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                margin: auto;
+                width: 98%;
+                height: 98%;
+                border: 0;
+            }
+            video {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                margin: auto;
+                width: 98%;
+                height: 98%;
+                border: 0;
+            }
             .caption {
                 position: absolute;
                 z-index: 11;
-                bottom: 0px;
+                top: 0px;
                 margin: auto;
-                padding: 10px;
+                padding: 5px;
                 color: rgb(255, 255, 255);
                 background-color: rgba(0, 0, 0, 0.35);
                 max-width: 100%;
                 left: 0px;
                 right: 0px;
-                border-radius: 0px 0px 10px 10px;
+                border-radius: 10px 10px 0px 0px;
             }
             .close {
                 position: absolute;
