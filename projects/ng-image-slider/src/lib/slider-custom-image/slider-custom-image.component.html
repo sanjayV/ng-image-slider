@@ -1,0 +1,7 @@
+<div *ngIf="fileUrl">
+    <img [ngClass]="{'image': type === IMAGE, 'youtube': type === YOUTUBE}" *ngIf="type === IMAGE || type === YOUTUBE" [src]="fileUrl">
+    <video [class]="VIDEO" *ngIf="type === VIDEO">
+        <source [src]="fileUrl" type="video/mp4"> Your browser does not support the video tag.
+    </video>
+    <span *ngIf="type === YOUTUBE || type === VIDEO || isVideo" class="youtube-icon"></span>
+</div>

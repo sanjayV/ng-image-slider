@@ -1,5 +1,5 @@
 // for slider
-.img-slider {
+.ng-image-slider {
     display: inline-block;
     width: 100%;
     .container {
@@ -59,6 +59,7 @@
                         color: rgb(255, 255, 255);
                         background-color: rgba(0, 0, 0, 0.35);
                         width: 100%;
+                        box-sizing: border-box;
                         text-align: left;
                     }
                 }
@@ -77,8 +78,9 @@
                 height: 35px;
                 font-size: 35px;
                 line-height: 30px;
-                z-index: 1;
+                z-index: 8;
                 transition: all 0.5s ease-in-out;
+                text-align: center;
                 &:hover{
                     background-color:#d4cdcd;
                     background-position: -192px -415px;
@@ -98,7 +100,7 @@
     }
 }
 @media (max-width: 1199px){
-    .img-slider{
+    .ng-image-slider{
         .container{
             .main{
                 .main-inner {
@@ -112,7 +114,7 @@
     }
 }  
 @media (max-width:991px){
-    .img-slider{
+    .ng-image-slider{
         .container{
             .main{
                 .main-inner {
@@ -126,7 +128,7 @@
     }
 }  
 @media (max-width:768px){
-    .img-slider{
+    .ng-image-slider{
         .container{
             .main{
                 .main-inner {
@@ -140,7 +142,7 @@
     }
 }  
 @media (max-width:576px){
-    .img-slider{
+    .ng-image-slider{
         .container{
             .main{
                 .main-inner {
@@ -158,7 +160,7 @@
 }
 
 // for lightbox
-.img-lightbox {
+.ng-image-slider-lightbox {
     position: fixed;
     z-index: 1031;
     background-color: rgba(0, 0, 0, 0.6);
@@ -305,7 +307,7 @@
     }
 }
 @media(max-width: 768px){
-    .img-lightbox{
+    .ng-image-slider-lightbox{
         .lightbox-wrapper {
             width: calc(100% - 40px);
             height: calc(100% - 40px);

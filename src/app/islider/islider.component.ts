@@ -1,6 +1,9 @@
 import {
     ChangeDetectorRef,
     Component,
+    OnChanges,
+    SimpleChanges,
+    SimpleChange,
     OnInit,
     AfterViewInit,
     OnDestroy,
@@ -28,11 +31,10 @@ const NEXT_ARROW_CLICK_MESSAGE = 'next',
     styleUrls: ['./islider.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class ISliderComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ISliderComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
     // for slider
     sliderMainDivWidth: number = 0;
     imageParentDivWidth: number = 0;
-    totalImageCount: number = 0;
     imageObj: Array<object> = [];
     leftPos: number = 0;
     effectStyle: string = 'all 1s ease-in-out';
@@ -52,6 +54,7 @@ export class ISliderComponent implements OnInit, AfterViewInit, OnDestroy {
     private swipeTime?: number;
 
     @ViewChild('sliderMain') sliderMain;
+    @ViewChild('imageDiv') imageDiv;
 
     // @inputs
     @Input()
@@ -67,7 +70,6 @@ export class ISliderComponent implements OnInit, AfterViewInit, OnDestroy {
             }
         }
     }
-    @Input() imageShowCount: number = 3;
     @Input() infinite: boolean = false;
     @Input() imagePopup: boolean = true;
     @Input()
@@ -83,7 +85,6 @@ export class ISliderComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input() set images(imgObj) {
         if (imgObj && imgObj.length) {
             this.imageObj = imgObj;
-            this.totalImageCount = imgObj.length - this.imageShowCount; // total image - total showing image
             this.imageParentDivWidth = imgObj.length * this.sliderImageSizeWithPadding;
         }
     }
@@ -115,18 +116,10 @@ export class ISliderComponent implements OnInit, AfterViewInit, OnDestroy {
     lightboxNextDisable: boolean = false;
     lightboxPrevDisable: boolean = false;
     showImage: boolean = true;
-    @ViewChild('imageDiv') imageDiv;
 
     @HostListener('window:resize', ['$event'])
     onResize(event) {
-        if (this.imageDiv.nativeElement.offsetWidth) {
-            this.imageParentDivWidth = this.imageObj.length * this.sliderImageSizeWithPadding;
-            this.leftPos = this.infinite ? -1 * this.sliderImageSizeWithPadding : 0;
-        }
-        if (this.sliderMain.nativeElement.offsetWidth) {
-            this.sliderMainDivWidth = this.sliderMain.nativeElement.offsetWidth;
-        }
-        this.nextPrevSliderButtonDisable();
+        this.setSliderWidth();
     }
     @HostListener('document:keyup', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
@@ -166,14 +159,7 @@ export class ISliderComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // for slider
     ngAfterViewInit() {
-        if (this.imageDiv.nativeElement.offsetWidth) {
-            this.leftPos = this.infinite ? -1 * this.sliderImageSizeWithPadding * this.slideImageCount : 0;
-            this.imageParentDivWidth = this.imageObj.length * this.sliderImageSizeWithPadding;
-        }
-        if (this.sliderMain.nativeElement.offsetWidth) {
-            this.sliderMainDivWidth = this.sliderMain.nativeElement.offsetWidth;
-        }
-        this.nextPrevSliderButtonDisable();
+        this.setSliderWidth();
         this.cdRef.detectChanges();
         if (isPlatformBrowser(this.platformId)) {
             this.imageAutoSlide();
@@ -184,6 +170,32 @@ export class ISliderComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this.autoSlideInterval) {
             clearInterval(this.autoSlideInterval);
         }
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes && changes.imageSize) {
+            const size: SimpleChange = changes.imageSize;
+            if (size
+                && size.previousValue
+                && size.currentValue
+                && size.previousValue.width && size.previousValue.height
+                && size.currentValue.width && size.currentValue.height
+                && (size.previousValue.width !== size.currentValue.width
+                || size.previousValue.height !== size.currentValue.height)) {
+                this.setSliderWidth();
+            }
+        }
+    }
+
+    setSliderWidth() {
+        if (this.imageDiv.nativeElement.offsetWidth) {
+            this.imageParentDivWidth = this.imageObj.length * this.sliderImageSizeWithPadding;
+            this.leftPos = this.infinite ? -1 * this.sliderImageSizeWithPadding * this.slideImageCount : 0;
+        }
+        if (this.sliderMain.nativeElement.offsetWidth) {
+            this.sliderMainDivWidth = this.sliderMain.nativeElement.offsetWidth;
+        }
+        this.nextPrevSliderButtonDisable();
     }
 
     imageOnClick(index) {
@@ -371,11 +383,11 @@ export class ISliderComponent implements OnInit, AfterViewInit, OnDestroy {
 
     getImage(url, title = '') {
         const self = this;
-        // this.currentImageSrc = '';
+        this.currentImageSrc = '';
         this.showImage = false;
         if (url) {
             const fileExtension = url.replace(/^.*\./, '');
-            // verify for youtube url
+            // verify for youtube and video url
             const match = url.match(youtubeRegExp);
             if ((match && match[2].length === 11)
                 || (fileExtension && validVideoExtensions.indexOf(fileExtension.toLowerCase()) > -1)) {

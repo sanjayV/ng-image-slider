@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
-import { NgImageSliderComponent } from 'ng-image-slider';
+import { ISliderComponent } from './islider/islider.component';
 
 @Component({
     selector: 'app-root',
@@ -8,19 +8,32 @@ import { NgImageSliderComponent } from 'ng-image-slider';
     encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
-    @ViewChild('nav') ds: NgImageSliderComponent;
+    @ViewChild('nav') ds: ISliderComponent;
     title = 'Image Slider demo';
+    showSlider = true;
+
+    sliderWidth: Number = 940;
+    sliderImageWidth: Number = 300;
+    sliderImageHeight: Number = 225;
+    sliderArrowShow: Boolean = true;
+    sliderInfinite: Boolean = false;
+    sliderImagePopup: Boolean = true;
+    sliderAutoSlide: Boolean = false;
+    sliderSlideImage: Number = 1;
+    sliderAnimationSpeed: any = 1;
+
     imageObject: Array<object> = [{
-        image: 'assets/img/slider/1.jpg',
-        thumbImage: 'assets/img/slider/1_min.jpeg'
+        video: 'https://youtu.be/tYa6OLQHrEc',
+        title: 'Youtube example one with title.'
     }, {
-        image: 'assets/img/slider/2.jpg',
-        thumbImage: 'assets/img/slider/2_min.jpeg',
-        title: 'Nature birds and flowers.'
+        video: 'https://youtu.be/6pxRHBw-k8M'
     }, {
-        image: 'assets/img/slider/3.jpg',
-        thumbImage: 'assets/img/slider/3_min.jpeg',
-        title: 'Bird of paradise.'
+        video: 'assets/video/movie.mp4',
+        title: 'MP4 Video example one with title and No Poster-Image.'
+    }, {
+        video: 'assets/video/movie2.mp4',
+        posterImage: 'assets/img/slider/2_min.jpeg',
+        title: 'MP4 Video exmaple two with Poster-Image.'
     }, {
         image: 'assets/img/slider/4.jpg',
         thumbImage: 'assets/img/slider/4_min.jpeg',
@@ -43,6 +56,45 @@ export class AppComponent {
     }];
 
     constructor() {}
+
+    onChangeHandler() {
+        this.imageObject = [{
+            video: 'https://youtu.be/tYa6OLQHrEc',
+            title: 'Youtube example one with title.'
+        }, {
+            video: 'https://youtu.be/6pxRHBw-k8M'
+        }, {
+            video: 'assets/video/movie.mp4',
+            title: 'MP4 Video example one with title and No Poster-Image.'
+        }, {
+            video: 'assets/video/movie2.mp4',
+            posterImage: 'assets/img/slider/2_min.jpeg',
+            title: 'MP4 Video exmaple two with Poster-Image.'
+        }, {
+            image: 'assets/img/slider/4.jpg',
+            thumbImage: 'assets/img/slider/4_min.jpeg',
+            title: 'Most beautiful birds in the world flying.'
+        }, {
+            image: 'assets/img/slider/5.jpg',
+            thumbImage: 'assets/img/slider/5_min.jpeg'
+        }, {
+            image: 'assets/img/slider/6.jpg',
+            thumbImage: 'assets/img/slider/6_min.jpeg'
+        }, {
+            image: 'assets/img/slider/7.jpg',
+            thumbImage: 'assets/img/slider/7_min.jpeg'
+        }, {
+            image: 'assets/img/slider/8.jpg',
+            thumbImage: 'assets/img/slider/8_min.jpeg'
+        }, {
+            image: 'assets/img/slider/9.jpg',
+            thumbImage: 'assets/img/slider/9_min.jpeg'
+        }];
+        this.showSlider = false;
+        setTimeout(() => {
+            this.showSlider = true;
+        }, 10);
+    }
 
     imageOnClick(index) {
         console.log('index', index);

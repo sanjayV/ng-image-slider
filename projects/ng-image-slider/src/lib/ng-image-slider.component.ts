@@ -2,6 +2,9 @@ import {
     ChangeDetectorRef,
     Component,
     OnInit,
+    OnChanges,
+    SimpleChanges,
+    SimpleChange,
     AfterViewInit,
     OnDestroy,
     Input,
@@ -17,7 +20,10 @@ import {
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 
 const NEXT_ARROW_CLICK_MESSAGE = 'next',
-    PREV_ARROW_CLICK_MESSAGE = 'previous';
+    PREV_ARROW_CLICK_MESSAGE = 'previous',
+    youtubeRegExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/,
+    validFileExtensions = ['jpeg', 'jpg', 'gif', 'png'],
+    validVideoExtensions = ['mp4'];
 
 @Component({
     selector: 'ng-image-slider',
@@ -39,17 +45,19 @@ const NEXT_ARROW_CLICK_MESSAGE = 'next',
                         (mouseenter)="imageMouseEnterHandler()"
                         (mouseleave)="imageAutoSlide()"
                         #imageDiv>
-                        <img class="img-fluid" [src]="img.thumbImage" />
+                        <custom-img [imageUrl]="img.thumbImage || img.posterImage || img.video"
+                            [isVideo]="!!(img.posterImage || img.video)">
+                        </custom-img>
                         <div class="caption" *ngIf="img.title">{{ img.title }}</div>
                     </div>
                 </div>
-                <a  *ngIf="showArrowButton"
+                <a *ngIf="showArrowButton"
                     [ngClass]="{'disable': sliderPrevDisable}"
                     class="prev icons prev-icon"
                     (click)="prev()"
                     (mouseenter)="imageMouseEnterHandler()"
                     (mouseleave)="imageAutoSlide()">&lsaquo;</a>
-                <a  *ngIf="showArrowButton"
+                <a *ngIf="showArrowButton"
                     [ngClass]="{'disable': sliderNextDisable}"
                     class="next icons next-icon"
                     (click)="next()"
@@ -58,32 +66,24 @@ const NEXT_ARROW_CLICK_MESSAGE = 'next',
             </div>
         </div>
     </div>
-    <div class="img-lightbox" *ngIf="ligthboxShow">
-        <div class="lightbox-wrapper">
-            <div class="lightbox-div" >
-                <div class="pre-loader">
-                    <div class="mnml-spinner"></div>
-                </div>
-                <a class="close" (click)="close()">&times;</a>
-                <img *ngIf="currentImageSrc" [ngClass]="{'show': showImage, 'hide': !showImage}" [src]="currentImageSrc">
-                <div *ngIf="currentImageTitle"
-                    [ngClass]="{'show': showImage, 'hide': !showImage}"
-                    class="caption" >
-                    {{ currentImageTitle }}
-                </div>
-                <a [ngClass]="{'disable': lightboxPrevDisable}" class="prev icons prev-icon" (click)="prevImage()">&lsaquo;</a>
-                <a [ngClass]="{'disable': lightboxNextDisable}" class="next icons next-icon" (click)="nextImage()">&rsaquo;</a>
-            </div>
-        </div>
-    </div>
+    <slider-lightbox *ngIf="ligthboxShow"
+        [currentImageSrc]="currentImageSrc"
+        [currentImageTitle]="currentImageTitle"
+        [showImage]="showImage"
+        [lightboxPrevDisable]="lightboxPrevDisable"
+        [lightboxNextDisable]="lightboxNextDisable"
+        (close)="close()"
+        (prevImage)="prevImage()"
+        (nextImage)="nextImage()">
+    </slider-lightbox>
     `,
-    styleUrls: ['./ng-image-slider.component.scss']
+    styleUrls: ['./ng-image-slider.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
-export class NgImageSliderComponent implements OnInit, AfterViewInit, OnDestroy {
+export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
     // for slider
     sliderMainDivWidth: number = 0;
     imageParentDivWidth: number = 0;
-    totalImageCount: number = 0;
     imageObj: Array<object> = [];
     leftPos: number = 0;
     effectStyle: string = 'all 1s ease-in-out';
@@ -103,6 +103,7 @@ export class NgImageSliderComponent implements OnInit, AfterViewInit, OnDestroy 
     private swipeTime?: number;
 
     @ViewChild('sliderMain') sliderMain;
+    @ViewChild('imageDiv') imageDiv;
 
     // @inputs
     @Input()
@@ -118,7 +119,6 @@ export class NgImageSliderComponent implements OnInit, AfterViewInit, OnDestroy 
             }
         }
     }
-    @Input() imageShowCount: number = 3;
     @Input() infinite: boolean = false;
     @Input() imagePopup: boolean = true;
     @Input()
@@ -134,7 +134,6 @@ export class NgImageSliderComponent implements OnInit, AfterViewInit, OnDestroy 
     @Input() set images(imgObj) {
         if (imgObj && imgObj.length) {
             this.imageObj = imgObj;
-            this.totalImageCount = imgObj.length - this.imageShowCount; // total image - total showing image
             this.imageParentDivWidth = imgObj.length * this.sliderImageSizeWithPadding;
         }
     }
@@ -166,18 +165,10 @@ export class NgImageSliderComponent implements OnInit, AfterViewInit, OnDestroy 
     lightboxNextDisable: boolean = false;
     lightboxPrevDisable: boolean = false;
     showImage: boolean = true;
-    @ViewChild('imageDiv') imageDiv;
 
     @HostListener('window:resize', ['$event'])
     onResize(event) {
-        if (this.imageDiv.nativeElement.offsetWidth) {
-            this.imageParentDivWidth = this.imageObj.length * this.sliderImageSizeWithPadding;
-            this.leftPos = this.infinite ? -1 * this.sliderImageSizeWithPadding : 0;
-        }
-        if (this.sliderMain.nativeElement.offsetWidth) {
-            this.sliderMainDivWidth = this.sliderMain.nativeElement.offsetWidth;
-        }
-        this.nextPrevSliderButtonDisable();
+        this.setSliderWidth();
     }
     @HostListener('document:keyup', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
@@ -217,14 +208,7 @@ export class NgImageSliderComponent implements OnInit, AfterViewInit, OnDestroy 
 
     // for slider
     ngAfterViewInit() {
-        if (this.imageDiv.nativeElement.offsetWidth) {
-            this.leftPos = this.infinite ? -1 * this.sliderImageSizeWithPadding * this.slideImageCount : 0;
-            this.imageParentDivWidth = this.imageObj.length * this.sliderImageSizeWithPadding;
-        }
-        if (this.sliderMain.nativeElement.offsetWidth) {
-            this.sliderMainDivWidth = this.sliderMain.nativeElement.offsetWidth;
-        }
-        this.nextPrevSliderButtonDisable();
+        this.setSliderWidth();
         this.cdRef.detectChanges();
         if (isPlatformBrowser(this.platformId)) {
             this.imageAutoSlide();
@@ -235,6 +219,32 @@ export class NgImageSliderComponent implements OnInit, AfterViewInit, OnDestroy 
         if (this.autoSlideInterval) {
             clearInterval(this.autoSlideInterval);
         }
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes && changes.imageSize) {
+            const size: SimpleChange = changes.imageSize;
+            if (size
+                && size.previousValue
+                && size.currentValue
+                && size.previousValue.width && size.previousValue.height
+                && size.currentValue.width && size.currentValue.height
+                && (size.previousValue.width !== size.currentValue.width
+                || size.previousValue.height !== size.currentValue.height)) {
+                this.setSliderWidth();
+            }
+        }
+    }
+
+    setSliderWidth() {
+        if (this.imageDiv.nativeElement.offsetWidth) {
+            this.imageParentDivWidth = this.imageObj.length * this.sliderImageSizeWithPadding;
+            this.leftPos = this.infinite ? -1 * this.sliderImageSizeWithPadding * this.slideImageCount : 0;
+        }
+        if (this.sliderMain.nativeElement.offsetWidth) {
+            this.sliderMainDivWidth = this.sliderMain.nativeElement.offsetWidth;
+        }
+        this.nextPrevSliderButtonDisable();
     }
 
     imageOnClick(index) {
@@ -355,11 +365,11 @@ export class NgImageSliderComponent implements OnInit, AfterViewInit, OnDestroy 
 
     // for lightbox
     showLightbox() {
-        if (this.imageObj.length && this.imageObj[0]['image']) {
-            let imageSrc = this.imageObj[0]['image'],
+        if (this.imageObj.length && (this.imageObj[0]['image'] || this.imageObj[0]['video'])) {
+            let imageSrc = this.imageObj[0]['image'] || this.imageObj[0]['video'],
                 imageTitle = this.imageObj[0]['title'] || '';
             if (this.imageObj[this.activeImageIndex]) {
-                imageSrc = this.imageObj[this.activeImageIndex]['image'];
+                imageSrc = this.imageObj[this.activeImageIndex]['image'] || this.imageObj[this.activeImageIndex]['video'];
                 imageTitle = this.imageObj[this.activeImageIndex]['title'] || '';
             }
             this.getImage(imageSrc, imageTitle);
@@ -375,9 +385,10 @@ export class NgImageSliderComponent implements OnInit, AfterViewInit, OnDestroy 
 
         if (this.activeImageIndex + 1 < this.imageObj.length
             && this.imageObj[this.activeImageIndex + 1]
-            && this.imageObj[this.activeImageIndex + 1]['image']) {
+            && (this.imageObj[this.activeImageIndex + 1]['image']
+            || this.imageObj[this.activeImageIndex + 1]['video'])) {
             this.activeImageIndex++;
-            const imageSrc = this.imageObj[this.activeImageIndex]['image'];
+            const imageSrc = this.imageObj[this.activeImageIndex]['image'] || this.imageObj[this.activeImageIndex]['video'];
             const imageTitle = this.imageObj[this.activeImageIndex]['title'] || '';
             this.getImage(imageSrc, imageTitle);
             this.nextPrevLigthboxButtonDisable();
@@ -391,9 +402,10 @@ export class NgImageSliderComponent implements OnInit, AfterViewInit, OnDestroy 
 
         if (this.activeImageIndex - 1 > -1
             && this.imageObj[this.activeImageIndex - 1]
-            && this.imageObj[this.activeImageIndex - 1]['image']) {
+            && (this.imageObj[this.activeImageIndex - 1]['image']
+            || this.imageObj[this.activeImageIndex - 1]['video'])) {
             this.activeImageIndex--;
-            const imageSrc = this.imageObj[this.activeImageIndex]['image'];
+            const imageSrc = this.imageObj[this.activeImageIndex]['image'] || this.imageObj[this.activeImageIndex]['video'];
             const imageTitle = this.imageObj[this.activeImageIndex]['title'] || '';
             this.getImage(imageSrc, imageTitle);
             this.nextPrevLigthboxButtonDisable();
@@ -420,18 +432,28 @@ export class NgImageSliderComponent implements OnInit, AfterViewInit, OnDestroy 
 
     getImage(url, title = '') {
         const self = this;
-        // this.currentImageSrc = '';
+        this.currentImageSrc = '';
         this.showImage = false;
         if (url) {
-            const image = new Image();
-            image.onload = function () {
-                setTimeout(() => {
-                    self.currentImageSrc = url;
-                    self.currentImageTitle = title;
-                    self.showImage = true;
-                }, 0);
-            };
-            image.src = url;
+            const fileExtension = url.replace(/^.*\./, '');
+            // verify for youtube and video url
+            const match = url.match(youtubeRegExp);
+            if ((match && match[2].length === 11)
+                || (fileExtension && validVideoExtensions.indexOf(fileExtension.toLowerCase()) > -1)) {
+                this.currentImageSrc = url;
+                this.currentImageTitle = title;
+                this.showImage = true;
+            } else if (fileExtension && validFileExtensions.indexOf(fileExtension.toLowerCase()) > -1) {
+                const image = new Image();
+                image.onload = function () {
+                    setTimeout(() => {
+                        self.currentImageSrc = url;
+                        self.currentImageTitle = title;
+                        self.showImage = true;
+                    }, 0);
+                };
+                image.src = url;
+            }
         }
     }
 

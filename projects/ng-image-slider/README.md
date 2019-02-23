@@ -1,6 +1,6 @@
-# Angular Responsive Image Slider with Lightbox
+# Angular Responsive Image & Video Slider with Lightbox
 
-An Angular 6 responsive image slider with image lightbox popup.
+An Angular 6 responsive image and video slider with lightbox popup.
 
 ## Features!
 
@@ -8,6 +8,7 @@ An Angular 6 responsive image slider with image lightbox popup.
   - captures swipes from phones and tablets
   - Compatible with Angular Universal
   - Image lightbox popup
+  - Support Images, Youtube and MP4 video url's
 
 ### Demo: https://ng-image-slider.herokuapp.com/
 
@@ -51,18 +52,30 @@ imageObject: Array<object> = [{
         thumbImage: 'assets/img/slider/1_min.jpeg'
     }, {
         image: 'assets/img/slider/2.jpg',
-        thumbImage: 'assets/img/slider/2_min.jpeg'
+        thumbImage: 'assets/img/slider/2_min.jpeg',
+		title: 'Image with title' //Optional: You can use this key if you want to show title
     }
 ];
 ```
 
-**ImageObject format with title**
+**Image, Youtube and MP4 url's object format**
  ```js
 imageObject: Array<object> = [{
-        image: 'assets/img/slider/1.jpg',
-        thumbImage: 'assets/img/slider/1_min.jpeg',
-        title: 'Your title will display on slider image.'
+        video: 'https://youtu.be/6pxRHBw-k8M' // Youtube url
     },
+	{
+		video: 'assets/video/movie.mp4', // MP4 Video url
+		title: 'Video with title' //Optional: You can use this key if you want to show Video with title
+	},
+	{
+		video: 'assets/video/movie2.mp4',
+		posterImage: 'assets/img/slider/2_min.jpeg', //Optional: You can use this key if you want to show video poster image in slider
+		title: 'Video with title and poster image.'
+    },
+	{
+		image: 'assets/img/slider/1.jpg',
+        thumbImage: 'assets/img/slider/1_min.jpeg'
+	}
     ...
 ];
 ```
