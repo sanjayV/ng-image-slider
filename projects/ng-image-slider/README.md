@@ -1,6 +1,7 @@
 # Angular Responsive Image & Video Slider with Lightbox
 
-An Angular 6 responsive image and video slider with lightbox popup.
+An Angular image slider with lightbox popup.
+Also support youtube and mp4 video urls.
 
 ## Features!
 
