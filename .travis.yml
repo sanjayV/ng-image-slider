@@ -16,6 +16,4 @@ before_script:
 script:
   - ng build --prod --aot
   - ng test
-
-after_success:
   - npm start
