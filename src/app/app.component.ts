@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
-import { ISliderComponent } from './islider/islider.component';
+import { NgImageSliderModule, NgImageSliderComponent } from 'ng-image-slider';
 
 @Component({
     selector: 'app-root',
@@ -8,8 +8,8 @@ import { ISliderComponent } from './islider/islider.component';
     encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
-    @ViewChild('nav') ds: ISliderComponent;
-    title = 'Image Slider demo';
+    @ViewChild('nav') ds: NgImageSliderComponent;
+    title = 'Ng Image Slider';
     showSlider = true;
 
     sliderWidth: Number = 940;

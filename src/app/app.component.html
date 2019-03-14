@@ -1,8 +1,8 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div class="bg">
-    <span class="text-center demo-title-main">
+    <h1 class="text-center demo-title-main">
         Welcome to {{ title }}!
-    </span>
+    </h1>
     <div class="margin-auto demo-div box-shadow" [ngStyle]="{'width':sliderWidth+'px', 'min-height': sliderImageHeight+4+'px'}">
         <ng-image-slider *ngIf="showSlider" #nav
             [images]="imageObject"
