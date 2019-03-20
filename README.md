@@ -1,4 +1,4 @@
-# Angular Responsive Image & Video Slider with Lightbox
+# Angular Responsive Image Slider with Lightbox
 
 An Angular image slider with lightbox popup.
 Also support youtube and mp4 video urls.
@@ -9,6 +9,7 @@ Also support youtube and mp4 video urls.
   - captures swipes from phones and tablets
   - Compatible with Angular Universal
   - Image lightbox popup
+  - captures keyboard next/previous arrow key event for lightbox image move
   - Support Images, Youtube and MP4 video url's
 
 ### Demo: https://ng-image-slider.herokuapp.com/
@@ -94,6 +95,7 @@ imageObject: Array<object> = [{
 | showArrow | @Input | boolean | Hide/Show slider arrow buttons | true |
 | imageClick | @Output | n/a | Executes when click event on slider image. Return image index. | n/a |
 | arrowClick | @Output | n/a | Executes when click on slider left/right arrow. | n/a |
+| lightboxArrowClick | @Output | n/a | Executes when click on lightbox next/previous arrow. | n/a |
 
 
 ## Add custom navigation button

@@ -21,6 +21,8 @@ import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 
 const NEXT_ARROW_CLICK_MESSAGE = 'next',
     PREV_ARROW_CLICK_MESSAGE = 'previous',
+    LIGHTBOX_NEXT_ARROW_CLICK_MESSAGE = 'lightbox next',
+    LIGHTBOX_PREV_ARROW_CLICK_MESSAGE = 'lightbox previous',
     youtubeRegExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/,
     validFileExtensions = ['jpeg', 'jpg', 'gif', 'png'],
     validVideoExtensions = ['mp4'];
@@ -156,6 +158,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
     // @Outputs
     @Output() imageClick = new EventEmitter<number>();
     @Output() arrowClick = new EventEmitter<string>();
+    @Output() lightboxArrowClick = new EventEmitter<object>();
 
     // for lightbox
     currentImageSrc: string;
@@ -172,15 +175,15 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
     }
     @HostListener('document:keyup', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
-        if (event.key.toLowerCase() === 'arrowright') {
+        if (event.key.toLowerCase() === 'arrowright' && this.ligthboxShow) {
             this.nextImage();
         }
 
-        if (event.key.toLowerCase() === 'arrowleft') {
+        if (event.key.toLowerCase() === 'arrowleft' && this.ligthboxShow) {
             this.prevImage();
         }
 
-        if (event.key.toLowerCase() === 'escape') {
+        if (event.key.toLowerCase() === 'escape' && this.ligthboxShow) {
             this.close();
         }
     }
@@ -392,6 +395,10 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
             const imageTitle = this.imageObj[this.activeImageIndex]['title'] || '';
             this.getImage(imageSrc, imageTitle);
             this.nextPrevLigthboxButtonDisable();
+            this.lightboxArrowClick.emit({
+                message: LIGHTBOX_NEXT_ARROW_CLICK_MESSAGE,
+                index: this.activeImageIndex
+            });
         }
     }
 
@@ -409,6 +416,10 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
             const imageTitle = this.imageObj[this.activeImageIndex]['title'] || '';
             this.getImage(imageSrc, imageTitle);
             this.nextPrevLigthboxButtonDisable();
+            this.lightboxArrowClick.emit({
+                message: LIGHTBOX_PREV_ARROW_CLICK_MESSAGE,
+                index: this.activeImageIndex
+            });
         }
     }
 
