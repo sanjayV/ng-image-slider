@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,maximum-scale=2">
+    <link rel="stylesheet" type="text/css" media="screen" href="/ng-image-slider/assets/css/style.css?v=f05e2c326f5ffd0362bde63069924dd35992ea8c">
+
+    <!-- Begin Jekyll SEO tag v2.5.0 -->
+    <title>Angular Responsive Image Slider with Lightbox | ng-image-slider</title>
+    <meta name="generator" content="Jekyll v3.7.4" />
+    <meta property="og:title" content="Angular Responsive Image Slider with Lightbox" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="description" content="Image slider with image lightbox in angular 6." />
+    <meta property="og:description" content="Image slider with image lightbox in angular 6." />
+    <link rel="canonical" href="https://sanjayv.github.io/ng-image-slider/" />
+    <meta property="og:url" content="https://sanjayv.github.io/ng-image-slider/" />
+    <meta property="og:site_name" content="ng-image-slider" />
+    <script type="application/ld+json">
+{"@type":"WebSite","url":"https://sanjayv.github.io/ng-image-slider/","name":"ng-image-slider","headline":"Angular Responsive Image Slider with Lightbox","description":"Image slider with image lightbox in angular 6.","@context":"http://schema.org"}</script>
+    <!-- End Jekyll SEO tag -->
+
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+            <a id="forkme_banner" href="https://github.com/sanjayV/ng-image-slider">View on GitHub</a>
+
+            <h1 id="project_title">ng-image-slider</h1>
+            <h2 id="project_tagline">Angular image slider.</h2>
+
+
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+        <section id="main_content" class="inner">
+            <h1 id="angular-responsive-image-slider-with-lightbox">Angular Responsive Image Slider with Lightbox</h1>
+
+            <p>An Angular image slider with lightbox popup. Also support youtube and mp4 video urls.</p>
+
+            <h2 id="features">Features!</h2>
+
+            <ul>
+                <li>Responsive</li>
+                <li>captures swipes from phones and tablets</li>
+                <li>Compatible with Angular Universal</li>
+                <li>Image lightbox popup</li>
+                <li>captures keyboard next/previous arrow key event for lightbox image move</li>
+                <li>Support Images, Youtube and MP4 video url’s</li>
+            </ul>
+
+            <h3 id="demo-httpsng-image-sliderherokuappcom">Demo: https://ng-image-slider.herokuapp.com/</h3>
+
+            <h1 id="installation">Installation</h1>
+            <p>
+                <code class="highlighter-rouge">npm install ng-image-slider</code>
+            </p>
+
+            <h1 id="setup-">Setup :</h1>
+
+            <p>
+                <strong>Import module in your
+                    <code class="highlighter-rouge">app.module.ts</code>:</strong>
+            </p>
+            <div class="language-typescript highlighter-rouge">
+                <div class="highlight">
+                    <pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">NgImageSliderModule</span> <span class="p">}</span> <span class="k">from</span> <span class="s1">'ng-image-slider'</span><span class="p">;</span>
+<span class="p">...</span>
+
+<span class="p">@</span><span class="nd">NgModule</span><span class="p">({</span>
+    <span class="na">declarations</span><span class="p">:</span> <span class="p">[</span>
+        <span class="nx">AppComponent</span>
+    <span class="p">],</span>
+    <span class="na">imports</span><span class="p">:</span> <span class="p">[</span>
+        <span class="nx">NgImageSliderModule</span><span class="p">,</span>
+        <span class="p">...</span>
+    <span class="p">],</span>
+    <span class="na">providers</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="na">bootstrap</span><span class="p">:</span> <span class="p">[</span><span class="nx">AppComponent</span><span class="p">]</span>
+<span class="p">})</span>
+
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">AppModule</span> <span class="p">{</span>
+<span class="p">}</span>
+
+</code></pre>
+                </div>
+            </div>
+
+            <p>
+                <strong>Add component in your template file.</strong>
+            </p>
+            <div class="language-html highlighter-rouge">
+                <div class="highlight">
+                    <pre class="highlight"><code><span class="nt">&lt;ng-image-slider</span> <span class="err">[</span><span class="na">images</span><span class="err">]="</span><span class="na">imageObject</span><span class="err">"</span> <span class="err">#</span><span class="na">nav</span><span class="nt">&gt;&lt;/ng-image-slider&gt;</span>
+</code></pre>
+                </div>
+            </div>
+
+            <p>
+                <strong>ImageObject format</strong>
+            </p>
+            <div class="language-js highlighter-rouge">
+                <div class="highlight">
+                    <pre class="highlight"><code><span class="nx">imageObject</span><span class="p">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">object</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">[{</span>
+        <span class="na">image</span><span class="p">:</span> <span class="s1">'assets/img/slider/1.jpg'</span><span class="p">,</span>
+        <span class="na">thumbImage</span><span class="p">:</span> <span class="s1">'assets/img/slider/1_min.jpeg'</span>
+    <span class="p">},</span> <span class="p">{</span>
+        <span class="na">image</span><span class="p">:</span> <span class="s1">'assets/img/slider/2.jpg'</span><span class="p">,</span>
+        <span class="na">thumbImage</span><span class="p">:</span> <span class="s1">'assets/img/slider/2_min.jpeg'</span><span class="p">,</span>
+		<span class="na">title</span><span class="p">:</span> <span class="s1">'Image with title'</span> <span class="c1">//Optional: You can use this key if you want to show title</span>
+    <span class="p">}</span>
+<span class="p">];</span>
+</code></pre>
+                </div>
+            </div>
+
+            <p>
+                <strong>Image, Youtube and MP4 url’s object format</strong>
+            </p>
+            <div class="language-js highlighter-rouge">
+                <div class="highlight">
+                    <pre class="highlight"><code><span class="nx">imageObject</span><span class="p">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">object</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">[{</span>
+        <span class="na">video</span><span class="p">:</span> <span class="s1">'https://youtu.be/6pxRHBw-k8M'</span> <span class="c1">// Youtube url</span>
+    <span class="p">},</span>
+	<span class="p">{</span>
+		<span class="na">video</span><span class="p">:</span> <span class="s1">'assets/video/movie.mp4'</span><span class="p">,</span> <span class="c1">// MP4 Video url</span>
+		<span class="na">title</span><span class="p">:</span> <span class="s1">'Video with title'</span> <span class="c1">//Optional: You can use this key if you want to show Video with title</span>
+	<span class="p">},</span>
+	<span class="p">{</span>
+		<span class="na">video</span><span class="p">:</span> <span class="s1">'assets/video/movie2.mp4'</span><span class="p">,</span>
+		<span class="na">posterImage</span><span class="p">:</span> <span class="s1">'assets/img/slider/2_min.jpeg'</span><span class="p">,</span> <span class="c1">//Optional: You can use this key if you want to show video poster image in slider</span>
+		<span class="na">title</span><span class="p">:</span> <span class="s1">'Video with title and poster image.'</span>
+    <span class="p">},</span>
+	<span class="p">{</span>
+		<span class="na">image</span><span class="p">:</span> <span class="s1">'assets/img/slider/1.jpg'</span><span class="p">,</span>
+        <span class="na">thumbImage</span><span class="p">:</span> <span class="s1">'assets/img/slider/1_min.jpeg'</span>
+	<span class="p">}</span>
+    <span class="p">...</span>
+<span class="p">];</span>
+</code></pre>
+                </div>
+            </div>
+
+            <h2 id="api-reference-optional-">API Reference (optional) :</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Data Type</th>
+                        <th>Description</th>
+                        <th>Default</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>infinite</td>
+                        <td>@Input</td>
+                        <td>boolean</td>
+                        <td>Infinite sliding images if value is
+                            <strong>true</strong>.</td>
+                        <td>false</td>
+                    </tr>
+                    <tr>
+                        <td>imagePopup</td>
+                        <td>@Input</td>
+                        <td>boolean</td>
+                        <td>Enable image lightBox popup option on slider image click.</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td>animationSpeed</td>
+                        <td>@Input</td>
+                        <td>number</td>
+                        <td>By this user can set slider animation speed. Minimum value is
+                            <strong>0.1 second</strong> and Maximum value is
+                            <strong>5 second</strong>.</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>slideImage</td>
+                        <td>@Input</td>
+                        <td>number</td>
+                        <td>Set how many images will move on left/right arrow click.</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>imageSize</td>
+                        <td>@Input</td>
+                        <td>object</td>
+                        <td>Set slider images width and height. Pass object like
+                            <code class="highlighter-rouge">{width: 400, height: 300}</code>
+                        </td>
+                        <td>
+                            <code class="highlighter-rouge">{width: 205, height: 200}</code>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>autoSlide</td>
+                        <td>@Input</td>
+                        <td>number</td>
+                        <td>Auto slide images according provided time. Option will work only if
+                            <strong>infinite</strong> option is
+                            <strong>true</strong>. Minimum value is 1 second and Maximum value is 5 second.</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>showArrow</td>
+                        <td>@Input</td>
+                        <td>boolean</td>
+                        <td>Hide/Show slider arrow buttons</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td>imageClick</td>
+                        <td>@Output</td>
+                        <td>n/a</td>
+                        <td>Executes when click event on slider image. Return image index.</td>
+                        <td>n/a</td>
+                    </tr>
+                    <tr>
+                        <td>arrowClick</td>
+                        <td>@Output</td>
+                        <td>n/a</td>
+                        <td>Executes when click on slider left/right arrow.</td>
+                        <td>n/a</td>
+                    </tr>
+                    <tr>
+                        <td>lightboxArrowClick</td>
+                        <td>@Output</td>
+                        <td>n/a</td>
+                        <td>Executes when click on lightbox next/previous arrow.</td>
+                        <td>n/a</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 id="add-custom-navigation-button">Add custom navigation button</h2>
+            <div class="language-typescript highlighter-rouge">
+                <div class="highlight">
+                    <pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">NgImageSliderComponent</span> <span class="p">}</span> <span class="k">from</span> <span class="s1">'ng-image-slider'</span><span class="p">;</span>
+
+<span class="p">@</span><span class="nd">Component</span><span class="p">({</span>
+    <span class="na">selector</span><span class="p">:</span> <span class="s1">'sample'</span><span class="p">,</span>
+        <span class="na">template</span><span class="p">:</span><span class="s2">`
+        &lt;ng-image-slider [images]="imageObject" #nav&gt;
+        &lt;/ng-image-slider&gt;
+        &lt;button (click)="prevImageClick()"&gt;Prev&lt;/button&gt;
+        &lt;button (click)="nextImageClick()"&gt;Next&lt;/button&gt;
+        `</span>
+<span class="p">})</span>
+<span class="kd">class</span> <span class="nx">Sample</span> <span class="p">{</span>
+    <span class="p">@</span><span class="nd">ViewChild</span><span class="p">(</span><span class="s1">'nav'</span><span class="p">)</span> <span class="nx">slider</span><span class="p">:</span> <span class="nx">NgImageSliderComponent</span><span class="p">;</span>
+    <span class="nx">imageObject</span> <span class="o">=</span> <span class="p">[{...}]</span>
+  
+    <span class="nx">prevImageClick</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">slider</span><span class="p">.</span><span class="nx">prev</span><span class="p">();</span>
+    <span class="p">}</span>
+    
+    <span class="nx">nextImageClick</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">slider</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+                </div>
+            </div>
+
+            <h2 id="license">License</h2>
+            <p>As Angular itself, this module is released under the permissive
+                <a href="http://revolunet.mit-license.org">MIT license</a>.</p>
+
+            <p>Your contributions and suggestions are always welcome :)</p>
+
+        </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+        <footer class="inner">
+
+            <p class="copyright">ng-image-slider maintained by
+                <a href="https://github.com/sanjayV">sanjayV</a>
+            </p>
+
+            <p>Published with
+                <a href="https://pages.github.com">GitHub Pages</a>
+            </p>
+        </footer>
+    </div>
+
+
+</body>
+
+</html>
