@@ -1,0 +1,7 @@
+1) Events: Done
+2) Outside buttons: Done
+3) Option for hide arrow button: Done
+4) Option for set slider width: Already done as slider is responsive, will use it in next phase
+5) Option for show title with image: Done
+6) Update read me , reference https://www.npmjs.com/package/ngx-drag-scroll
+6) Prope demo with all events and options
