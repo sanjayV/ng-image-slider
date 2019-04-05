@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, ViewEncapsulation, ViewChild, HostListener } from '@angular/core';
 import { NgImageSliderModule, NgImageSliderComponent } from 'ng-image-slider';
 
 @Component({
@@ -14,7 +14,10 @@ export class AppComponent {
 
     sliderWidth: Number = 940;
     sliderImageWidth: Number = 300;
+    slideShowWidth: Number = 940;
     sliderImageHeight: Number = 225;
+    slideShowImageWidth: Number = 920;
+    slideShowImageHeight: Number = 500;
     sliderArrowShow: Boolean = true;
     sliderInfinite: Boolean = false;
     sliderImagePopup: Boolean = true;
@@ -22,9 +25,37 @@ export class AppComponent {
     sliderSlideImage: Number = 1;
     sliderAnimationSpeed: any = 1;
     imageObject: Array<object> = [];
+    imageSlideShow = this.imageObject = [{
+        image: 'assets/img/slider/6.jpg',
+        thumbImage: 'assets/img/slider/6.jpg',
+        title: 'brown deer under tree'
+    }, {
+        image: 'assets/img/slider/5.jpg',
+        thumbImage: 'assets/img/slider/5.jpg',
+        title: 'Hummingbirds are amazing creatures'
+    }, {
+        image: 'assets/img/slider/7.jpg',
+        thumbImage: 'assets/img/slider/7.jpg',
+        title: 'The fox squirrel (Sciurus niger), also known as the eastern fox squirrel or Bryants fox squirrel'
+    }, {
+        image: 'assets/img/slider/8.jpg',
+        thumbImage: 'assets/img/slider/8.jpg',
+        title: 'The birds-of-paradise are members of the family Paradisaeidae of the order Passeriformes.'
+    }, {
+        image: 'assets/img/slider/9.jpg',
+        thumbImage: 'assets/img/slider/9.jpg',
+        title: 'Blue Bird-of-Paradise, Tigibi, Tari area'
+    }];
+
+    @HostListener('window:resize', ['$event'])
+    onResize() {
+        this.slideShowWidth = window.innerWidth - 30;
+        this.slideShowImageWidth = window.innerWidth - 60;
+    }
 
     constructor() {
         this.setImageObject();
+        this.onResize();
     }
 
     onChangeHandler() {
@@ -36,7 +67,24 @@ export class AppComponent {
     }
 
     setImageObject() {
-        this.imageObject = [{
+        this.imageObject = this.imageObject = [{
+            image: 'assets/img/slider/6.jpg',
+            thumbImage: 'assets/img/slider/6_min.jpeg',
+            title: 'brown deer under tree'
+        }, {
+            image: 'assets/img/slider/5.jpg',
+            thumbImage: 'assets/img/slider/5_min.jpeg',
+            title: 'Hummingbirds are amazing creatures'
+        }, {
+            image: 'assets/img/slider/7.jpg',
+            thumbImage: 'assets/img/slider/7_min.jpeg'
+        }, {
+            image: 'assets/img/slider/8.jpg',
+            thumbImage: 'assets/img/slider/8_min.jpeg'
+        }, {
+            image: 'assets/img/slider/9.jpg',
+            thumbImage: 'assets/img/slider/9_min.jpeg'
+        }, {
             video: 'https://youtu.be/tYa6OLQHrEc',
             title: 'Youtube example one with title.'
         }, {
@@ -52,21 +100,6 @@ export class AppComponent {
             image: 'assets/img/slider/4.jpg',
             thumbImage: 'assets/img/slider/4_min.jpeg',
             title: 'Most beautiful birds in the world flying.'
-        }, {
-            image: 'assets/img/slider/5.jpg',
-            thumbImage: 'assets/img/slider/5_min.jpeg'
-        }, {
-            image: 'assets/img/slider/6.jpg',
-            thumbImage: 'assets/img/slider/6_min.jpeg'
-        }, {
-            image: 'assets/img/slider/7.jpg',
-            thumbImage: 'assets/img/slider/7_min.jpeg'
-        }, {
-            image: 'assets/img/slider/8.jpg',
-            thumbImage: 'assets/img/slider/8_min.jpeg'
-        }, {
-            image: 'assets/img/slider/9.jpg',
-            thumbImage: 'assets/img/slider/9_min.jpeg'
         }];
     }
 

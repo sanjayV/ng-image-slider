@@ -130,4 +130,19 @@
             </td>
         </tr>
     </table>
+
+    <hr />
+    <h2 class="text-center demo-title-main">
+        <i style="color: blue">Image Slide Show</i>
+    </h2>
+    <div class="margin-auto demo-div box-shadow" [ngStyle]="{'width': slideShowWidth + 'px', 'height': '520px'}">
+        <ng-image-slider *ngIf="showSlider" #nav
+            [images]="imageSlideShow"
+            [infinite]="true"
+            [showArrow]="true"
+            [imageSize]="{width: slideShowImageWidth, height: 500}"
+            [autoSlide]="2"
+            [animationSpeed]="2"
+            [imagePopup]="false"></ng-image-slider>
+    </div>
 </div>
