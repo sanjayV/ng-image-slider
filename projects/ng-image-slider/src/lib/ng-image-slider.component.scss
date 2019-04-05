@@ -1,13 +1,14 @@
 // for slider
 .ng-image-slider {
     display: inline-block;
+    position: relative;
     width: 100%;
     .container {
         .main {
-            overflow-x: hidden;
-            position: relative;
+            overflow: hidden;
+            position: absolute;
             height: 200px;
-            overflow-y: hidden;
+            width: 100%;
             .main-inner {
                 width: 1760px;
                 padding: 0px;

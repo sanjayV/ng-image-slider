@@ -30,7 +30,8 @@ const NEXT_ARROW_CLICK_MESSAGE = 'next',
 @Component({
     selector: 'ng-image-slider',
     template: `
-    <div class="ng-image-slider">
+    <div class="ng-image-slider"
+        [ngStyle]="{'height':sliderImageHeight+'px'}">
         <div class="container">
             <div class="main"
                 [ngStyle]="{'height':sliderImageHeight+'px'}"
@@ -259,7 +260,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
     }
 
     imageAutoSlide() {
-        if (this.infinite && this.autoSlideCount) {
+        if (this.infinite && this.autoSlideCount && !this.ligthboxShow) {
             this.autoSlideInterval = setInterval(() => {
                 this.next();
             }, this.autoSlideCount);
@@ -377,6 +378,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
             }
             this.getImage(imageSrc, imageTitle);
             this.nextPrevLigthboxButtonDisable();
+            this.imageMouseEnterHandler();
             this.ligthboxShow = true;
         }
     }
@@ -439,6 +441,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
 
     close() {
         this.ligthboxShow = false;
+        this.imageAutoSlide();
     }
 
     getImage(url, title = '') {
