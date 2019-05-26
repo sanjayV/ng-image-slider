@@ -176,16 +176,18 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
     }
     @HostListener('document:keyup', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
-        if (event.key.toLowerCase() === 'arrowright' && this.ligthboxShow) {
-            this.nextImage();
-        }
+        if (event && event.key) {
+            if (event.key.toLowerCase() === 'arrowright' && this.ligthboxShow) {
+                this.nextImage();
+            }
 
-        if (event.key.toLowerCase() === 'arrowleft' && this.ligthboxShow) {
-            this.prevImage();
-        }
+            if (event.key.toLowerCase() === 'arrowleft' && this.ligthboxShow) {
+                this.prevImage();
+            }
 
-        if (event.key.toLowerCase() === 'escape' && this.ligthboxShow) {
-            this.close();
+            if (event.key.toLowerCase() === 'escape' && this.ligthboxShow) {
+                this.close();
+            }
         }
     }
 
@@ -234,7 +236,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
                 && size.previousValue.width && size.previousValue.height
                 && size.currentValue.width && size.currentValue.height
                 && (size.previousValue.width !== size.currentValue.width
-                || size.previousValue.height !== size.currentValue.height)) {
+                    || size.previousValue.height !== size.currentValue.height)) {
                 this.setSliderWidth();
             }
         }
@@ -391,7 +393,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
         if (this.activeImageIndex + 1 < this.imageObj.length
             && this.imageObj[this.activeImageIndex + 1]
             && (this.imageObj[this.activeImageIndex + 1]['image']
-            || this.imageObj[this.activeImageIndex + 1]['video'])) {
+                || this.imageObj[this.activeImageIndex + 1]['video'])) {
             this.activeImageIndex++;
             const imageSrc = this.imageObj[this.activeImageIndex]['image'] || this.imageObj[this.activeImageIndex]['video'];
             const imageTitle = this.imageObj[this.activeImageIndex]['title'] || '';
@@ -412,7 +414,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
         if (this.activeImageIndex - 1 > -1
             && this.imageObj[this.activeImageIndex - 1]
             && (this.imageObj[this.activeImageIndex - 1]['image']
-            || this.imageObj[this.activeImageIndex - 1]['video'])) {
+                || this.imageObj[this.activeImageIndex - 1]['video'])) {
             this.activeImageIndex--;
             const imageSrc = this.imageObj[this.activeImageIndex]['image'] || this.imageObj[this.activeImageIndex]['video'];
             const imageTitle = this.imageObj[this.activeImageIndex]['title'] || '';
