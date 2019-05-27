@@ -57,6 +57,7 @@ export class SliderLightboxComponent implements OnInit, AfterViewInit, OnDestroy
     @Input() showImage;
     @Input() lightboxPrevDisable;
     @Input() lightboxNextDisable;
+    @Input() direction: string = 'ltr';
 
     // @Output
     @Output() close = new EventEmitter<any>();

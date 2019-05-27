@@ -1,0 +1,49 @@
+<div class="ng-image-slider" [ngStyle]="{'height':sliderImageHeight+'px'}">
+    <div class="container">
+        <div class="main"
+            [ngStyle]="{'height':sliderImageHeight+'px'}"
+            #sliderMain>
+            <div class="main-inner"
+                [ngStyle]="{'margin-left':leftPos+'px', 'width':imageParentDivWidth+'px', 'transition': effectStyle}"
+                (touchstart)="swipe($event, 'start')"
+                (touchend)="swipe($event, 'end')">
+                <div [ngClass]="{'image-popup': imagePopup}"
+                    [ngStyle]="{'width':sliderImageWidth+'px', 'height':sliderImageHeight+'px'}"
+                    class="img-div"
+                    *ngFor="let img of imageObj; let i = index"
+                    (click)="imageOnClick(i)"
+                    (mouseenter)="imageMouseEnterHandler()"
+                    (mouseleave)="imageAutoSlide()"
+                    #imageDiv>
+                    <custom-img [imageUrl]="img.thumbImage || img.posterImage || img.video"
+                        [isVideo]="!!(img.posterImage || img.video)">
+                    </custom-img>
+                    <div [dir]="textDirection" class="caption" *ngIf="img.title">{{ img.title }}</div>
+                </div>
+            </div>
+            <a *ngIf="showArrowButton"
+                [ngClass]="{'disable': sliderPrevDisable}"
+                class="prev icons prev-icon"
+                (click)="prev()"
+                (mouseenter)="imageMouseEnterHandler()"
+                (mouseleave)="imageAutoSlide()">&lsaquo;</a>
+            <a *ngIf="showArrowButton"
+                [ngClass]="{'disable': sliderNextDisable}"
+                class="next icons next-icon"
+                (click)="next()"
+                (mouseenter)="imageMouseEnterHandler()"
+                (mouseleave)="imageAutoSlide()">&rsaquo;</a>
+        </div>
+    </div>
+</div>
+<slider-lightbox *ngIf="ligthboxShow"
+    [currentImageSrc]="currentImageSrc"
+    [currentImageTitle]="currentImageTitle"
+    [showImage]="showImage"
+    [lightboxPrevDisable]="lightboxPrevDisable"
+    [lightboxNextDisable]="lightboxNextDisable"
+    [direction]="textDirection"
+    (close)="close()"
+    (prevImage)="prevImage()"
+    (nextImage)="nextImage()">
+</slider-lightbox>

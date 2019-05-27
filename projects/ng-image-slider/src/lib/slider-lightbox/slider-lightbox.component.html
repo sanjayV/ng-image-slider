@@ -14,10 +14,10 @@
                 frameborder="0" allowfullscreen></iframe>
             <!-- Video type -->
             <video [ngClass]="{'show': showImage, 'hide': !showImage}" *ngIf="type === VIDEO && fileUrl" controls  controlsList="nodownload">
-                <source [src]="fileUrl" type="video/mp4"> Your browser does not support the video tag.
+                <source [dir]="direction" [src]="fileUrl" type="video/mp4"> Your browser does not support the video tag.
             </video>
-            <div *ngIf="!fileUrl">Invalid file format</div>
-            <div *ngIf="currentImageTitle" [ngClass]="{'show': showImage, 'hide': !showImage}" class="caption">{{ currentImageTitle }}</div>
+            <div [dir]="direction" *ngIf="!fileUrl">Invalid file format</div>
+            <div [dir]="direction" *ngIf="currentImageTitle" [ngClass]="{'show': showImage, 'hide': !showImage}" class="caption">{{ currentImageTitle }}</div>
             <a [ngClass]="{'disable': lightboxPrevDisable}" class="prev icons prev-icon" (click)="prevImageLightbox()">&lsaquo;</a>
             <a [ngClass]="{'disable': lightboxNextDisable}" class="next icons next-icon" (click)="nextImageLightbox()">&rsaquo;</a>
         </div>

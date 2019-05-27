@@ -29,57 +29,7 @@ const NEXT_ARROW_CLICK_MESSAGE = 'next',
 
 @Component({
     selector: 'ng-image-slider',
-    template: `
-    <div class="ng-image-slider"
-        [ngStyle]="{'height':sliderImageHeight+'px'}">
-        <div class="container">
-            <div class="main"
-                [ngStyle]="{'height':sliderImageHeight+'px'}"
-                #sliderMain>
-                <div class="main-inner"
-                    [ngStyle]="{'margin-left':leftPos+'px', 'width':imageParentDivWidth+'px', 'transition': effectStyle}"
-                    (touchstart)="swipe($event, 'start')"
-                    (touchend)="swipe($event, 'end')">
-                    <div [ngClass]="{'image-popup': imagePopup}"
-                        [ngStyle]="{'width':sliderImageWidth+'px', 'height':sliderImageHeight+'px'}"
-                        class="img-div"
-                        *ngFor="let img of imageObj; let i = index"
-                        (click)="imageOnClick(i)"
-                        (mouseenter)="imageMouseEnterHandler()"
-                        (mouseleave)="imageAutoSlide()"
-                        #imageDiv>
-                        <custom-img [imageUrl]="img.thumbImage || img.posterImage || img.video"
-                            [isVideo]="!!(img.posterImage || img.video)">
-                        </custom-img>
-                        <div class="caption" *ngIf="img.title">{{ img.title }}</div>
-                    </div>
-                </div>
-                <a *ngIf="showArrowButton"
-                    [ngClass]="{'disable': sliderPrevDisable}"
-                    class="prev icons prev-icon"
-                    (click)="prev()"
-                    (mouseenter)="imageMouseEnterHandler()"
-                    (mouseleave)="imageAutoSlide()">&lsaquo;</a>
-                <a *ngIf="showArrowButton"
-                    [ngClass]="{'disable': sliderNextDisable}"
-                    class="next icons next-icon"
-                    (click)="next()"
-                    (mouseenter)="imageMouseEnterHandler()"
-                    (mouseleave)="imageAutoSlide()">&rsaquo;</a>
-            </div>
-        </div>
-    </div>
-    <slider-lightbox *ngIf="ligthboxShow"
-        [currentImageSrc]="currentImageSrc"
-        [currentImageTitle]="currentImageTitle"
-        [showImage]="showImage"
-        [lightboxPrevDisable]="lightboxPrevDisable"
-        [lightboxNextDisable]="lightboxNextDisable"
-        (close)="close()"
-        (prevImage)="prevImage()"
-        (nextImage)="nextImage()">
-    </slider-lightbox>
-    `,
+    templateUrl: './ng-image-slider.component.html',
     styleUrls: ['./ng-image-slider.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
@@ -100,6 +50,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
     autoSlideCount: number = 0;
     autoSlideInterval;
     showArrowButton: boolean = true;
+    textDirection: string = 'ltr';
 
     // for swipe event
     private swipeCoord?: [number, number];
@@ -124,6 +75,12 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
     }
     @Input() infinite: boolean = false;
     @Input() imagePopup: boolean = true;
+    @Input()
+    set direction(dir: string)  {
+        if (dir) {
+            this.textDirection = dir;
+        }
+    }
     @Input()
     set animationSpeed(data: number) {
         if (data
