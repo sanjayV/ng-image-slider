@@ -1,7 +1,7 @@
 {
   "name": "ng-image-slider",
-  "version": "1.3.1",
-  "description": "Angular Image slider with lightbox in angular 6. An Angular responsive image slider with lightbox popup. Also support youtube and mp4 video urls.",
+  "version": "1.3.2",
+  "description": "Angular Image slider with lightbox. An Angular responsive image slider with lightbox popup. Also support youtube and mp4 video urls.",
   "peerDependencies": {
     "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
     "@angular/core": "^6.0.0-rc.0 || ^6.0.0"
@@ -12,7 +12,10 @@
     "Angular image slider",
     "Angular video slider",
     "Angular Carousel",
-    "responsive slider"
+    "responsive slider",
+    "slideshow",
+    "carousel",
+    "slider"
   ],
   "author": "Sanjay V <skumarverma45@gmail.com>",
   "license": "MIT",

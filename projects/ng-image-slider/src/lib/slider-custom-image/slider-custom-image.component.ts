@@ -41,6 +41,8 @@ export class SliderCustomImageComponent implements OnInit, AfterViewInit, OnDest
         }
     }
     @Input() isVideo = false;
+    @Input() alt: String = '';
+    @Input() title: String = '';
 
     constructor() {
     }
