@@ -12,7 +12,7 @@ export class AppComponent {
     title = 'Ng Image Slider';
     showSlider = true;
 
-    sliderWidth: Number = 940;
+    sliderWidth: Number = 1140;
     sliderImageWidth: Number = 300;
     slideShowWidth: Number = 940;
     sliderImageHeight: Number = 225;
@@ -70,36 +70,41 @@ export class AppComponent {
         this.imageObject = this.imageObject = [{
             image: 'assets/img/slider/6.jpg',
             thumbImage: 'assets/img/slider/6_min.jpeg',
-            title: 'brown deer under tree'
+            title: 'angular image slider : brown deer under tree'
         }, {
             image: 'assets/img/slider/5.jpg',
             thumbImage: 'assets/img/slider/5_min.jpeg',
-            title: 'Hummingbirds are amazing creatures'
+            title: 'angular image slider : Hummingbirds are amazing creatures'
         }, {
             image: 'assets/img/slider/7.jpg',
-            thumbImage: 'assets/img/slider/7_min.jpeg'
+            thumbImage: 'assets/img/slider/7_min.jpeg',
+            alt: 'angular image slider : squirrel on tree'
         }, {
             image: 'assets/img/slider/8.jpg',
-            thumbImage: 'assets/img/slider/8_min.jpeg'
+            thumbImage: 'assets/img/slider/8_min.jpeg',
+            alt: 'angular image slider : beautiful bird'
         }, {
             image: 'assets/img/slider/9.jpg',
-            thumbImage: 'assets/img/slider/9_min.jpeg'
+            thumbImage: 'assets/img/slider/9_min.jpeg',
+            alt: 'angular image slider : beautiful bird'
         }, {
             video: 'https://youtu.be/tYa6OLQHrEc',
-            title: 'Youtube example one with title.'
+            title: 'Youtube example one with title.',
+            alt: 'angular image slider : spider with shoes'
         }, {
-            video: 'https://youtu.be/6pxRHBw-k8M'
+            video: 'https://youtu.be/6pxRHBw-k8M',
+            alt: 'angular image slider : indian tiger'
         }, {
             video: 'assets/video/movie.mp4',
-            title: 'MP4 Video example one with title and No Poster-Image.'
+            title: 'angular image slider : MP4 Video example one with title and No Poster-Image.'
         }, {
             video: 'assets/video/movie2.mp4',
             posterImage: 'assets/img/slider/2_min.jpeg',
-            title: 'MP4 Video exmaple two with Poster-Image.'
+            title: 'angular image slider : MP4 Video exmaple two with Poster-Image.'
         }, {
             image: 'assets/img/slider/4.jpg',
             thumbImage: 'assets/img/slider/4_min.jpeg',
-            title: 'Most beautiful birds in the world flying.'
+            title: 'angular image slider : Most beautiful birds in the world flying.'
         }];
     }
 
