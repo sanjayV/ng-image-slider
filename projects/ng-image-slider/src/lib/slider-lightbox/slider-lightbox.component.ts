@@ -10,6 +10,7 @@ import {
     HostListener
 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { NgImageSliderService } from './../ng-image-slider.service';
 
 const youtubeRegExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/,
     validFileExtensions = ['jpeg', 'jpg', 'gif', 'png'],
@@ -32,6 +33,9 @@ export class SliderLightboxComponent implements OnInit, AfterViewInit, OnDestroy
     set currentImageSrc(url) {
         if (url && typeof (url) === 'string') {
             this.fileExtension = url.replace(/^.*\./, '');
+            if (this.imageSliderService.base64FileExtension(url) && validFileExtensions.indexOf(this.imageSliderService.base64FileExtension(url).toLowerCase()) > -1) {
+                this.fileExtension = this.imageSliderService.base64FileExtension(url);
+            }
             // verify for youtube url
             const match = url.match(youtubeRegExp);
             if (match && match[2].length === 11) {
@@ -79,7 +83,7 @@ export class SliderLightboxComponent implements OnInit, AfterViewInit, OnDestroy
         }
     } */
 
-    constructor(private sanitizer: DomSanitizer) {
+    constructor(private sanitizer: DomSanitizer, public imageSliderService: NgImageSliderService) {
     }
 
     ngOnInit() {

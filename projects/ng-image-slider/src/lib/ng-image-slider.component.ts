@@ -18,6 +18,7 @@ import {
     ElementRef
 } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { NgImageSliderService } from './ng-image-slider.service';
 
 const NEXT_ARROW_CLICK_MESSAGE = 'next',
     PREV_ARROW_CLICK_MESSAGE = 'previous',
@@ -151,6 +152,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
     constructor(
         private cdRef: ChangeDetectorRef,
         @Inject(PLATFORM_ID) private platformId: Object,
+        public imageSliderService: NgImageSliderService
         // @Inject(ElementRef) private _elementRef: ElementRef
     ) {
     }
@@ -408,7 +410,10 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
         this.currentImageSrc = '';
         this.showImage = false;
         if (url) {
-            const fileExtension = url.replace(/^.*\./, '');
+            let fileExtension = url.replace(/^.*\./, '');
+            if (this.imageSliderService.base64FileExtension(url) && validFileExtensions.indexOf(this.imageSliderService.base64FileExtension(url).toLowerCase()) > -1) {
+                fileExtension = this.imageSliderService.base64FileExtension(url);
+            }
             // verify for youtube and video url
             const match = url.match(youtubeRegExp);
             if ((match && match[2].length === 11)

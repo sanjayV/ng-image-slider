@@ -305,6 +305,10 @@
             cursor: pointer;
         }
     }
+    .invalid-msg {
+        color: #fff;
+        font-size: 18px;
+    }
 }
 @media(max-width: 768px){
     .ng-image-slider-lightbox{
