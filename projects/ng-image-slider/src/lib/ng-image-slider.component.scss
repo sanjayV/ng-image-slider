@@ -3,7 +3,7 @@
     display: inline-block;
     position: relative;
     width: 100%;
-    .container {
+    .ng-image-slider-container {
         .main {
             overflow: hidden;
             position: absolute;
@@ -101,7 +101,7 @@
 }
 @media (max-width: 1199px){
     .ng-image-slider{
-        .container{
+        .ng-image-slider-container{
             .main{
                 .main-inner {
                     .img-div{
@@ -115,7 +115,7 @@
 }  
 @media (max-width:991px){
     .ng-image-slider{
-        .container{
+        .ng-image-slider-container{
             .main{
                 .main-inner {
                     .img-div{
@@ -129,7 +129,7 @@
 }  
 @media (max-width:768px){
     .ng-image-slider{
-        .container{
+        .ng-image-slider-container{
             .main{
                 .main-inner {
                     .img-div{
@@ -143,7 +143,7 @@
 }  
 @media (max-width:576px){
     .ng-image-slider{
-        .container{
+        .ng-image-slider-container{
             .main{
                 .main-inner {
                     .img-div{
