@@ -6,5 +6,6 @@
     <video [class]="VIDEO" *ngIf="type === VIDEO">
         <source [src]="fileUrl" type="video/mp4"> Your browser does not support the video tag.
     </video>
+    <div [dir]="direction" *ngIf="!fileUrl" class="invalid-msg">Invalid file format</div>
     <span *ngIf="type === YOUTUBE || type === VIDEO || isVideo" class="youtube-icon"></span>
 </div>

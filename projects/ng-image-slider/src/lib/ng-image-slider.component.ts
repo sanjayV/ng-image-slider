@@ -411,7 +411,9 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
         this.showImage = false;
         if (url) {
             let fileExtension = url.replace(/^.*\./, '');
-            if (this.imageSliderService.base64FileExtension(url) && validFileExtensions.indexOf(this.imageSliderService.base64FileExtension(url).toLowerCase()) > -1) {
+            if (this.imageSliderService.base64FileExtension(url) 
+                && (validFileExtensions.indexOf(this.imageSliderService.base64FileExtension(url).toLowerCase()) > -1 
+                || validVideoExtensions.indexOf(this.imageSliderService.base64FileExtension(url).toLowerCase()) > -1)) {
                 fileExtension = this.imageSliderService.base64FileExtension(url);
             }
             // verify for youtube and video url

@@ -1,5 +1,5 @@
 <div class="ng-image-slider-lightbox">
-    <div class="lightbox-wrapper">
+    <div class="lightbox-wrapper" [ngClass]="{'error-msg': !fileUrl}">
         <a class="close" (click)="closeLightbox()">&times;</a>
         <div class="lightbox-div" #lightboxDiv>
             <div class="pre-loader">

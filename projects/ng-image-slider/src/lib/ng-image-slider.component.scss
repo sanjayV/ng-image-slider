@@ -304,10 +304,16 @@
             font-weight: bold;
             cursor: pointer;
         }
+        &.error-msg {
+            background-image: none;
+        }
     }
     .invalid-msg {
         color: #fff;
         font-size: 18px;
+        position: absolute;
+        top: 45%;
+        left: 45%;
     }
 }
 @media(max-width: 768px){
@@ -322,6 +328,9 @@
                 line-height: 30px;
                 height: 30px;
                 width: 30px;
+            }
+            &.error-msg {
+                background-image: none;
             }
         }
     }

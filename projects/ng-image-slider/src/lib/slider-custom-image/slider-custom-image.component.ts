@@ -5,6 +5,7 @@ import {
     OnDestroy,
     Input
 } from '@angular/core';
+import { NgImageSliderService } from './../ng-image-slider.service';
 
 const youtubeRegExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/,
     validFileExtensions = ['jpeg', 'jpg', 'gif', 'png'],
@@ -28,6 +29,11 @@ export class SliderCustomImageComponent implements OnInit, AfterViewInit, OnDest
         if (url && typeof (url) === 'string') {
             this.fileUrl = url;
             this.fileExtension = url.replace(/^.*\./, '');
+            if (this.imageSliderService.base64FileExtension(url) 
+            && (validFileExtensions.indexOf(this.imageSliderService.base64FileExtension(url).toLowerCase()) > -1 
+            || validVideoExtensions.indexOf(this.imageSliderService.base64FileExtension(url).toLowerCase()) > -1)) {
+                this.fileExtension = this.imageSliderService.base64FileExtension(url);
+            }
             // verify for youtube url
             const match = url.match(youtubeRegExp);
             if (match && match[2].length === 11) {
@@ -43,8 +49,9 @@ export class SliderCustomImageComponent implements OnInit, AfterViewInit, OnDest
     @Input() isVideo = false;
     @Input() alt: String = '';
     @Input() title: String = '';
+    @Input() direction: string = 'ltr';
 
-    constructor() {
+    constructor(public imageSliderService: NgImageSliderService) {
     }
 
     ngOnInit() {

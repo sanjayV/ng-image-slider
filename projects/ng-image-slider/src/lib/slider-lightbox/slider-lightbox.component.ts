@@ -33,7 +33,9 @@ export class SliderLightboxComponent implements OnInit, AfterViewInit, OnDestroy
     set currentImageSrc(url) {
         if (url && typeof (url) === 'string') {
             this.fileExtension = url.replace(/^.*\./, '');
-            if (this.imageSliderService.base64FileExtension(url) && validFileExtensions.indexOf(this.imageSliderService.base64FileExtension(url).toLowerCase()) > -1) {
+            if (this.imageSliderService.base64FileExtension(url) 
+            && (validFileExtensions.indexOf(this.imageSliderService.base64FileExtension(url).toLowerCase()) > -1 
+            || validVideoExtensions.indexOf(this.imageSliderService.base64FileExtension(url).toLowerCase()) > -1)) {
                 this.fileExtension = this.imageSliderService.base64FileExtension(url);
             }
             // verify for youtube url

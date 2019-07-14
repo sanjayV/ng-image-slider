@@ -18,7 +18,8 @@
                     <custom-img [imageUrl]="img.thumbImage || img.posterImage || img.video"
                         [isVideo]="!!(img.posterImage || img.video)"
                         [alt]="img.alt || img.title || ''"
-                        [title]="img.title || img.alt || ''">
+                        [title]="img.title || img.alt || ''"
+                        [direction]="textDirection">
                     </custom-img>
                     <div [dir]="textDirection" class="caption" *ngIf="img.title">{{ img.title }}</div>
                 </div>
