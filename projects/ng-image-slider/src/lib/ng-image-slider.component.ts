@@ -202,11 +202,11 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
     }
 
     setSliderWidth() {
-        if (this.imageDiv.nativeElement.offsetWidth) {
+        if (this.imageDiv && this.imageDiv.nativeElement && this.imageDiv.nativeElement.offsetWidth) {
             this.imageParentDivWidth = this.imageObj.length * this.sliderImageSizeWithPadding;
             this.leftPos = this.infinite ? -1 * this.sliderImageSizeWithPadding * this.slideImageCount : 0;
         }
-        if (this.sliderMain.nativeElement.offsetWidth) {
+        if (this.sliderMain && this.sliderMain.nativeElement && this.sliderMain.nativeElement.offsetWidth) {
             this.sliderMainDivWidth = this.sliderMain.nativeElement.offsetWidth;
         }
         this.nextPrevSliderButtonDisable();
