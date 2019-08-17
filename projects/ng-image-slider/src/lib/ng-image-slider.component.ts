@@ -17,6 +17,7 @@ import {
     Inject,
     ElementRef
 } from '@angular/core';
+
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { NgImageSliderService } from './ng-image-slider.service';
 
@@ -57,8 +58,8 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
     private swipeCoord?: [number, number];
     private swipeTime?: number;
 
-    @ViewChild('sliderMain') sliderMain;
-    @ViewChild('imageDiv') imageDiv;
+    @ViewChild('sliderMain', {static: false}) sliderMain;
+    @ViewChild('imageDiv', {static: false}) imageDiv;
 
     // @inputs
     @Input()
