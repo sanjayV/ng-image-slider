@@ -4,6 +4,7 @@
             [ngStyle]="{'height':sliderImageHeight+'px'}"
             #sliderMain>
             <div class="main-inner"
+                *ngIf="imageObj.length"
                 [ngStyle]="{'margin-left':leftPos+'px', 'width':imageParentDivWidth+'px', 'transition': effectStyle}"
                 (touchstart)="swipe($event, 'start')"
                 (touchend)="swipe($event, 'end')">
@@ -23,6 +24,10 @@
                     </custom-img>
                     <div [dir]="textDirection" class="caption" *ngIf="img.title">{{ img.title }}</div>
                 </div>
+            </div>
+            <div class="ng-image-slider-error"
+                *ngIf="!imageObj.length">
+                Provided images array not valid.
             </div>
             <a *ngIf="showArrowButton"
                 [ngClass]="{'disable': sliderPrevDisable}"

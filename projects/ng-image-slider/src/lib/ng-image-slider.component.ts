@@ -94,7 +94,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
         }
     }
     @Input() set images(imgObj) {
-        if (imgObj && imgObj.length) {
+        if (imgObj && imgObj instanceof Array && imgObj.length) {
             this.imageObj = imgObj;
             this.imageParentDivWidth = imgObj.length * this.sliderImageSizeWithPadding;
         }

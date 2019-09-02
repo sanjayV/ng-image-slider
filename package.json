@@ -1,12 +1,13 @@
 {
   "name": "ng-image-slider",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "description": "Angular Image slider with lightbox. An Angular responsive image slider with lightbox popup. Also support youtube url, image base64 string and mp4 video urls and base64 string.",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 4100 --host 0.0.0.0",
-    "build": "ng build --prod",
+    "build": "ng build ng-image-slider",
+    "build:prod": "ng build ng-image-slider --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

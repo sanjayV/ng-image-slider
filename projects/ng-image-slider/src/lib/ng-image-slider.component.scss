@@ -98,6 +98,13 @@
             }
         }
     }
+    .ng-image-slider-error {
+        color: #ff0000;
+        text-align: center;
+        height: 100%;
+        top: 50%;
+        position: relative;
+    }
 }
 @media (max-width: 1199px){
     .ng-image-slider{
