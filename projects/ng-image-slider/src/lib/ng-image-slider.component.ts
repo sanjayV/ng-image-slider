@@ -114,6 +114,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
             this.showArrowButton = flag;
         }
     }
+    @Input() videoAutoPlay: boolean = false;
 
     // @Outputs
     @Output() imageClick = new EventEmitter<number>();

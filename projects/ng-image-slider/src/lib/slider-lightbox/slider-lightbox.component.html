@@ -13,7 +13,7 @@
                 [src]="fileUrl"
                 frameborder="0" allowfullscreen></iframe>
             <!-- Video type -->
-            <video [ngClass]="{'show': showImage, 'hide': !showImage}" *ngIf="type === VIDEO && fileUrl" controls  controlsList="nodownload">
+            <video [autoplay]="videoAutoPlay" [ngClass]="{'show': showImage, 'hide': !showImage}" *ngIf="type === VIDEO && fileUrl" controls  controlsList="nodownload">
                 <source [dir]="direction" [src]="fileUrl" type="video/mp4"> Your browser does not support the video tag.
             </video>
             <div [dir]="direction" *ngIf="!fileUrl" class="invalid-msg">Invalid file format</div>

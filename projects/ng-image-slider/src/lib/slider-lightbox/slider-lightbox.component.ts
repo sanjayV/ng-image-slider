@@ -29,6 +29,7 @@ export class SliderLightboxComponent implements OnInit, AfterViewInit, OnDestroy
     type = this.IMAGE;
 
     // @Inputs
+    @Input() videoAutoPlay: boolean = false;
     @Input()
     set currentImageSrc(url) {
         if (url && typeof (url) === 'string') {
@@ -44,7 +45,7 @@ export class SliderLightboxComponent implements OnInit, AfterViewInit, OnDestroy
                 this.type = '';
                 setTimeout(() => {
                     this.type = this.YOUTUBE;
-                    url = `${'//www.youtube.com/embed/'}${match[2]}`;
+                    url = `${'//www.youtube.com/embed/'}${match[2]}${this.videoAutoPlay ? '?autoplay=1' : '?autoplay=0'}`;
                     this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
                 }, 50);
             } else if (this.fileExtension && validFileExtensions.indexOf(this.fileExtension.toLowerCase()) > -1) {

@@ -96,6 +96,7 @@ imageObject: Array<object> = [{
 | imageSize | @Input | object | Set slider images width and height. Pass object like `{width: 400, height: 300}` | `{width: 205, height: 200}` |
 | autoSlide | @Input | number | Auto slide images according provided time. Option will work only if **infinite** option is **true**. Minimum value is 1 second and Maximum value is 5 second. | 0 |
 | showArrow | @Input | boolean | Hide/Show slider arrow buttons | true |
+| videoAutoPlay | @Input | boolean | Auto play popup video | false |
 | direction | @Input | string | Set text direction. You can pass **rtl** / **ltr** / **auto** | ltr |
 | imageClick | @Output | n/a | Executes when click event on slider image. Return image index. | n/a |
 | arrowClick | @Output | n/a | Executes when click on slider left/right arrow. | n/a |
