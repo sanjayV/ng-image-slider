@@ -1,15 +1,16 @@
-<div class="ng-image-slider" [ngStyle]="{'height':sliderImageHeight+'px'}">
+<div class="ng-image-slider" [ngStyle]="{'height':'100%'}">
     <div class="ng-image-slider-container">
         <div class="main"
-            [ngStyle]="{'height':sliderImageHeight+'px'}"
+            [ngStyle]="{'height':'100%'}"
             #sliderMain>
             <div class="main-inner"
                 *ngIf="imageObj.length"
-                [ngStyle]="{'margin-left':leftPos+'px', 'width':imageParentDivWidth+'px', 'transition': effectStyle}"
+                [ngStyle]="{'margin-left':leftPos+'px', 'width':imageParentDivWidth+'px', 'height': '100%', 'transition': effectStyle}"
                 (touchstart)="swipe($event, 'start')"
-                (touchend)="swipe($event, 'end')">
+                (touchend)="swipe($event, 'end')"
+                #sliderMainInner>
                 <div [ngClass]="{'image-popup': imagePopup}"
-                    [ngStyle]="{'width':sliderImageWidth+'px', 'height':sliderImageHeight+'px'}"
+                    [ngStyle]="{'width':sliderImageWidth, 'height':'100%'}"
                     class="img-div"
                     *ngFor="let img of imageObj; let i = index"
                     (click)="imageOnClick(i)"

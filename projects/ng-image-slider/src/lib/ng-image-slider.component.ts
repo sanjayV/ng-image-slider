@@ -27,7 +27,8 @@ const NEXT_ARROW_CLICK_MESSAGE = 'next',
     LIGHTBOX_PREV_ARROW_CLICK_MESSAGE = 'lightbox previous',
     youtubeRegExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/,
     validFileExtensions = ['jpeg', 'jpg', 'gif', 'png'],
-    validVideoExtensions = ['mp4'];
+    validVideoExtensions = ['mp4'],
+    VALID_SIZE_TYPE = ['px', 'vh', '%'];
 
 @Component({
     selector: 'ng-image-slider',
@@ -46,8 +47,8 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
     sliderPrevDisable: boolean = false;
     sliderNextDisable: boolean = false;
     slideImageCount: number = 1;
-    sliderImageWidth: number = 205;
-    sliderImageHeight: number = 200;
+    sliderImageWidth: string = '205px';
+    sliderImageHeight: string = '200px';
     sliderImageSizeWithPadding = 211;
     autoSlideCount: number = 0;
     autoSlideInterval;
@@ -58,27 +59,42 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
     private swipeCoord?: [number, number];
     private swipeTime?: number;
 
-    @ViewChild('sliderMain', {static: false}) sliderMain;
-    @ViewChild('imageDiv', {static: false}) imageDiv;
+    @ViewChild('sliderMain', { static: false }) sliderMain;
+    @ViewChild('sliderMainInner', { static: false }) sliderMainInner;
+    @ViewChild('imageDiv', { static: false }) imageDiv;
 
     // @inputs
     @Input()
     set imageSize(data) {
         if (data
             && typeof (data) === 'object') {
-            if (data.hasOwnProperty('width') && typeof (data['width']) === 'number') {
-                this.sliderImageWidth = data['width'];
-                this.sliderImageSizeWithPadding = data['width'] + 6; // addeing padding with image width
+            if (data.hasOwnProperty('width')) {
+                if (typeof (data['width']) === 'number') {
+                    this.sliderImageWidth = data['width'] + 'px';
+                    this.sliderImageSizeWithPadding = data['width'] + 6; // addeing padding with image width
+                } else if (typeof (data['width']) === 'string' && data['width'].match(/\d+/)) {
+                    this.sliderImageWidth = data['width'];
+                    const sizeType = (data['width'].replace(/[0-9]/g, '')).toLowerCase();
+                    if (!data['width'].replace(/[0-9]/g, '') || VALID_SIZE_TYPE.indexOf((data['width'].replace(/[0-9]/g, '')).toLowerCase()) < 0) {
+                        this.sliderImageWidth = data['width'].match(/\d+/)[0] + 'px';
+                    }
+                    if (sizeType == 'vh') {
+                        this.sliderImageSizeWithPadding = (document.documentElement.clientHeight * (+(data['width'].match(/\d+/)[0])/100)) + 6
+                    } else {
+                        this.sliderImageSizeWithPadding = +(data['width'].match(/\d+/)[0]) + 6;
+                    }
+                }
             }
             if (data.hasOwnProperty('height') && typeof (data['height']) === 'number') {
-                this.sliderImageHeight = data['height'];
+                this.
+                 = data['height'];
             }
         }
     }
     @Input() infinite: boolean = false;
     @Input() imagePopup: boolean = true;
     @Input()
-    set direction(dir: string)  {
+    set direction(dir: string) {
         if (dir) {
             this.textDirection = dir;
         }
@@ -96,7 +112,9 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
     @Input() set images(imgObj) {
         if (imgObj && imgObj instanceof Array && imgObj.length) {
             this.imageObj = imgObj;
+            //console.log("document.getElementsByClassName('main-inner')[0].offsetWidth1", this.sliderMainInner.nativeElement.offsetWidth)
             this.imageParentDivWidth = imgObj.length * this.sliderImageSizeWithPadding;
+            console.log('this.imageParentDivWidth', this.imageParentDivWidth)
         }
     }
     @Input() set slideImage(count) {
@@ -174,6 +192,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
 
     // for slider
     ngAfterViewInit() {
+        console.log("document.getElementsByClassName('main-inner')[0].offsetWidth2", this.sliderMainInner.nativeElement.offsetWidth)
         this.setSliderWidth();
         this.cdRef.detectChanges();
         if (isPlatformBrowser(this.platformId)) {
@@ -204,12 +223,16 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
 
     setSliderWidth() {
         if (this.imageDiv && this.imageDiv.nativeElement && this.imageDiv.nativeElement.offsetWidth) {
+            this.sliderImageSizeWithPadding = this.imageDiv.nativeElement.offsetWidth + 6;
             this.imageParentDivWidth = this.imageObj.length * this.sliderImageSizeWithPadding;
             this.leftPos = this.infinite ? -1 * this.sliderImageSizeWithPadding * this.slideImageCount : 0;
         }
         if (this.sliderMain && this.sliderMain.nativeElement && this.sliderMain.nativeElement.offsetWidth) {
             this.sliderMainDivWidth = this.sliderMain.nativeElement.offsetWidth;
         }
+        console.log('sliderImageSizeWithPadding', this.sliderImageSizeWithPadding)
+        console.log('imageParentDivWidth', this.imageParentDivWidth)
+        console.log('sliderMainDivWidth', this.sliderMainDivWidth)
         this.nextPrevSliderButtonDisable();
     }
 
@@ -412,9 +435,9 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
         this.showImage = false;
         if (url) {
             let fileExtension = url.replace(/^.*\./, '');
-            if (this.imageSliderService.base64FileExtension(url) 
-                && (validFileExtensions.indexOf(this.imageSliderService.base64FileExtension(url).toLowerCase()) > -1 
-                || validVideoExtensions.indexOf(this.imageSliderService.base64FileExtension(url).toLowerCase()) > -1)) {
+            if (this.imageSliderService.base64FileExtension(url)
+                && (validFileExtensions.indexOf(this.imageSliderService.base64FileExtension(url).toLowerCase()) > -1
+                    || validVideoExtensions.indexOf(this.imageSliderService.base64FileExtension(url).toLowerCase()) > -1)) {
                 fileExtension = this.imageSliderService.base64FileExtension(url);
             }
             // verify for youtube and video url
