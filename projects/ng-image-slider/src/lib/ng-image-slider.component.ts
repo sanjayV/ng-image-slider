@@ -40,6 +40,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
     sliderMainDivWidth: number = 0;
     imageParentDivWidth: number = 0;
     imageObj: Array<object> = [];
+    totalImages: number = 0;
     leftPos: number = 0;
     effectStyle: string = 'all 1s ease-in-out';
     speed: number = 1; // default speed in second
@@ -48,6 +49,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
     slideImageCount: number = 1;
     sliderImageWidth: number = 205;
     sliderImageHeight: number = 200;
+    sliderInnerHeight: number = 175;
     sliderImageSizeWithPadding = 211;
     autoSlideCount: number = 0;
     autoSlideInterval;
@@ -58,8 +60,8 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
     private swipeCoord?: [number, number];
     private swipeTime?: number;
 
-    @ViewChild('sliderMain', {static: false}) sliderMain;
-    @ViewChild('imageDiv', {static: false}) imageDiv;
+    @ViewChild('sliderMain', { static: false }) sliderMain;
+    @ViewChild('imageDiv', { static: false }) imageDiv;
 
     // @inputs
     @Input()
@@ -72,13 +74,14 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
             }
             if (data.hasOwnProperty('height') && typeof (data['height']) === 'number') {
                 this.sliderImageHeight = data['height'];
+                this.sliderInnerHeight = data['height'] - 30;
             }
         }
     }
     @Input() infinite: boolean = false;
     @Input() imagePopup: boolean = true;
     @Input()
-    set direction(dir: string)  {
+    set direction(dir: string) {
         if (dir) {
             this.textDirection = dir;
         }
@@ -95,7 +98,11 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
     }
     @Input() set images(imgObj) {
         if (imgObj && imgObj instanceof Array && imgObj.length) {
-            this.imageObj = imgObj;
+            this.imageObj = imgObj.map((img, index) => {
+                img['index'] = index + 1;
+                return img;
+            });
+            this.totalImages = this.imageObj.length;
             this.imageParentDivWidth = imgObj.length * this.sliderImageSizeWithPadding;
         }
     }
@@ -115,6 +122,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
         }
     }
     @Input() videoAutoPlay: boolean = false;
+    @Input() paginationShow: boolean = false;
 
     // @Outputs
     @Output() imageClick = new EventEmitter<number>();
@@ -123,9 +131,11 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
 
     // for lightbox
     currentImageSrc: string;
+    popupImageIndex: number = 0;
     currentImageTitle = '';
     ligthboxShow: boolean = false;
     activeImageIndex: number = 0;
+    visiableImageIndex: number = 1;
     lightboxNextDisable: boolean = false;
     lightboxPrevDisable: boolean = false;
     showImage: boolean = true;
@@ -137,12 +147,20 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
     @HostListener('document:keyup', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
         if (event && event.key) {
-            if (event.key.toLowerCase() === 'arrowright' && this.ligthboxShow) {
-                this.nextImage();
+            if (event.key.toLowerCase() === 'arrowright') { 
+                if(this.ligthboxShow) {
+                    this.nextImage();
+                } else {
+                    this.next();
+                }
             }
 
-            if (event.key.toLowerCase() === 'arrowleft' && this.ligthboxShow) {
-                this.prevImage();
+            if (event.key.toLowerCase() === 'arrowleft') {
+                if (this.ligthboxShow) {
+                    this.prevImage();
+                } else {
+                    this.prev();
+                }
             }
 
             if (event.key.toLowerCase() === 'escape' && this.ligthboxShow) {
@@ -154,7 +172,8 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
     constructor(
         private cdRef: ChangeDetectorRef,
         @Inject(PLATFORM_ID) private platformId: Object,
-        public imageSliderService: NgImageSliderService
+        public imageSliderService: NgImageSliderService,
+        private elRef: ElementRef
         // @Inject(ElementRef) private _elementRef: ElementRef
     ) {
     }
@@ -204,14 +223,21 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
     }
 
     setSliderWidth() {
-        if (this.imageDiv && this.imageDiv.nativeElement && this.imageDiv.nativeElement.offsetWidth) {
-            this.imageParentDivWidth = this.imageObj.length * this.sliderImageSizeWithPadding;
-            this.leftPos = this.infinite ? -1 * this.sliderImageSizeWithPadding * this.slideImageCount : 0;
-        }
         if (this.sliderMain && this.sliderMain.nativeElement && this.sliderMain.nativeElement.offsetWidth) {
             this.sliderMainDivWidth = this.sliderMain.nativeElement.offsetWidth;
+            //this.sliderImageWidth = this.sliderMain.nativeElement.offsetWidth;
+            //this.sliderImageSizeWithPadding = this.sliderMain.nativeElement.offsetWidth;
+            this.imageParentDivWidth = this.imageObj.length * this.sliderImageSizeWithPadding;
+        }
+        if (this.imageDiv && this.imageDiv.nativeElement && this.imageDiv.nativeElement.offsetWidth) {
+            this.leftPos = this.infinite ? -1 * this.sliderImageSizeWithPadding * this.slideImageCount : 0;
         }
         this.nextPrevSliderButtonDisable();
+    }
+
+    fullView() {
+        const currentIndex = Math.round((Math.abs(this.leftPos) + this.sliderImageWidth) / this.sliderImageWidth);
+        this.imageOnClick(currentIndex - 1)
     }
 
     imageOnClick(index) {
@@ -246,6 +272,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
 
             this.arrowClick.emit(PREV_ARROW_CLICK_MESSAGE);
             this.sliderArrowDisableTeam();
+            this.getVisiableIndex();
         }
     }
 
@@ -259,6 +286,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
 
             this.arrowClick.emit(NEXT_ARROW_CLICK_MESSAGE);
             this.sliderArrowDisableTeam();
+            this.getVisiableIndex();
         }
     }
 
@@ -305,6 +333,13 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
         }, this.speed * 1000);
     }
 
+    getVisiableIndex() {
+        const currentIndex = Math.round((Math.abs(this.leftPos) + this.sliderImageWidth) / this.sliderImageWidth);
+        if (this.imageObj[currentIndex - 1] && this.imageObj[currentIndex - 1]['index']) {
+            this.visiableImageIndex = this.imageObj[currentIndex - 1]['index'];
+        }
+    }
+
     /**
      * Disable slider left/right arrow when image moving
      */
@@ -335,14 +370,17 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
         if (this.imageObj.length && (this.imageObj[0]['image'] || this.imageObj[0]['video'])) {
             let imageSrc = this.imageObj[0]['image'] || this.imageObj[0]['video'],
                 imageTitle = this.imageObj[0]['title'] || '';
+            this.popupImageIndex = this.imageObj[0]['index'] || 1;
             if (this.imageObj[this.activeImageIndex]) {
                 imageSrc = this.imageObj[this.activeImageIndex]['image'] || this.imageObj[this.activeImageIndex]['video'];
                 imageTitle = this.imageObj[this.activeImageIndex]['title'] || '';
+                this.popupImageIndex = this.imageObj[this.activeImageIndex]['index'] || 1;
             }
             this.getImage(imageSrc, imageTitle);
             this.nextPrevLigthboxButtonDisable();
             this.imageMouseEnterHandler();
             this.ligthboxShow = true;
+            this.elRef.nativeElement.ownerDocument.body.style.overflow = 'hidden';
         }
     }
 
@@ -358,6 +396,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
             this.activeImageIndex++;
             const imageSrc = this.imageObj[this.activeImageIndex]['image'] || this.imageObj[this.activeImageIndex]['video'];
             const imageTitle = this.imageObj[this.activeImageIndex]['title'] || '';
+            this.popupImageIndex = this.imageObj[this.activeImageIndex]['index'] || 1;
             this.getImage(imageSrc, imageTitle);
             this.nextPrevLigthboxButtonDisable();
             this.lightboxArrowClick.emit({
@@ -379,6 +418,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
             this.activeImageIndex--;
             const imageSrc = this.imageObj[this.activeImageIndex]['image'] || this.imageObj[this.activeImageIndex]['video'];
             const imageTitle = this.imageObj[this.activeImageIndex]['title'] || '';
+            this.popupImageIndex = this.imageObj[this.activeImageIndex]['index'] || 1;
             this.getImage(imageSrc, imageTitle);
             this.nextPrevLigthboxButtonDisable();
             this.lightboxArrowClick.emit({
@@ -404,6 +444,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
 
     close() {
         this.ligthboxShow = false;
+        this.elRef.nativeElement.ownerDocument.body.style.overflow = '';
         this.imageAutoSlide();
     }
 
@@ -413,9 +454,9 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
         this.showImage = false;
         if (url) {
             let fileExtension = url.replace(/^.*\./, '');
-            if (this.imageSliderService.base64FileExtension(url) 
-                && (validFileExtensions.indexOf(this.imageSliderService.base64FileExtension(url).toLowerCase()) > -1 
-                || validVideoExtensions.indexOf(this.imageSliderService.base64FileExtension(url).toLowerCase()) > -1)) {
+            if (this.imageSliderService.base64FileExtension(url)
+                && (validFileExtensions.indexOf(this.imageSliderService.base64FileExtension(url).toLowerCase()) > -1
+                    || validVideoExtensions.indexOf(this.imageSliderService.base64FileExtension(url).toLowerCase()) > -1)) {
                 fileExtension = this.imageSliderService.base64FileExtension(url);
             }
             // verify for youtube and video url

@@ -1,6 +1,6 @@
 <div class="ng-image-slider-lightbox">
-    <div class="lightbox-wrapper" [ngClass]="{'error-msg': !fileUrl}">
-        <a class="close" (click)="closeLightbox()">&times;</a>
+    <div class="lightbox-wrapper" [ngClass]="{'error-msg': !fileUrl, 'ng-ligthbox-pagination': paginationShow}">
+        <a class="close" (click)="closeLightbox()"></a>
         <div class="lightbox-div" #lightboxDiv>
             <div class="pre-loader">
                 <div class="mnml-spinner"></div>
@@ -16,10 +16,11 @@
             <video [autoplay]="videoAutoPlay" [ngClass]="{'show': showImage, 'hide': !showImage}" *ngIf="type === VIDEO && fileUrl" controls  controlsList="nodownload">
                 <source [dir]="direction" [src]="fileUrl" type="video/mp4"> Your browser does not support the video tag.
             </video>
-            <div [dir]="direction" *ngIf="!fileUrl" class="invalid-msg">Invalid file format</div>
+            <div [dir]="direction" *ngIf="fileUrl == false" class="invalid-msg">Invalid file format</div>
             <div [dir]="direction" *ngIf="currentImageTitle" [ngClass]="{'show': showImage, 'hide': !showImage}" class="caption">{{ currentImageTitle }}</div>
-            <a [ngClass]="{'disable': lightboxPrevDisable}" class="prev icons prev-icon" (click)="prevImageLightbox()">&lsaquo;</a>
-            <a [ngClass]="{'disable': lightboxNextDisable}" class="next icons next-icon" (click)="nextImageLightbox()">&rsaquo;</a>
+            <a *ngIf="totalImages > 1" [ngClass]="{'disable': lightboxPrevDisable}" class="prev icons prev-icon" (click)="prevImageLightbox()">&lsaquo;</a>
+            <a *ngIf="totalImages > 1" [ngClass]="{'disable': lightboxNextDisable}" class="next icons next-icon" (click)="nextImageLightbox()">&rsaquo;</a>
         </div>
     </div>
+    <div *ngIf="paginationShow" class="popup-pagination">{{currentImageIndex}} of {{totalImages}}</div>
 </div>

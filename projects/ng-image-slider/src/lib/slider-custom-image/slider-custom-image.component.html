@@ -3,7 +3,7 @@
         [src]="fileUrl"
         [alt]="alt"
         [title]="title">
-    <video [class]="VIDEO" *ngIf="type === VIDEO">
+    <video [class]="VIDEO" type="video/mp4" *ngIf="type === VIDEO" controls="true">
         <source [src]="fileUrl" type="video/mp4"> Your browser does not support the video tag.
     </video>
     <div [dir]="direction" *ngIf="!fileUrl" class="invalid-msg">Invalid file format</div>

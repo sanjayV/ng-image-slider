@@ -21,9 +21,8 @@ body {
 }
 
 .demo-div {
-    padding: 10px 10px 10px 10px;
+    /* padding: 10px 10px 10px 10px; */
     box-sizing: border-box;
-    border: 1px solid;
     border-color: #CFCFCF;
     margin-bottom: 20px;
 }

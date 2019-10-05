@@ -5,11 +5,12 @@
             #sliderMain>
             <div class="main-inner"
                 *ngIf="imageObj.length"
+                [ngClass]="{'with-ng-main-pagination': paginationShow}"
                 [ngStyle]="{'margin-left':leftPos+'px', 'width':imageParentDivWidth+'px', 'transition': effectStyle}"
                 (touchstart)="swipe($event, 'start')"
                 (touchend)="swipe($event, 'end')">
                 <div [ngClass]="{'image-popup': imagePopup}"
-                    [ngStyle]="{'width':sliderImageWidth+'px', 'height':sliderImageHeight+'px'}"
+                    [ngStyle]="{'width':sliderImageWidth+'px'}"
                     class="img-div"
                     *ngFor="let img of imageObj; let i = index"
                     (click)="imageOnClick(i)"
@@ -29,23 +30,27 @@
                 *ngIf="!imageObj.length">
                 Provided images array not valid.
             </div>
-            <a *ngIf="showArrowButton"
+            <a *ngIf="showArrowButton && imageObj.length > 1"
                 [ngClass]="{'disable': sliderPrevDisable}"
                 class="prev icons prev-icon"
                 (click)="prev()"
                 (mouseenter)="imageMouseEnterHandler()"
                 (mouseleave)="imageAutoSlide()">&lsaquo;</a>
-            <a *ngIf="showArrowButton"
+            <a *ngIf="showArrowButton && imageObj.length > 1"
                 [ngClass]="{'disable': sliderNextDisable}"
                 class="next icons next-icon"
                 (click)="next()"
                 (mouseenter)="imageMouseEnterHandler()"
                 (mouseleave)="imageAutoSlide()">&rsaquo;</a>
         </div>
+        <div *ngIf="imageObj.length && paginationShow" class="ng-main-pagination">{{visiableImageIndex}} of {{totalImages}}</div>
     </div>
 </div>
 <slider-lightbox *ngIf="ligthboxShow"
+    [paginationShow]="paginationShow"
     [currentImageSrc]="currentImageSrc"
+    [currentImageIndex]="popupImageIndex"
+    [totalImages]="totalImages"
     [currentImageTitle]="currentImageTitle"
     [showImage]="showImage"
     [lightboxPrevDisable]="lightboxPrevDisable"

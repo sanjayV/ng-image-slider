@@ -34,7 +34,7 @@
             </td>
             <td>
                 <span class="input-icon input-icon-right">
-                    <input type="number" min="325" max="1218" [value]="sliderWidth" [(ngModel)]="sliderWidth" (change)="onChangeHandler()" />
+                    <input type="number" [value]="sliderWidth" [(ngModel)]="sliderWidth" (change)="onChangeHandler()" />
                     <i>px</i>
                 </span>
             </td>
@@ -48,14 +48,14 @@
                 <div class="size-div">
                     <span class="input-title">Width</span>
                     <span class="input-icon input-icon-right">
-                        <input type="number" max="500" [value]="sliderImageWidth" [(ngModel)]="sliderImageWidth" />
+                        <input type="number" [value]="sliderImageWidth" [(ngModel)]="sliderImageWidth" />
                         <i>px</i>
                     </span>
                 </div>
                 <div class="size-div">
                     <span class="input-title">Height</span>
                     <span class="input-icon input-icon-right">
-                        <input type="number" max="500" [value]="sliderImageHeight" [(ngModel)]="sliderImageHeight" />
+                        <input type="number" [value]="sliderImageHeight" [(ngModel)]="sliderImageHeight" />
                         <i>px</i>
                     </span>
                 </div>
