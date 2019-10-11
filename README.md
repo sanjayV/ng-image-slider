@@ -93,7 +93,7 @@ imageObject: Array<object> = [{
 | imagePopup | @Input  | boolean | Enable image lightBox popup option on slider image click. | true |
 | animationSpeed | @Input  | number | By this user can set slider animation speed. Minimum value is **0.1 second** and Maximum value is **5 second**. | 1 |
 | slideImage | @Input | number | Set how many images will move on left/right arrow click. | 1 |
-| imageSize | @Input | object | Set slider images width and height. Pass object like `{width: 400, height: 300}` | `{width: 205, height: 200}` |
+| imageSize | @Input | object | Set slider images width, height and space. space is use for set space between slider images. Pass object like `{width: 400, height: 300, space: 4}` or if you only want to set space then pass space only `{space: 4}` | `{width: 205, height: 200, space: 3}` |
 | autoSlide | @Input | number | Auto slide images according provided time. Option will work only if **infinite** option is **true**. Minimum value is 1 second and Maximum value is 5 second. | 0 |
 | showArrow | @Input | boolean | Hide/Show slider arrow buttons | true |
 | videoAutoPlay | @Input | boolean | Auto play popup video | false |

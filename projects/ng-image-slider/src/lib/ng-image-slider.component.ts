@@ -55,6 +55,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
     autoSlideInterval;
     showArrowButton: boolean = true;
     textDirection: string = 'ltr';
+    imageMargin: number = 3;
 
     // for swipe event
     private swipeCoord?: [number, number];
@@ -68,9 +69,12 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
     set imageSize(data) {
         if (data
             && typeof (data) === 'object') {
+            if (data.hasOwnProperty('space') && typeof (data['space']) === 'number' && data['space'] > -1) {
+                this.imageMargin = data['space'];
+            }
             if (data.hasOwnProperty('width') && typeof (data['width']) === 'number') {
                 this.sliderImageWidth = data['width'];
-                this.sliderImageSizeWithPadding = data['width'] + 6; // addeing padding with image width
+                this.sliderImageSizeWithPadding = data['width'] + (this.imageMargin * 2); // addeing padding with image width
             }
             if (data.hasOwnProperty('height') && typeof (data['height']) === 'number') {
                 this.sliderImageHeight = data['height'];

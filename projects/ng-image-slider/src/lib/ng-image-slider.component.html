@@ -10,7 +10,7 @@
                 (touchstart)="swipe($event, 'start')"
                 (touchend)="swipe($event, 'end')">
                 <div [ngClass]="{'image-popup': imagePopup}"
-                    [ngStyle]="{'width':sliderImageWidth+'px'}"
+                    [ngStyle]="{'width':sliderImageWidth+'px', 'margin-left':imageMargin+'px', 'margin-right':imageMargin+'px'}"
                     class="img-div"
                     *ngFor="let img of imageObj; let i = index"
                     (click)="imageOnClick(i)"

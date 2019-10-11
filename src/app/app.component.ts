@@ -13,8 +13,8 @@ export class AppComponent {
     showSlider = true;
 
     sliderWidth: Number = 940;
-    sliderImageWidth: Number = 934;
-    sliderImageHeight: Number = 600;
+    sliderImageWidth: Number = 250;
+    sliderImageHeight: Number = 200;
     sliderArrowShow: Boolean = true;
     sliderInfinite: Boolean = false;
     sliderImagePopup: Boolean = true;
