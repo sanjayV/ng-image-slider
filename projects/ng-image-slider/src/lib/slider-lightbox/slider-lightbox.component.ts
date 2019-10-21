@@ -59,8 +59,21 @@ export class SliderLightboxComponent implements OnInit, AfterViewInit, OnDestroy
 
     // @Output
     @Output() close = new EventEmitter<any>();
-    @Output() prevImage = new EventEmitter<any>();
-    @Output() nextImage = new EventEmitter<any>();
+    /* @Output() prevImage = new EventEmitter<any>(); */
+    /* @Output() nextImage = new EventEmitter<any>(); */
+
+    @HostListener('document:keyup', ['$event'])
+    handleKeyboardEvent(event: KeyboardEvent) {
+        if (event && event.key) {
+            if (event.key.toLowerCase() === 'arrowright') {
+                this.nextImageLightbox();
+            }
+
+            if (event.key.toLowerCase() === 'arrowleft') {
+                this.prevImageLightbox();
+            }
+        }
+    }
 
     constructor(
         private cdRef: ChangeDetectorRef,
@@ -88,7 +101,7 @@ export class SliderLightboxComponent implements OnInit, AfterViewInit, OnDestroy
     prevImageLightbox() {
         if (this.currentImageIndex > 0 && !this.lightboxPrevDisable) {
             this.currentImageIndex--;
-            this.prevImage.emit();
+            //this.prevImage.emit();
             this.getImageData();
             this.nextPrevDisable();
         }
@@ -97,7 +110,7 @@ export class SliderLightboxComponent implements OnInit, AfterViewInit, OnDestroy
     nextImageLightbox() {
         if (this.currentImageIndex < this.images.length - 1 && !this.lightboxNextDisable) {
             this.currentImageIndex++;
-            this.nextImage.emit();
+            //this.nextImage.emit();
             this.getImageData();
             this.nextPrevDisable();
         }

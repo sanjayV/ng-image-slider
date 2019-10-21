@@ -151,20 +151,12 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
     @HostListener('document:keyup', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
         if (event && event.key) {
-            if (event.key.toLowerCase() === 'arrowright') { 
-                if(this.ligthboxShow) {
-                    this.nextImage();
-                } else {
-                    this.next();
-                }
+            if (event.key.toLowerCase() === 'arrowright' && !this.ligthboxShow) {
+                this.next();
             }
 
-            if (event.key.toLowerCase() === 'arrowleft') {
-                if (this.ligthboxShow) {
-                    this.prevImage();
-                } else {
-                    this.prev();
-                }
+            if (event.key.toLowerCase() === 'arrowleft' && !this.ligthboxShow) {
+                this.prev();
             }
 
             if (event.key.toLowerCase() === 'escape' && this.ligthboxShow) {
@@ -371,24 +363,24 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
 
     // for lightbox
     showLightbox() {
-        if (this.imageObj.length && (this.imageObj[0]['image'] || this.imageObj[0]['video'])) {
-            let imageSrc = this.imageObj[0]['image'] || this.imageObj[0]['video'],
-                imageTitle = this.imageObj[0]['title'] || '';
+        if (this.imageObj.length) {
+            /* let imageSrc = this.imageObj[0]['image'] || this.imageObj[0]['video'],
+                imageTitle = this.imageObj[0]['title'] || ''; */
             this.popupImageIndex = this.imageObj[0]['index'] || 0;
             if (this.imageObj[this.activeImageIndex]) {
-                imageSrc = this.imageObj[this.activeImageIndex]['image'] || this.imageObj[this.activeImageIndex]['video'];
-                imageTitle = this.imageObj[this.activeImageIndex]['title'] || '';
+                /* imageSrc = this.imageObj[this.activeImageIndex]['image'] || this.imageObj[this.activeImageIndex]['video'];
+                imageTitle = this.imageObj[this.activeImageIndex]['title'] || ''; */
                 this.popupImageIndex = this.imageObj[this.activeImageIndex]['index'] || 0;
             }
-            this.getImage(imageSrc, imageTitle);
-            this.nextPrevLigthboxButtonDisable();
+            // this.getImage(imageSrc, imageTitle);
+            // this.nextPrevLigthboxButtonDisable();
             this.imageMouseEnterHandler();
             this.ligthboxShow = true;
             this.elRef.nativeElement.ownerDocument.body.style.overflow = 'hidden';
         }
     }
 
-    nextImage() {
+    /* nextImage() {
         if (this.infinite && this.activeImageIndex + 1 >= this.imageObj.length) {
             this.activeImageIndex = 0;
         }
@@ -408,9 +400,9 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
                 index: this.activeImageIndex
             });
         }
-    }
+    } */
 
-    prevImage() {
+    /* prevImage() {
         if (this.infinite && this.activeImageIndex - 1 <= 0) {
             this.activeImageIndex = this.imageObj.length;
         }
@@ -430,9 +422,9 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
                 index: this.activeImageIndex
             });
         }
-    }
+    } */
 
-    nextPrevLigthboxButtonDisable() {
+    /* nextPrevLigthboxButtonDisable() {
         this.lightboxNextDisable = false;
         this.lightboxPrevDisable = false;
         if (!this.infinite) {
@@ -444,7 +436,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
                 this.lightboxPrevDisable = true;
             }
         }
-    }
+    } */
 
     close() {
         this.ligthboxShow = false;
@@ -452,7 +444,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
         this.imageAutoSlide();
     }
 
-    getImage(url, title = '') {
+    /* getImage(url, title = '') {
         const self = this;
         this.currentImageSrc = '';
         this.showImage = false;
@@ -482,7 +474,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
                 image.src = url;
             }
         }
-    }
+    } */
 
     /**
      * Swipe event handler

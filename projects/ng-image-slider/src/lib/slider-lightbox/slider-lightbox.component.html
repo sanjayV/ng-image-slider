@@ -20,9 +20,10 @@
                     *ngFor="let img of images; let i = index"
                     [ngClass]="{'ng-image-lightbox-show': i == currentImageIndex, 'ng-image-lightbox-hide': i != currentImageIndex}">
                     <custom-img
+                        *ngIf="i == currentImageIndex"
                         [imageUrl]="img.image || img.video"
                         [isVideo]="!!(img.posterImage || img.video)"
-                        [videoAutoPlay]="videoAutoPlay && i == currentImageIndex"
+                        [videoAutoPlay]="videoAutoPlay"
                         [alt]="img.alt || img.title || ''"
                         [title]="img.title || img.alt || ''"
                         [showVideo]="true"
