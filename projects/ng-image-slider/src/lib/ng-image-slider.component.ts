@@ -103,7 +103,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
     @Input() set images(imgObj) {
         if (imgObj && imgObj instanceof Array && imgObj.length) {
             this.imageObj = imgObj.map((img, index) => {
-                img['index'] = index + 1;
+                img['index'] = index;
                 return img;
             });
             this.totalImages = this.imageObj.length;
@@ -374,11 +374,11 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
         if (this.imageObj.length && (this.imageObj[0]['image'] || this.imageObj[0]['video'])) {
             let imageSrc = this.imageObj[0]['image'] || this.imageObj[0]['video'],
                 imageTitle = this.imageObj[0]['title'] || '';
-            this.popupImageIndex = this.imageObj[0]['index'] || 1;
+            this.popupImageIndex = this.imageObj[0]['index'] || 0;
             if (this.imageObj[this.activeImageIndex]) {
                 imageSrc = this.imageObj[this.activeImageIndex]['image'] || this.imageObj[this.activeImageIndex]['video'];
                 imageTitle = this.imageObj[this.activeImageIndex]['title'] || '';
-                this.popupImageIndex = this.imageObj[this.activeImageIndex]['index'] || 1;
+                this.popupImageIndex = this.imageObj[this.activeImageIndex]['index'] || 0;
             }
             this.getImage(imageSrc, imageTitle);
             this.nextPrevLigthboxButtonDisable();
@@ -400,7 +400,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
             this.activeImageIndex++;
             const imageSrc = this.imageObj[this.activeImageIndex]['image'] || this.imageObj[this.activeImageIndex]['video'];
             const imageTitle = this.imageObj[this.activeImageIndex]['title'] || '';
-            this.popupImageIndex = this.imageObj[this.activeImageIndex]['index'] || 1;
+            this.popupImageIndex = this.imageObj[this.activeImageIndex]['index'] || 0;
             this.getImage(imageSrc, imageTitle);
             this.nextPrevLigthboxButtonDisable();
             this.lightboxArrowClick.emit({
@@ -422,7 +422,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
             this.activeImageIndex--;
             const imageSrc = this.imageObj[this.activeImageIndex]['image'] || this.imageObj[this.activeImageIndex]['video'];
             const imageTitle = this.imageObj[this.activeImageIndex]['title'] || '';
-            this.popupImageIndex = this.imageObj[this.activeImageIndex]['index'] || 1;
+            this.popupImageIndex = this.imageObj[this.activeImageIndex]['index'] || 0;
             this.getImage(imageSrc, imageTitle);
             this.nextPrevLigthboxButtonDisable();
             this.lightboxArrowClick.emit({

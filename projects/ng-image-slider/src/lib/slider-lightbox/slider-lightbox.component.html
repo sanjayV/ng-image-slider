@@ -1,23 +1,36 @@
 <div class="ng-image-slider-lightbox">
-    <div class="lightbox-wrapper" [ngClass]="{'error-msg': !fileUrl, 'ng-ligthbox-pagination': paginationShow}">
+    <div class="lightbox-wrapper">
         <a class="close" (click)="closeLightbox()"></a>
         <div class="lightbox-div" #lightboxDiv>
             <div class="pre-loader">
                 <div class="mnml-spinner"></div>
             </div>
-            <!-- Image type -->
-            <img *ngIf="type === IMAGE && fileUrl" [ngClass]="{'show': showImage, 'hide': !showImage}" [src]="fileUrl">
-            <!-- Youtube type -->
+
+            <!-- <img *ngIf="type === IMAGE && fileUrl" [ngClass]="{'show': showImage, 'hide': !showImage}" [src]="fileUrl">
             <iframe *ngIf="type === YOUTUBE && fileUrl"
                 [ngClass]="{'show': showImage, 'hide': !showImage}"
                 [src]="fileUrl"
                 frameborder="0" allowfullscreen></iframe>
-            <!-- Video type -->
             <video [autoplay]="videoAutoPlay" [ngClass]="{'show': showImage, 'hide': !showImage}" *ngIf="type === VIDEO && fileUrl" controls  controlsList="nodownload">
                 <source [dir]="direction" [src]="fileUrl" type="video/mp4"> Your browser does not support the video tag.
-            </video>
-            <!-- <div [dir]="direction" *ngIf="fileUrl == false" class="invalid-msg">Invalid file format</div> -->
-            <div [dir]="direction" *ngIf="currentImageTitle" [ngClass]="{'show': showImage, 'hide': !showImage}" class="caption">{{ currentImageTitle }}</div>
+            </video> -->
+
+            <div class="lightbox-image-main">
+                <div class="lightbox-image"
+                    *ngFor="let img of images; let i = index"
+                    [ngClass]="{'ng-image-lightbox-show': i == currentImageIndex, 'ng-image-lightbox-hide': i != currentImageIndex}">
+                    <custom-img
+                        [imageUrl]="img.image || img.video"
+                        [isVideo]="!!(img.posterImage || img.video)"
+                        [videoAutoPlay]="videoAutoPlay && i == currentImageIndex"
+                        [alt]="img.alt || img.title || ''"
+                        [title]="img.title || img.alt || ''"
+                        [showVideo]="true"
+                        [direction]="direction">
+                    </custom-img>
+                </div>
+            </div>
+            <div [dir]="direction" [ngClass]="{'show': showImage, 'hide': !showImage}" class="caption">{{ title }}</div>
             <a *ngIf="totalImages > 1" [ngClass]="{'disable': lightboxPrevDisable}" class="prev icons prev-icon" (click)="prevImageLightbox()">&lsaquo;</a>
             <a *ngIf="totalImages > 1" [ngClass]="{'disable': lightboxNextDisable}" class="next icons next-icon" (click)="nextImageLightbox()">&rsaquo;</a>
         </div>

@@ -1,6 +1,8 @@
 import {
+    ChangeDetectorRef,
     Component,
     OnInit,
+    Inject,
     AfterViewInit,
     OnDestroy,
     Input,
@@ -9,6 +11,7 @@ import {
     ViewChild,
     HostListener
 } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { NgImageSliderService } from './../ng-image-slider.service';
 
@@ -21,85 +24,57 @@ const youtubeRegExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([
     templateUrl: './slider-lightbox.component.html'
 })
 export class SliderLightboxComponent implements OnInit, AfterViewInit, OnDestroy {
+
     YOUTUBE = 'youtube';
     IMAGE = 'image';
     VIDEO = 'video';
-    fileUrl: SafeResourceUrl = '';
-    fileExtension = '';
-    type = this.IMAGE;
+    INVALID = 'invalid';
+    totalImages: number = 0;
+    nextImageIndex: number = -1;
+    popupWidth: number = 1200;
+    marginLeft: number = 0;
+    lightboxPrevDisable: boolean = false;
+    lightboxNextDisable: boolean = false;
+    showLoading: boolean = true;
+    effectStyle: string = 'none';
+    speed: number = 1; // default speed in second
+    title: string = '';
 
     // @Inputs
     @Input() videoAutoPlay: boolean = false;
+    @Input() currentImageIndex: number = 0;
+    @Input() showImage;
+    @Input() direction: string = 'ltr';
+    @Input() images: Array<object> = [];
+    @Input() paginationShow: boolean = false;
     @Input()
-    set currentImageSrc(url) {
-        if (url && typeof (url) === 'string') {
-            this.fileExtension = url.replace(/^.*\./, '');
-            if (this.imageSliderService.base64FileExtension(url)
-                && (validFileExtensions.indexOf(this.imageSliderService.base64FileExtension(url).toLowerCase()) > -1
-                    || validVideoExtensions.indexOf(this.imageSliderService.base64FileExtension(url).toLowerCase()) > -1)) {
-                this.fileExtension = this.imageSliderService.base64FileExtension(url);
-            }
-            // verify for youtube url
-            const match = url.match(youtubeRegExp);
-            if (match && match[2].length === 11) {
-                this.type = '';
-                setTimeout(() => {
-                    this.type = this.YOUTUBE;
-                    url = `${'//www.youtube.com/embed/'}${match[2]}${this.videoAutoPlay ? '?autoplay=1' : '?autoplay=0'}`;
-                    this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-                }, 50);
-            } else if (this.fileExtension && validFileExtensions.indexOf(this.fileExtension.toLowerCase()) > -1) {
-                this.type = this.IMAGE;
-                this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-            } else if (this.fileExtension && validVideoExtensions.indexOf(this.fileExtension.toLowerCase()) > -1) {
-                this.type = '';
-                setTimeout(() => {
-                    this.type = this.VIDEO;
-                    this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-                }, 50);
-            } else {
-                this.fileUrl = false;
-            }
-        } else {
-            this.fileUrl = false;
+    set animationSpeed(data: number) {
+        if (data
+            && typeof (data) === 'number'
+            && data >= 0.1
+            && data <= 5) {
+            this.speed = data;
         }
     }
-    @Input() currentImageTitle;
-    @Input() currentImageIndex: number = 1;
-    @Input() totalImages: number = 0;
-    @Input() paginationShow: boolean = false;
-    @Input() showImage;
-    @Input() lightboxPrevDisable;
-    @Input() lightboxNextDisable;
-    @Input() direction: string = 'ltr';
 
     // @Output
     @Output() close = new EventEmitter<any>();
     @Output() prevImage = new EventEmitter<any>();
     @Output() nextImage = new EventEmitter<any>();
 
-    /* @ViewChild('lightboxDiv') lightboxDiv;
-    @HostListener('window:resize', ['$event'])
-    onResize(event) {
-        const widthAspectRatio = 16 / 9;
-        const heightAspectRatio = 9 / 16;
-        console.log('this.lightboxDiv.nativeElement.offsetWidth', this.lightboxDiv.nativeElement.offsetWidth);
-        console.log('this.lightboxDiv.nativeElement.offsetHeight', this.lightboxDiv.nativeElement.offsetHeight);
-        if (this.lightboxDiv.nativeElement.offsetWidth && this.lightboxDiv.nativeElement.offsetHeight) {
-            const calculatedWidth = 480 * (this.lightboxDiv.nativeElement.offsetWidth / this.lightboxDiv.nativeElement.offsetHeight);
-            const calculatedHeight = 385 * (this.lightboxDiv.nativeElement.offsetHeight / this.lightboxDiv.nativeElement.offsetWidth);
-            console.log('calculated widht and height =>', calculatedWidth, calculatedHeight);
-
-        }
-    } */
-
-    constructor(private sanitizer: DomSanitizer, public imageSliderService: NgImageSliderService) {
+    constructor(
+        private cdRef: ChangeDetectorRef,
+        private sanitizer: DomSanitizer,
+        public imageSliderService: NgImageSliderService,
+        @Inject(DOCUMENT) private document: any) {
     }
 
     ngOnInit() {
     }
 
     ngAfterViewInit() {
+        this.getImageData();
+        this.cdRef.detectChanges();
     }
 
     ngOnDestroy() {
@@ -111,16 +86,65 @@ export class SliderLightboxComponent implements OnInit, AfterViewInit, OnDestroy
     }
 
     prevImageLightbox() {
-        this.prevImage.emit();
+        if (this.currentImageIndex > 0 && !this.lightboxPrevDisable) {
+            this.currentImageIndex--;
+            this.prevImage.emit();
+            this.getImageData();
+            this.nextPrevDisable();
+        }
     }
 
     nextImageLightbox() {
-        this.nextImage.emit();
+        if (this.currentImageIndex < this.images.length - 1 && !this.lightboxNextDisable) {
+            this.currentImageIndex++;
+            this.nextImage.emit();
+            this.getImageData();
+            this.nextPrevDisable();
+        }
+    }
+
+    nextPrevDisable() {
+        this.lightboxNextDisable = true;
+        this.lightboxPrevDisable = true;
+        //setTimeout(() => {
+        this.applyButtonDisableCondition();
+        //}, this.speed * 1000);
+    }
+
+    applyButtonDisableCondition() {
+        this.lightboxNextDisable = false;
+        this.lightboxPrevDisable = false;
+        if (this.currentImageIndex >= this.images.length - 1) {
+            this.lightboxNextDisable = true;
+        }
+        if (this.currentImageIndex <= 0) {
+            this.lightboxPrevDisable = true;
+        }
+    }
+
+    getImageData() {
+        if (this.images
+            && this.images.length
+            && typeof (this.currentImageIndex) === 'number'
+            && this.currentImageIndex !== undefined
+            && this.images[this.currentImageIndex]
+            && (this.images[this.currentImageIndex]['image'] || this.images[this.currentImageIndex]['video'])) {
+            this.title = this.images[this.currentImageIndex]['title'] || '';
+            this.totalImages = this.images.length;
+            for(let iframeI in this.document.getElementsByTagName("iframe")) {
+                if (this.document.getElementsByTagName("iframe")[iframeI] && this.document.getElementsByTagName("iframe")[iframeI].contentWindow) {
+                    this.document.getElementsByTagName("iframe")[iframeI].contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+                }
+            }
+            for(let videoI in this.document.getElementsByTagName("video")) {
+                if (this.document.getElementsByTagName("video")[videoI] && this.document.getElementsByTagName("video")[videoI].pause) {
+                    this.document.getElementsByTagName("video")[videoI].pause();
+                }
+            }
+        }
     }
 
     resetState() {
-        this.fileUrl = '';
-        this.fileExtension = '';
-        this.type = this.IMAGE;
+        this.images = [];
     }
 }

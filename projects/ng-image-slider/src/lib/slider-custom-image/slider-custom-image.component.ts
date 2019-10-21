@@ -5,6 +5,7 @@ import {
     OnDestroy,
     Input
 } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { NgImageSliderService } from './../ng-image-slider.service';
 
 const youtubeRegExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/,
@@ -19,15 +20,17 @@ export class SliderCustomImageComponent implements OnInit, AfterViewInit, OnDest
     YOUTUBE = 'youtube';
     IMAGE = 'image';
     VIDEO = 'video';
-    fileUrl = '';
+    fileUrl: SafeResourceUrl = '';
     fileExtension = '';
     type = this.IMAGE;
 
     // @inputs
+    @Input() showVideo: boolean = false;
+    @Input() videoAutoPlay: boolean = false;
     @Input()
     set imageUrl(url) {
         if (url && typeof (url) === 'string') {
-            this.fileUrl = url;
+            this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);;
             this.fileExtension = url.replace(/^.*\./, '');
             if (this.imageSliderService.base64FileExtension(url) 
             && (validFileExtensions.indexOf(this.imageSliderService.base64FileExtension(url).toLowerCase()) > -1 
@@ -37,8 +40,13 @@ export class SliderCustomImageComponent implements OnInit, AfterViewInit, OnDest
             // verify for youtube url
             const match = url.match(youtubeRegExp);
             if (match && match[2].length === 11) {
-                this.type = this.YOUTUBE;
-                this.fileUrl = `https://img.youtube.com/vi/${match[2]}/0.jpg`;
+                if (this.showVideo) {
+                    this.type = this.YOUTUBE;
+                    this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`${'//www.youtube.com/embed/'}${match[2]}${this.videoAutoPlay ? '?autoplay=1&enablejsapi=1' : '?autoplay=0&enablejsapi=1'}`);
+                } else {
+                    this.type = this.IMAGE;
+                    this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://img.youtube.com/vi/${match[2]}/0.jpg`);
+                }
             } else if (this.fileExtension && validFileExtensions.indexOf(this.fileExtension.toLowerCase()) > -1) {
                 this.type = this.IMAGE;
             } else if (this.fileExtension && validVideoExtensions.indexOf(this.fileExtension.toLowerCase()) > -1) {
@@ -51,7 +59,7 @@ export class SliderCustomImageComponent implements OnInit, AfterViewInit, OnDest
     @Input() title: String = '';
     @Input() direction: string = 'ltr';
 
-    constructor(public imageSliderService: NgImageSliderService) {
+    constructor(public imageSliderService: NgImageSliderService, private sanitizer: DomSanitizer) {
     }
 
     ngOnInit() {
