@@ -56,6 +56,7 @@ export class SliderLightboxComponent implements OnInit, AfterViewInit, OnDestroy
             this.speed = data;
         }
     }
+    @Input() infinite: boolean = false;
 
     // @Output
     @Output() close = new EventEmitter<any>();
@@ -99,6 +100,10 @@ export class SliderLightboxComponent implements OnInit, AfterViewInit, OnDestroy
     }
 
     prevImageLightbox() {
+        if (this.infinite && this.currentImageIndex == 0) {
+            this.currentImageIndex = this.images.length;
+        }
+
         if (this.currentImageIndex > 0 && !this.lightboxPrevDisable) {
             this.currentImageIndex--;
             //this.prevImage.emit();
@@ -108,6 +113,10 @@ export class SliderLightboxComponent implements OnInit, AfterViewInit, OnDestroy
     }
 
     nextImageLightbox() {
+        if (this.infinite && this.currentImageIndex == this.images.length - 1) {
+            this.currentImageIndex = -1;
+        }
+
         if (this.currentImageIndex < this.images.length - 1 && !this.lightboxNextDisable) {
             this.currentImageIndex++;
             //this.nextImage.emit();
@@ -127,10 +136,10 @@ export class SliderLightboxComponent implements OnInit, AfterViewInit, OnDestroy
     applyButtonDisableCondition() {
         this.lightboxNextDisable = false;
         this.lightboxPrevDisable = false;
-        if (this.currentImageIndex >= this.images.length - 1) {
+        if (!this.infinite && this.currentImageIndex >= this.images.length - 1) {
             this.lightboxNextDisable = true;
         }
-        if (this.currentImageIndex <= 0) {
+        if (!this.infinite && this.currentImageIndex <= 0) {
             this.lightboxPrevDisable = true;
         }
     }

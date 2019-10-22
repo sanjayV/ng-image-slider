@@ -40,6 +40,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
     sliderMainDivWidth: number = 0;
     imageParentDivWidth: number = 0;
     imageObj: Array<object> = [];
+    ligthboxImageObj: Array<object> = [];
     totalImages: number = 0;
     leftPos: number = 0;
     effectStyle: string = 'all 1s ease-in-out';
@@ -106,6 +107,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
                 img['index'] = index;
                 return img;
             });
+            this.ligthboxImageObj = [...this.imageObj];
             this.totalImages = this.imageObj.length;
             this.imageParentDivWidth = imgObj.length * this.sliderImageSizeWithPadding;
         }
