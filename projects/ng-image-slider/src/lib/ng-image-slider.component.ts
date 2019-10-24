@@ -137,7 +137,6 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
 
     // for lightbox
     currentImageSrc: string;
-    popupImageIndex: number = 0;
     currentImageTitle = '';
     ligthboxShow: boolean = false;
     activeImageIndex: number = 0;
@@ -366,117 +365,17 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
     // for lightbox
     showLightbox() {
         if (this.imageObj.length) {
-            /* let imageSrc = this.imageObj[0]['image'] || this.imageObj[0]['video'],
-                imageTitle = this.imageObj[0]['title'] || ''; */
-            this.popupImageIndex = this.imageObj[0]['index'] || 0;
-            if (this.imageObj[this.activeImageIndex]) {
-                /* imageSrc = this.imageObj[this.activeImageIndex]['image'] || this.imageObj[this.activeImageIndex]['video'];
-                imageTitle = this.imageObj[this.activeImageIndex]['title'] || ''; */
-                this.popupImageIndex = this.imageObj[this.activeImageIndex]['index'] || 0;
-            }
-            // this.getImage(imageSrc, imageTitle);
-            // this.nextPrevLigthboxButtonDisable();
             this.imageMouseEnterHandler();
             this.ligthboxShow = true;
             this.elRef.nativeElement.ownerDocument.body.style.overflow = 'hidden';
         }
     }
 
-    /* nextImage() {
-        if (this.infinite && this.activeImageIndex + 1 >= this.imageObj.length) {
-            this.activeImageIndex = 0;
-        }
-
-        if (this.activeImageIndex + 1 < this.imageObj.length
-            && this.imageObj[this.activeImageIndex + 1]
-            && (this.imageObj[this.activeImageIndex + 1]['image']
-                || this.imageObj[this.activeImageIndex + 1]['video'])) {
-            this.activeImageIndex++;
-            const imageSrc = this.imageObj[this.activeImageIndex]['image'] || this.imageObj[this.activeImageIndex]['video'];
-            const imageTitle = this.imageObj[this.activeImageIndex]['title'] || '';
-            this.popupImageIndex = this.imageObj[this.activeImageIndex]['index'] || 0;
-            this.getImage(imageSrc, imageTitle);
-            this.nextPrevLigthboxButtonDisable();
-            this.lightboxArrowClick.emit({
-                message: LIGHTBOX_NEXT_ARROW_CLICK_MESSAGE,
-                index: this.activeImageIndex
-            });
-        }
-    } */
-
-    /* prevImage() {
-        if (this.infinite && this.activeImageIndex - 1 <= 0) {
-            this.activeImageIndex = this.imageObj.length;
-        }
-
-        if (this.activeImageIndex - 1 > -1
-            && this.imageObj[this.activeImageIndex - 1]
-            && (this.imageObj[this.activeImageIndex - 1]['image']
-                || this.imageObj[this.activeImageIndex - 1]['video'])) {
-            this.activeImageIndex--;
-            const imageSrc = this.imageObj[this.activeImageIndex]['image'] || this.imageObj[this.activeImageIndex]['video'];
-            const imageTitle = this.imageObj[this.activeImageIndex]['title'] || '';
-            this.popupImageIndex = this.imageObj[this.activeImageIndex]['index'] || 0;
-            this.getImage(imageSrc, imageTitle);
-            this.nextPrevLigthboxButtonDisable();
-            this.lightboxArrowClick.emit({
-                message: LIGHTBOX_PREV_ARROW_CLICK_MESSAGE,
-                index: this.activeImageIndex
-            });
-        }
-    } */
-
-    /* nextPrevLigthboxButtonDisable() {
-        this.lightboxNextDisable = false;
-        this.lightboxPrevDisable = false;
-        if (!this.infinite) {
-            if (this.activeImageIndex >= this.imageObj.length - 1) {
-                this.lightboxNextDisable = true;
-            }
-
-            if (this.activeImageIndex <= 0) {
-                this.lightboxPrevDisable = true;
-            }
-        }
-    } */
-
     close() {
         this.ligthboxShow = false;
         this.elRef.nativeElement.ownerDocument.body.style.overflow = '';
         this.imageAutoSlide();
     }
-
-    /* getImage(url, title = '') {
-        const self = this;
-        this.currentImageSrc = '';
-        this.showImage = false;
-        if (url) {
-            let fileExtension = url.replace(/^.*\./, '');
-            if (this.imageSliderService.base64FileExtension(url)
-                && (validFileExtensions.indexOf(this.imageSliderService.base64FileExtension(url).toLowerCase()) > -1
-                    || validVideoExtensions.indexOf(this.imageSliderService.base64FileExtension(url).toLowerCase()) > -1)) {
-                fileExtension = this.imageSliderService.base64FileExtension(url);
-            }
-            // verify for youtube and video url
-            const match = url.match(youtubeRegExp);
-            if ((match && match[2].length === 11)
-                || (fileExtension && validVideoExtensions.indexOf(fileExtension.toLowerCase()) > -1)) {
-                this.currentImageSrc = url;
-                this.currentImageTitle = title;
-                this.showImage = true;
-            } else if (fileExtension && validFileExtensions.indexOf(fileExtension.toLowerCase()) > -1) {
-                const image = new Image();
-                image.onload = function () {
-                    setTimeout(() => {
-                        self.currentImageSrc = url;
-                        self.currentImageTitle = title;
-                        self.showImage = true;
-                    }, 0);
-                };
-                image.src = url;
-            }
-        }
-    } */
 
     /**
      * Swipe event handler
