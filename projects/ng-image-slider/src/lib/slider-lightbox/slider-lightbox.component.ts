@@ -57,6 +57,7 @@ export class SliderLightboxComponent implements OnInit, AfterViewInit, OnDestroy
         }
     }
     @Input() infinite: boolean = false;
+    @Input() arrowKeyMove: boolean = true;
 
     // @Output
     @Output() close = new EventEmitter<any>();
@@ -65,7 +66,7 @@ export class SliderLightboxComponent implements OnInit, AfterViewInit, OnDestroy
 
     @HostListener('document:keyup', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
-        if (event && event.key) {
+        if (event && event.key && this.arrowKeyMove) {
             if (event.key.toLowerCase() === 'arrowright') {
                 this.nextImageLightbox();
             }

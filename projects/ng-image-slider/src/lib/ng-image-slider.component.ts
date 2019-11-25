@@ -129,6 +129,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
     }
     @Input() videoAutoPlay: boolean = false;
     @Input() paginationShow: boolean = false;
+    @Input() arrowKeyMove: boolean = true;
 
     // @Outputs
     @Output() imageClick = new EventEmitter<number>();
@@ -152,11 +153,11 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
     @HostListener('document:keyup', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
         if (event && event.key) {
-            if (event.key.toLowerCase() === 'arrowright' && !this.ligthboxShow) {
+            if (event.key.toLowerCase() === 'arrowright' && !this.ligthboxShow && this.arrowKeyMove) {
                 this.next();
             }
 
-            if (event.key.toLowerCase() === 'arrowleft' && !this.ligthboxShow) {
+            if (event.key.toLowerCase() === 'arrowleft' && !this.ligthboxShow && this.arrowKeyMove) {
                 this.prev();
             }
 
