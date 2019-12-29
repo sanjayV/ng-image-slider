@@ -6,7 +6,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 4100 --host 0.0.0.0",
-    "build": "ng build ng-image-slider",
+    "build": "ng build ng-image-slider --watch",
     "build:prod": "ng build ng-image-slider --prod",
     "test": "ng test",
     "lint": "ng lint",

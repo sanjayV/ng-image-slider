@@ -96,6 +96,7 @@ imageObject: Array<object> = [{
 | imageSize | @Input | object | Set slider images width, height and space. space is use for set space between slider images. Pass object like `{width: 400, height: 300, space: 4}` or if you only want to set space then pass space only `{space: 4}` | `{width: 205, height: 200, space: 3}` |
 | autoSlide | @Input | number | Auto slide images according provided time. Option will work only if **infinite** option is **true**. Minimum value is 1 second and Maximum value is 5 second. | 0 |
 | showArrow | @Input | boolean | Hide/Show slider arrow buttons | true |
+| arrowKeyMove | @Input | boolean | Disable slider and popup image left/right move on arrow key press event, if value is `false`  | true |
 | videoAutoPlay | @Input | boolean | Auto play popup video | false |
 | direction | @Input | string | Set text direction. You can pass **rtl** / **ltr** / **auto** | ltr |
 | imageClick | @Output | n/a | Executes when click event on slider image. Return image index. | n/a |
