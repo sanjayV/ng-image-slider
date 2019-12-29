@@ -11,6 +11,7 @@ Also support youtube and mp4 video urls.
   - Image lightbox popup
   - captures keyboard next/previous arrow key event for lightbox image move
   - Support Images (jpeg, jpg, gif, png and Base64-String), Youtube url and MP4 video (url and Base64-String)
+  - Handling runtime image arraylist changes
 
 ### Demo: https://sanjayv.github.io/ng-image-slider/
 
