@@ -3,6 +3,7 @@ import {
     Component,
     OnInit,
     OnChanges,
+    DoCheck,
     SimpleChanges,
     SimpleChange,
     AfterViewInit,
@@ -35,7 +36,7 @@ const NEXT_ARROW_CLICK_MESSAGE = 'next',
     styleUrls: ['./ng-image-slider.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
+export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, AfterViewInit, OnDestroy {
     // for slider
     sliderMainDivWidth: number = 0;
     imageParentDivWidth: number = 0;
@@ -101,17 +102,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
             this.effectStyle = `all ${this.speed}s ease-in-out`;
         }
     }
-    @Input() set images(imgObj) {
-        if (imgObj && imgObj instanceof Array && imgObj.length) {
-            this.imageObj = imgObj.map((img, index) => {
-                img['index'] = index;
-                return img;
-            });
-            this.ligthboxImageObj = [...this.imageObj];
-            this.totalImages = this.imageObj.length;
-            this.imageParentDivWidth = imgObj.length * this.sliderImageSizeWithPadding;
-        }
-    }
+    @Input() images: Array<object> = [];
     @Input() set slideImage(count) {
         if (count && typeof count === 'number') {
             this.slideImageCount = Math.round(count);
@@ -206,6 +197,12 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        if (changes.images
+            && changes.images.hasOwnProperty('previousValue')
+            && changes.images.hasOwnProperty('currentValue')
+            && changes.images.previousValue != changes.images.currentValue) {
+            this.setSliderImages(changes.images.currentValue);
+        }
         if (changes && changes.imageSize) {
             const size: SimpleChange = changes.imageSize;
             if (size
@@ -217,6 +214,27 @@ export class NgImageSliderComponent implements OnChanges, OnInit, AfterViewInit,
                     || size.previousValue.height !== size.currentValue.height)) {
                 this.setSliderWidth();
             }
+        }
+    }
+
+    ngDoCheck() {
+        if (this.images
+            && this.ligthboxImageObj
+            && this.images.length !== this.ligthboxImageObj.length) {
+            this.setSliderImages(this.images);
+        }
+    }
+
+    setSliderImages(imgObj) {
+        if (imgObj && imgObj instanceof Array && imgObj.length) {
+            this.imageObj = imgObj.map((img, index) => {
+                img['index'] = index;
+                return img;
+            });
+            this.ligthboxImageObj = [...this.imageObj];
+            this.totalImages = this.imageObj.length;
+            this.imageParentDivWidth = imgObj.length * this.sliderImageSizeWithPadding;
+            this.setSliderWidth();
         }
     }
 

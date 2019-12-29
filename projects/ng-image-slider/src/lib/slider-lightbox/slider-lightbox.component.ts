@@ -2,6 +2,8 @@ import {
     ChangeDetectorRef,
     Component,
     OnInit,
+    OnChanges,
+    SimpleChanges,
     Inject,
     AfterViewInit,
     OnDestroy,
@@ -23,7 +25,7 @@ const youtubeRegExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([
     selector: 'slider-lightbox',
     templateUrl: './slider-lightbox.component.html'
 })
-export class SliderLightboxComponent implements OnInit, AfterViewInit, OnDestroy {
+export class SliderLightboxComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
 
     YOUTUBE = 'youtube';
     IMAGE = 'image';
@@ -85,6 +87,15 @@ export class SliderLightboxComponent implements OnInit, AfterViewInit, OnDestroy
     }
 
     ngOnInit() {
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.currentImageIndex
+            && changes.currentImageIndex.hasOwnProperty('previousValue')
+            && changes.currentImageIndex.hasOwnProperty('currentValue')
+            && changes.currentImageIndex.previousValue != changes.images.currentValue) {
+            this.nextPrevDisable();
+        }
     }
 
     ngAfterViewInit() {
@@ -154,12 +165,12 @@ export class SliderLightboxComponent implements OnInit, AfterViewInit, OnDestroy
             && (this.images[this.currentImageIndex]['image'] || this.images[this.currentImageIndex]['video'])) {
             this.title = this.images[this.currentImageIndex]['title'] || '';
             this.totalImages = this.images.length;
-            for(let iframeI in this.document.getElementsByTagName("iframe")) {
+            for (let iframeI in this.document.getElementsByTagName("iframe")) {
                 if (this.document.getElementsByTagName("iframe")[iframeI] && this.document.getElementsByTagName("iframe")[iframeI].contentWindow) {
                     this.document.getElementsByTagName("iframe")[iframeI].contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
                 }
             }
-            for(let videoI in this.document.getElementsByTagName("video")) {
+            for (let videoI in this.document.getElementsByTagName("video")) {
                 if (this.document.getElementsByTagName("video")[videoI] && this.document.getElementsByTagName("video")[videoI].pause) {
                     this.document.getElementsByTagName("video")[videoI].pause();
                 }
