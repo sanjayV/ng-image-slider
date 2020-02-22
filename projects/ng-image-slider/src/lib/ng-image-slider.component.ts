@@ -50,6 +50,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
     sliderNextDisable: boolean = false;
     slideImageCount: number = 1;
     sliderImageWidth: number = 205;
+    sliderImageReceivedWidth: number | string = 205;
     sliderImageHeight: number = 200;
     sliderInnerHeight: number = 175;
     sliderImageSizeWithPadding = 211;
@@ -74,9 +75,9 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
             if (data.hasOwnProperty('space') && typeof (data['space']) === 'number' && data['space'] > -1) {
                 this.imageMargin = data['space'];
             }
-            if (data.hasOwnProperty('width') && typeof (data['width']) === 'number') {
-                this.sliderImageWidth = data['width'];
-                this.sliderImageSizeWithPadding = data['width'] + (this.imageMargin * 2); // addeing padding with image width
+            if (data.hasOwnProperty('width') && (typeof (data['width']) === 'number' || typeof (data['width']) === 'string')) {
+                this.sliderImageReceivedWidth = data['width'];
+                // this.sliderImageSizeWithPadding = data['width'] + (this.imageMargin * 2); // addeing padding with image width
             }
             if (data.hasOwnProperty('height') && typeof (data['height']) === 'number') {
                 this.sliderImageHeight = data['height'];
@@ -233,18 +234,34 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
             });
             this.ligthboxImageObj = [...this.imageObj];
             this.totalImages = this.imageObj.length;
-            this.imageParentDivWidth = imgObj.length * this.sliderImageSizeWithPadding;
+            // this.imageParentDivWidth = imgObj.length * this.sliderImageSizeWithPadding;
             this.setSliderWidth();
         }
     }
 
     setSliderWidth() {
-        if (this.sliderMain && this.sliderMain.nativeElement && this.sliderMain.nativeElement.offsetWidth) {
+        if (this.sliderMain
+            && this.sliderMain.nativeElement
+            && this.sliderMain.nativeElement.offsetWidth) {
             this.sliderMainDivWidth = this.sliderMain.nativeElement.offsetWidth;
-            //this.sliderImageWidth = this.sliderMain.nativeElement.offsetWidth;
-            //this.sliderImageSizeWithPadding = this.sliderMain.nativeElement.offsetWidth;
-            this.imageParentDivWidth = this.imageObj.length * this.sliderImageSizeWithPadding;
         }
+
+        if (this.sliderMainDivWidth
+            && this.sliderImageReceivedWidth) {
+            if (typeof this.sliderImageReceivedWidth === 'number') {
+                this.sliderImageWidth = this.sliderImageReceivedWidth;
+            } else if (typeof this.sliderImageReceivedWidth === 'string') {
+               if (this.sliderImageReceivedWidth.indexOf('px') >= 0) {
+                this.sliderImageWidth = parseFloat(this.sliderImageReceivedWidth);
+               } else if (this.sliderImageReceivedWidth.indexOf('%') >= 0) {
+                this.sliderImageWidth = +((this.sliderMainDivWidth * parseFloat(this.sliderImageReceivedWidth)) / 100).toFixed(2);
+               } else if (parseFloat(this.sliderImageReceivedWidth)) {
+                this.sliderImageWidth = parseFloat(this.sliderImageReceivedWidth);
+               }
+            }
+        }
+        this.sliderImageSizeWithPadding = this.sliderImageWidth + (this.imageMargin * 2);
+        this.imageParentDivWidth = this.imageObj.length * this.sliderImageSizeWithPadding;
         if (this.imageDiv && this.imageDiv.nativeElement && this.imageDiv.nativeElement.offsetWidth) {
             this.leftPos = this.infinite ? -1 * this.sliderImageSizeWithPadding * this.slideImageCount : 0;
         }
