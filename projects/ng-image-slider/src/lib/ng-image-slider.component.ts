@@ -52,7 +52,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
     sliderImageWidth: number = 205;
     sliderImageReceivedWidth: number | string = 205;
     sliderImageHeight: number = 200;
-    sliderInnerHeight: number = 175;
+    sliderImageReceivedHeight: number | string = 205;
     sliderImageSizeWithPadding = 211;
     autoSlideCount: number = 0;
     autoSlideInterval;
@@ -79,9 +79,8 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
                 this.sliderImageReceivedWidth = data['width'];
                 // this.sliderImageSizeWithPadding = data['width'] + (this.imageMargin * 2); // addeing padding with image width
             }
-            if (data.hasOwnProperty('height') && typeof (data['height']) === 'number') {
-                this.sliderImageHeight = data['height'];
-                this.sliderInnerHeight = data['height'] - 30;
+            if (data.hasOwnProperty('height') && (typeof (data['height']) === 'number' || typeof (data['height']) === 'string')) {
+                this.sliderImageReceivedHeight = data['height'];
             }
         }
     }
@@ -257,6 +256,21 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
                 this.sliderImageWidth = +((this.sliderMainDivWidth * parseFloat(this.sliderImageReceivedWidth)) / 100).toFixed(2);
                } else if (parseFloat(this.sliderImageReceivedWidth)) {
                 this.sliderImageWidth = parseFloat(this.sliderImageReceivedWidth);
+               }
+            }
+        }
+
+        if (window && window.innerHeight
+            && this.sliderImageReceivedHeight) {
+            if (typeof this.sliderImageReceivedHeight === 'number') {
+                this.sliderImageHeight = this.sliderImageReceivedHeight;
+            } else if (typeof this.sliderImageReceivedHeight === 'string') {
+               if (this.sliderImageReceivedHeight.indexOf('px') >= 0) {
+                this.sliderImageHeight = parseFloat(this.sliderImageReceivedHeight);
+               } else if (this.sliderImageReceivedHeight.indexOf('%') >= 0) {
+                this.sliderImageHeight = +((window.innerHeight * parseFloat(this.sliderImageReceivedHeight)) / 100).toFixed(2);
+               } else if (parseFloat(this.sliderImageReceivedHeight)) {
+                this.sliderImageHeight = parseFloat(this.sliderImageReceivedHeight);
                }
             }
         }
