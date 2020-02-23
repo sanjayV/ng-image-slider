@@ -3,16 +3,16 @@
     <h1 class="text-center demo-title-main">
         Welcome to {{ title }}!
     </h1>
-    <div class="margin-auto demo-div box-shadow" [ngStyle]="{'width':sliderWidth+'px', 'min-height': sliderImageHeight+'px'}">
+    <div class="margin-auto demo-div box-shadow" [ngStyle]="{'width':'100%'}">
         <ng-image-slider *ngIf="showSlider" #nav
             [images]="imageObject"
             [infinite]="sliderInfinite"
             [imagePopup]="sliderImagePopup"
             [showArrow]="sliderArrowShow"
-            [imageSize]="{width: sliderImageWidth, height: sliderImageHeight}"
             [autoSlide]="sliderAutoSlide ? 1 : 0"
             [slideImage]="+sliderSlideImage"
             [animationSpeed]="sliderAnimationSpeed"
+            [manageImageRatio]="false"
             (imageClick)="imageOnClick($event)"
             (arrowClick)="arrowOnClick($event)"
             (lightboxArrowClick)="lightboxArrowClick($event)"></ng-image-slider>

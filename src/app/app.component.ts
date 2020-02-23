@@ -54,15 +54,15 @@ export class AppComponent {
             title: 'angular image slider : brown deer under tree'
         }, {
             image: 'assets/img/slider/5.jpg',
-            thumbImage: 'assets/img/slider/5_min.jpeg',
+            thumbImage: 'assets/img/slider/long-1.jpeg',
             title: 'image five'
         }, {
             image: 'assets/img/slider/6.jpg',
-            thumbImage: 'assets/img/slider/6_min.jpeg',
+            thumbImage: 'assets/img/slider/long-2.jpeg',
             alt: 'image six'
         }, {
             image: 'assets/img/slider/7.jpg',
-            thumbImage: 'assets/img/slider/7_min.jpeg',
+            thumbImage: 'assets/img/slider/long-3.jpg',
             alt: 'alt of image seven',
             title: 'title of image seven'
         }, {

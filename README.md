@@ -5,7 +5,7 @@ Also support youtube and mp4 video urls.
 
 ## Features!
 
-  - Responsive
+  - Responsive (support images width and height in both % and px)
   - captures swipes from phones and tablets
   - Compatible with Angular Universal
   - Image lightbox popup
@@ -17,7 +17,7 @@ Also support youtube and mp4 video urls.
 
 
 # Installation
-`npm install ng-image-slider`
+`npm install ng-image-slider --save`
 
 # Setup :
 
@@ -94,7 +94,8 @@ imageObject: Array<object> = [{
 | imagePopup | @Input  | boolean | Enable image lightBox popup option on slider image click. | true |
 | animationSpeed | @Input  | number | By this user can set slider animation speed. Minimum value is **0.1 second** and Maximum value is **5 second**. | 1 |
 | slideImage | @Input | number | Set how many images will move on left/right arrow click. | 1 |
-| imageSize | @Input | object | Set slider images width, height and space. space is use for set space between slider images. Pass object like `{width: 400, height: 300, space: 4}` or if you only want to set space then pass space only `{space: 4}` | `{width: 205, height: 200, space: 3}` |
+| imageSize | @Input | object | Set slider images width, height and space. space is use for set space between slider images. Pass object like `{width: '400px', height: '300px', space: 4}` or you can pass value in percentage `{width: '20%', height: '20%'}` OR set only space `{space: 4}` | `{width: 205, height: 200, space: 3}` |
+| manageImageRatio | @Input | boolean | Show images with aspect ratio if value is `true` and set imageSize width and height on parent div | false |
 | autoSlide | @Input | number | Auto slide images according provided time. Option will work only if **infinite** option is **true**. Minimum value is 1 second and Maximum value is 5 second. | 0 |
 | showArrow | @Input | boolean | Hide/Show slider arrow buttons | true |
 | arrowKeyMove | @Input | boolean | Disable slider and popup image left/right move on arrow key press event, if value is `false`  | true |
