@@ -1,5 +1,6 @@
 <div *ngIf="fileUrl" class="custom-image-main">
     <img class="image"
+        [ngClass]="{'ratio': ratio}"
         *ngIf="type === IMAGE && fileUrl"
         [src]="fileUrl"
         [alt]="alt"
@@ -10,6 +11,7 @@
         frameborder="0"
         allowfullscreen></iframe>
     <video class="video"
+        [ngClass]="{'ratio': ratio}"
         [autoplay]="videoAutoPlay"
         *ngIf="type === VIDEO"
         type="video/mp4"

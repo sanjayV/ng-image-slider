@@ -23,12 +23,7 @@ import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { NgImageSliderService } from './ng-image-slider.service';
 
 const NEXT_ARROW_CLICK_MESSAGE = 'next',
-    PREV_ARROW_CLICK_MESSAGE = 'previous',
-    LIGHTBOX_NEXT_ARROW_CLICK_MESSAGE = 'lightbox next',
-    LIGHTBOX_PREV_ARROW_CLICK_MESSAGE = 'lightbox previous',
-    youtubeRegExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/,
-    validFileExtensions = ['jpeg', 'jpg', 'gif', 'png'],
-    validVideoExtensions = ['mp4'];
+    PREV_ARROW_CLICK_MESSAGE = 'previous';
 
 @Component({
     selector: 'ng-image-slider',
@@ -121,6 +116,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
     @Input() videoAutoPlay: boolean = false;
     @Input() paginationShow: boolean = false;
     @Input() arrowKeyMove: boolean = true;
+    @Input() manageImageRatio: boolean = false;
 
     // @Outputs
     @Output() imageClick = new EventEmitter<number>();

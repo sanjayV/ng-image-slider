@@ -21,7 +21,8 @@
                         [isVideo]="!!(img.posterImage || img.video)"
                         [alt]="img.alt || img.title || ''"
                         [title]="img.title || img.alt || ''"
-                        [direction]="textDirection">
+                        [direction]="textDirection"
+                        [ratio]="manageImageRatio">
                     </custom-img>
                     <div [dir]="textDirection" class="caption" *ngIf="img.title">{{ img.title }}</div>
                 </div>

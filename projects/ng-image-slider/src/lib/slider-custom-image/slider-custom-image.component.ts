@@ -16,7 +16,7 @@ const youtubeRegExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([
     selector: 'custom-img',
     templateUrl: './slider-custom-image.component.html'
 })
-export class SliderCustomImageComponent implements OnInit, AfterViewInit, OnDestroy {
+export class SliderCustomImageComponent implements OnInit {
     YOUTUBE = 'youtube';
     IMAGE = 'image';
     VIDEO = 'video';
@@ -58,16 +58,11 @@ export class SliderCustomImageComponent implements OnInit, AfterViewInit, OnDest
     @Input() alt: String = '';
     @Input() title: String = '';
     @Input() direction: string = 'ltr';
+    @Input() ratio: boolean = false;
 
     constructor(public imageSliderService: NgImageSliderService, private sanitizer: DomSanitizer) {
     }
 
     ngOnInit() {
-    }
-
-    ngAfterViewInit() {
-    }
-
-    ngOnDestroy() {
     }
 }
