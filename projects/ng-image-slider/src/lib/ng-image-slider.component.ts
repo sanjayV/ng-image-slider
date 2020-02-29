@@ -423,6 +423,10 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
         this.imageAutoSlide();
     }
 
+    lightboxArrowClickHandler(event) {
+        this.lightboxArrowClick.emit(event);
+    }
+
     /**
      * Swipe event handler
      * Reference from https://stackoverflow.com/a/44511007/2067646

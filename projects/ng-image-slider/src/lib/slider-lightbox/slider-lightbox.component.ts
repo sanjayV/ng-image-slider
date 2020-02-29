@@ -10,27 +10,20 @@ import {
     Input,
     Output,
     EventEmitter,
-    ViewChild,
     HostListener
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { NgImageSliderService } from './../ng-image-slider.service';
 
-const youtubeRegExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/,
-    validFileExtensions = ['jpeg', 'jpg', 'gif', 'png'],
-    validVideoExtensions = ['mp4'];
+const LIGHTBOX_NEXT_ARROW_CLICK_MESSAGE = 'lightbox next',
+    LIGHTBOX_PREV_ARROW_CLICK_MESSAGE = 'lightbox previous';
 
 @Component({
     selector: 'slider-lightbox',
     templateUrl: './slider-lightbox.component.html'
 })
 export class SliderLightboxComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
-
-    YOUTUBE = 'youtube';
-    IMAGE = 'image';
-    VIDEO = 'video';
-    INVALID = 'invalid';
     totalImages: number = 0;
     nextImageIndex: number = -1;
     popupWidth: number = 1200;
@@ -62,9 +55,8 @@ export class SliderLightboxComponent implements OnInit, OnChanges, AfterViewInit
     @Input() arrowKeyMove: boolean = true;
 
     // @Output
-    @Output() close = new EventEmitter<any>();
-    /* @Output() prevImage = new EventEmitter<any>(); */
-    /* @Output() nextImage = new EventEmitter<any>(); */
+    @Output() close: EventEmitter<any> = new EventEmitter<any>();
+    @Output() arrowClick: EventEmitter<any> = new EventEmitter<any>();
 
     @HostListener('document:keyup', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
@@ -118,7 +110,7 @@ export class SliderLightboxComponent implements OnInit, OnChanges, AfterViewInit
 
         if (this.currentImageIndex > 0 && !this.lightboxPrevDisable) {
             this.currentImageIndex--;
-            //this.prevImage.emit();
+            this.arrowClick.emit(LIGHTBOX_PREV_ARROW_CLICK_MESSAGE);
             this.getImageData();
             this.nextPrevDisable();
         }
@@ -131,7 +123,7 @@ export class SliderLightboxComponent implements OnInit, OnChanges, AfterViewInit
 
         if (this.currentImageIndex < this.images.length - 1 && !this.lightboxNextDisable) {
             this.currentImageIndex++;
-            //this.nextImage.emit();
+            this.arrowClick.emit(LIGHTBOX_NEXT_ARROW_CLICK_MESSAGE);
             this.getImageData();
             this.nextPrevDisable();
         }
@@ -140,9 +132,7 @@ export class SliderLightboxComponent implements OnInit, OnChanges, AfterViewInit
     nextPrevDisable() {
         this.lightboxNextDisable = true;
         this.lightboxPrevDisable = true;
-        //setTimeout(() => {
         this.applyButtonDisableCondition();
-        //}, this.speed * 1000);
     }
 
     applyButtonDisableCondition() {
