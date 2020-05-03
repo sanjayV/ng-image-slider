@@ -117,21 +117,18 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
     @Input() paginationShow: boolean = false;
     @Input() arrowKeyMove: boolean = true;
     @Input() manageImageRatio: boolean = false;
+    @Input() showVideoControls: boolean = true;
 
     // @Outputs
     @Output() imageClick = new EventEmitter<number>();
     @Output() arrowClick = new EventEmitter<string>();
     @Output() lightboxArrowClick = new EventEmitter<object>();
+    @Output() lightboxClose = new EventEmitter<object>();
 
     // for lightbox
-    currentImageSrc: string;
-    currentImageTitle = '';
     ligthboxShow: boolean = false;
     activeImageIndex: number = 0;
     visiableImageIndex: number = 1;
-    lightboxNextDisable: boolean = false;
-    lightboxPrevDisable: boolean = false;
-    showImage: boolean = true;
 
     @HostListener('window:resize', ['$event'])
     onResize(event) {
@@ -420,6 +417,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
     close() {
         this.ligthboxShow = false;
         this.elRef.nativeElement.ownerDocument.body.style.overflow = '';
+        this.lightboxClose.emit()
         this.imageAutoSlide();
     }
 

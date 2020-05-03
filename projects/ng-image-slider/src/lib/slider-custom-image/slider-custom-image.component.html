@@ -9,13 +9,16 @@
         *ngIf="type === YOUTUBE && fileUrl"
         [src]="fileUrl"
         frameborder="0"
+        allow="autoplay"
         allowfullscreen></iframe>
     <video class="video"
+        [id]="'video_' + imageIndex"
         [ngClass]="{'ratio': ratio}"
+        (click)="videoClickHandler($event)"
         [autoplay]="videoAutoPlay"
         *ngIf="type === VIDEO"
         type="video/mp4"
-        controls
+        [attr.controls]="showVideoControls ? showVideoControls : null"
         controlsList="nodownload">
         <source [src]="fileUrl" type="video/mp4">
         Your browser does not support the video tag.

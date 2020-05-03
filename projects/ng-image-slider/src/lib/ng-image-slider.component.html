@@ -47,16 +47,19 @@
         <div *ngIf="imageObj.length && paginationShow" class="ng-main-pagination">{{visiableImageIndex}} of {{totalImages}}</div>
     </div>
 </div>
-<slider-lightbox *ngIf="ligthboxShow"
-    [paginationShow]="paginationShow"
-    [arrowKeyMove]="arrowKeyMove"
-    [images]="ligthboxImageObj"
-    [infinite]="infinite"
-    [animationSpeed]="speed"
-    [currentImageIndex]="activeImageIndex"
-    [showImage]="showImage"
-    [direction]="textDirection"
-    [videoAutoPlay]="videoAutoPlay"
-    (arrowClick)="lightboxArrowClickHandler($event)"
-    (close)="close()">
-</slider-lightbox>
+<div *ngIf="ligthboxShow">
+    <slider-lightbox
+        [paginationShow]="paginationShow"
+        [showVideoControls]="showVideoControls"
+        [arrowKeyMove]="arrowKeyMove"
+        [images]="ligthboxImageObj"
+        [infinite]="infinite"
+        [animationSpeed]="speed"
+        [imageIndex]="activeImageIndex"
+        [show]="ligthboxShow"
+        [direction]="textDirection"
+        [videoAutoPlay]="videoAutoPlay"
+        (arrowClick)="lightboxArrowClickHandler($event)"
+        (close)="close()">
+    </slider-lightbox>
+</div>
