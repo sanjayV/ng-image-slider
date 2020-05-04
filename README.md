@@ -14,6 +14,9 @@ Also support youtube and mp4 video urls.
   - Handling runtime image arraylist changes
 
 ### Demo: https://sanjayv.github.io/ng-image-slider/
+##### code example:
+##### Images: https://stackblitz.com/edit/ng-image-slider-demo
+##### video: https://stackblitz.com/edit/ng-image-slider-video-demo
 
 
 # Installation
@@ -103,8 +106,8 @@ imageObject: Array<object> = [{
 | direction | @Input | string | Set text direction. You can pass **rtl** / **ltr** / **auto** | ltr |
 | imageClick | @Output | n/a | Executes when click event on slider image. Return image index. | n/a |
 | arrowClick | @Output | n/a | Executes when click on slider left/right arrow. | n/a |
+| lightboxClose | @Output | n/a | Executes when lightbox close. | n/a |
 | lightboxArrowClick | @Output | n/a | Executes when click on lightbox next/previous arrow. | n/a |
-
 
 ## Add custom navigation button
 ```typescript

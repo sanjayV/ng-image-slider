@@ -13,8 +13,12 @@
             [slideImage]="+sliderSlideImage"
             [animationSpeed]="sliderAnimationSpeed"
             [manageImageRatio]="false"
+            [videoAutoPlay]="true"
+            [showVideoControls]="true"
+            [paginationShow]="false"
             (imageClick)="imageOnClick($event)"
             (arrowClick)="arrowOnClick($event)"
+            (lightboxClose)="lightboxClose()"
             (lightboxArrowClick)="lightboxArrowClick($event)"></ng-image-slider>
     </div>
 
