@@ -104,8 +104,13 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
         }
     }
     @Input() set autoSlide(count) {
-        if (count && typeof count === 'number' && count >= 1 && count <= 5) {
-            this.autoSlideCount = Math.round(count) * 1000;
+        if (count && (typeof count === 'number' || typeof count === 'boolean')) {
+            if (typeof count === 'number' && count >= 1 && count <= 5) {
+                count = Math.round(count);
+            } else if (typeof count === 'boolean') {
+                count = 1;
+            }
+            this.autoSlideCount = count * 1000;
         }
     }
     @Input() set showArrow(flag) {
@@ -128,7 +133,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
     // for lightbox
     ligthboxShow: boolean = false;
     activeImageIndex: number = 0;
-    visiableImageIndex: number = 1;
+    visiableImageIndex: number = 0;
 
     @HostListener('window:resize', ['$event'])
     onResize(event) {
@@ -275,11 +280,6 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
         this.nextPrevSliderButtonDisable();
     }
 
-    fullView() {
-        const currentIndex = Math.round((Math.abs(this.leftPos) + this.sliderImageWidth) / this.sliderImageWidth);
-        this.imageOnClick(currentIndex - 1)
-    }
-
     imageOnClick(index) {
         if (this.imagePopup) {
             this.activeImageIndex = index;
@@ -375,7 +375,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
 
     getVisiableIndex() {
         const currentIndex = Math.round((Math.abs(this.leftPos) + this.sliderImageWidth) / this.sliderImageWidth);
-        if (this.imageObj[currentIndex - 1] && this.imageObj[currentIndex - 1]['index']) {
+        if (this.imageObj[currentIndex - 1] && this.imageObj[currentIndex - 1]['index'] !== undefined) {
             this.visiableImageIndex = this.imageObj[currentIndex - 1]['index'];
         }
     }

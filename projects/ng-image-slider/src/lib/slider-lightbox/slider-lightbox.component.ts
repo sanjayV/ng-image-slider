@@ -17,6 +17,9 @@ import {
 import { DOCUMENT } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 
+const LIGHTBOX_NEXT_ARROW_CLICK_MESSAGE = 'lightbox next',	
+    LIGHTBOX_PREV_ARROW_CLICK_MESSAGE = 'lightbox previous'
+
 @Component({
     selector: 'slider-lightbox',
     templateUrl: './slider-lightbox.component.html'
@@ -143,7 +146,7 @@ export class SliderLightboxComponent implements OnInit, AfterViewInit, OnDestroy
         this.effectStyle = `all ${this.speed}s ease-in-out`;
         if (this.currentImageIndex > 0 && !this.lightboxPrevDisable) {
             this.currentImageIndex--;
-            this.prevImage.emit();
+            this.prevImage.emit(LIGHTBOX_PREV_ARROW_CLICK_MESSAGE);
             this.marginLeft = -1 * this.popupWidth * this.currentImageIndex;
             this.getImageData();
             this.nextPrevDisable();
@@ -154,7 +157,7 @@ export class SliderLightboxComponent implements OnInit, AfterViewInit, OnDestroy
         this.effectStyle = `all ${this.speed}s ease-in-out`;
         if (this.currentImageIndex < this.images.length - 1 && !this.lightboxNextDisable) {
             this.currentImageIndex++;
-            this.nextImage.emit();
+            this.nextImage.emit(LIGHTBOX_NEXT_ARROW_CLICK_MESSAGE);
             this.marginLeft = -1 * this.popupWidth * this.currentImageIndex;
             this.getImageData();
             this.nextPrevDisable();

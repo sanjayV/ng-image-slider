@@ -44,7 +44,7 @@
                 (mouseenter)="imageMouseEnterHandler()"
                 (mouseleave)="imageAutoSlide()">&rsaquo;</a>
         </div>
-        <div *ngIf="imageObj.length && paginationShow" class="ng-main-pagination">{{visiableImageIndex}} of {{totalImages}}</div>
+        <div *ngIf="imageObj.length && paginationShow" class="ng-main-pagination">{{visiableImageIndex + 1}} of {{totalImages}}</div>
     </div>
 </div>
 <div *ngIf="ligthboxShow">
@@ -59,7 +59,8 @@
         [show]="ligthboxShow"
         [direction]="textDirection"
         [videoAutoPlay]="videoAutoPlay"
-        (arrowClick)="lightboxArrowClickHandler($event)"
+        (prevImage)="lightboxArrowClickHandler($event)"
+        (nextImage)="lightboxArrowClickHandler($event)"
         (close)="close()">
     </slider-lightbox>
 </div>
