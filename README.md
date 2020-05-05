@@ -103,6 +103,7 @@ imageObject: Array<object> = [{
 | showArrow | @Input | boolean | Hide/Show slider arrow buttons | true |
 | arrowKeyMove | @Input | boolean | Disable slider and popup image left/right move on arrow key press event, if value is `false`  | true |
 | videoAutoPlay | @Input | boolean | Auto play popup video | false |
+| showVideoControls | @Input | boolean | Hide video control if value is `false` | true |
 | direction | @Input | string | Set text direction. You can pass **rtl** / **ltr** / **auto** | ltr |
 | imageClick | @Output | n/a | Executes when click event on slider image. Return image index. | n/a |
 | arrowClick | @Output | n/a | Executes when click on slider left/right arrow. | n/a |
