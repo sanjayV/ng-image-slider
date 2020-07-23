@@ -192,6 +192,9 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
         if (this.autoSlideInterval) {
             clearInterval(this.autoSlideInterval);
         }
+        if (this.ligthboxShow === true) {
+            this.close();
+        }
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -248,13 +251,13 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
             if (typeof this.sliderImageReceivedWidth === 'number') {
                 this.sliderImageWidth = this.sliderImageReceivedWidth;
             } else if (typeof this.sliderImageReceivedWidth === 'string') {
-               if (this.sliderImageReceivedWidth.indexOf('px') >= 0) {
-                this.sliderImageWidth = parseFloat(this.sliderImageReceivedWidth);
-               } else if (this.sliderImageReceivedWidth.indexOf('%') >= 0) {
-                this.sliderImageWidth = +((this.sliderMainDivWidth * parseFloat(this.sliderImageReceivedWidth)) / 100).toFixed(2);
-               } else if (parseFloat(this.sliderImageReceivedWidth)) {
-                this.sliderImageWidth = parseFloat(this.sliderImageReceivedWidth);
-               }
+                if (this.sliderImageReceivedWidth.indexOf('px') >= 0) {
+                    this.sliderImageWidth = parseFloat(this.sliderImageReceivedWidth);
+                } else if (this.sliderImageReceivedWidth.indexOf('%') >= 0) {
+                    this.sliderImageWidth = +((this.sliderMainDivWidth * parseFloat(this.sliderImageReceivedWidth)) / 100).toFixed(2);
+                } else if (parseFloat(this.sliderImageReceivedWidth)) {
+                    this.sliderImageWidth = parseFloat(this.sliderImageReceivedWidth);
+                }
             }
         }
 
@@ -263,13 +266,13 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
             if (typeof this.sliderImageReceivedHeight === 'number') {
                 this.sliderImageHeight = this.sliderImageReceivedHeight;
             } else if (typeof this.sliderImageReceivedHeight === 'string') {
-               if (this.sliderImageReceivedHeight.indexOf('px') >= 0) {
-                this.sliderImageHeight = parseFloat(this.sliderImageReceivedHeight);
-               } else if (this.sliderImageReceivedHeight.indexOf('%') >= 0) {
-                this.sliderImageHeight = +((window.innerHeight * parseFloat(this.sliderImageReceivedHeight)) / 100).toFixed(2);
-               } else if (parseFloat(this.sliderImageReceivedHeight)) {
-                this.sliderImageHeight = parseFloat(this.sliderImageReceivedHeight);
-               }
+                if (this.sliderImageReceivedHeight.indexOf('px') >= 0) {
+                    this.sliderImageHeight = parseFloat(this.sliderImageReceivedHeight);
+                } else if (this.sliderImageReceivedHeight.indexOf('%') >= 0) {
+                    this.sliderImageHeight = +((window.innerHeight * parseFloat(this.sliderImageReceivedHeight)) / 100).toFixed(2);
+                } else if (parseFloat(this.sliderImageReceivedHeight)) {
+                    this.sliderImageHeight = parseFloat(this.sliderImageReceivedHeight);
+                }
             }
         }
         this.sliderImageSizeWithPadding = this.sliderImageWidth + (this.imageMargin * 2);
