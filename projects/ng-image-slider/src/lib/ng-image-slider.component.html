@@ -9,10 +9,10 @@
                 [ngStyle]="{'margin-left':leftPos+'px', 'width':imageParentDivWidth+'px', 'transition': effectStyle}"
                 (touchstart)="swipe($event, 'start')"
                 (touchend)="swipe($event, 'end')">
-                <div [ngClass]="{'image-popup': imagePopup}"
+                <div *ngFor="let img of imageObj; let i = index"
+                    [ngClass]="{'image-popup': imagePopup, 'selected-image': activeImageIndex == i}"
                     [ngStyle]="{'width':sliderImageWidth+'px', 'margin-left':imageMargin+'px', 'margin-right':imageMargin+'px'}"
                     class="img-div"
-                    *ngFor="let img of imageObj; let i = index"
                     (click)="imageOnClick(img.index)"
                     (mouseenter)="imageMouseEnterHandler()"
                     (mouseleave)="imageAutoSlide()"

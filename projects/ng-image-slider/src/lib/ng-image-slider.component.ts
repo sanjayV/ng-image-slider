@@ -132,7 +132,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
 
     // for lightbox
     ligthboxShow: boolean = false;
-    activeImageIndex: number = 0;
+    activeImageIndex: number = -1;
     visiableImageIndex: number = 0;
 
     @HostListener('window:resize', ['$event'])
