@@ -99,7 +99,7 @@ imageObject: Array<object> = [{
 | slideImage | @Input | number | Set how many images will move on left/right arrow click. | 1 |
 | imageSize | @Input | object | Set slider images width, height and space. space is use for set space between slider images. Pass object like `{width: '400px', height: '300px', space: 4}` or you can pass value in percentage `{width: '20%', height: '20%'}` OR set only space `{space: 4}` | `{width: 205, height: 200, space: 3}` |
 | manageImageRatio | @Input | boolean | Show images with aspect ratio if value is `true` and set imageSize width and height on parent div | false |
-| autoSlide | @Input | number | Auto slide images according provided time. Option will work only if **infinite** option is **true**. Minimum value is 1 second and Maximum value is 5 second. | 0 |
+| autoSlide | @Input | number/boolean/object | Auto slide images according provided time interval. Option will work only if **infinite** option is **true**. For number data type minimum value is 1 second and Maximum value is 5 second. By object data type you can prevent auto slide stop behaviour on mouse hover event. `{interval: 2, stopOnHover: false}` | 0 |
 | showArrow | @Input | boolean | Hide/Show slider arrow buttons | true |
 | arrowKeyMove | @Input | boolean | Disable slider and popup image left/right move on arrow key press event, if value is `false`  | true |
 | videoAutoPlay | @Input | boolean | Auto play popup video | false |
@@ -109,6 +109,7 @@ imageObject: Array<object> = [{
 | arrowClick | @Output | n/a | Executes when click on slider left/right arrow. | n/a |
 | lightboxClose | @Output | n/a | Executes when lightbox close. | n/a |
 | lightboxArrowClick | @Output | n/a | Executes when click on lightbox next/previous arrow. | n/a |
+
 
 ## Add custom navigation button
 ```typescript
