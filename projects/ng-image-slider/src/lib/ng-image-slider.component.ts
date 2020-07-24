@@ -294,8 +294,8 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
     }
 
     imageOnClick(index) {
+        this.activeImageIndex = index;
         if (this.imagePopup) {
-            this.activeImageIndex = index;
             this.showLightbox();
         }
         this.imageClick.emit(index);
