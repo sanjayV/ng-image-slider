@@ -50,6 +50,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
     sliderImageReceivedHeight: number | string = 205;
     sliderImageSizeWithPadding = 211;
     autoSlideCount: number = 0;
+    stopSlideOnHover: boolean = true;
     autoSlideInterval;
     showArrowButton: boolean = true;
     textDirection: string = 'ltr';
@@ -103,12 +104,21 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
             this.slideImageCount = Math.round(count);
         }
     }
-    @Input() set autoSlide(count) {
-        if (count && (typeof count === 'number' || typeof count === 'boolean')) {
+    @Input() set autoSlide(count: any) {
+        if (count && (typeof count === 'number'
+            || typeof count === 'boolean'
+            || typeof count === 'object')) {
             if (typeof count === 'number' && count >= 1 && count <= 5) {
                 count = Math.round(count);
             } else if (typeof count === 'boolean') {
                 count = 1;
+            } else if (typeof count === 'object'
+                && count.hasOwnProperty('interval')
+                && Math.round(count['interval'])
+                && Math.round(count['interval']) >= 1
+                && Math.round(count['interval']) <= 5) {
+                this.stopSlideOnHover = count.hasOwnProperty('stopOnHover') ? count['stopOnHover'] : true;
+                count = Math.round(count['interval']);
             }
             this.autoSlideCount = count * 1000;
         }

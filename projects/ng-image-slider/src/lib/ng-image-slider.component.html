@@ -14,8 +14,8 @@
                     [ngStyle]="{'width':sliderImageWidth+'px', 'margin-left':imageMargin+'px', 'margin-right':imageMargin+'px'}"
                     class="img-div"
                     (click)="imageOnClick(img.index)"
-                    (mouseenter)="imageMouseEnterHandler()"
-                    (mouseleave)="imageAutoSlide()"
+                    (mouseenter)="stopSlideOnHover && imageMouseEnterHandler()"
+                    (mouseleave)="stopSlideOnHover && imageAutoSlide()"
                     #imageDiv>
                     <custom-img [imageUrl]="img.thumbImage || img.posterImage || img.video"
                         [isVideo]="!!(img.posterImage || img.video)"
@@ -35,8 +35,8 @@
                 [ngClass]="{'disable': sliderPrevDisable}"
                 class="prev icons prev-icon"
                 (click)="prev()"
-                (mouseenter)="imageMouseEnterHandler()"
-                (mouseleave)="imageAutoSlide()">&lsaquo;</a>
+                (mouseenter)="stopSlideOnHover && imageMouseEnterHandler()"
+                (mouseleave)="stopSlideOnHover && imageAutoSlide()">&lsaquo;</a>
             <a *ngIf="showArrowButton && imageObj.length > 1"
                 [ngClass]="{'disable': sliderNextDisable}"
                 class="next icons next-icon"
