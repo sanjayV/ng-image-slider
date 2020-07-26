@@ -1,10 +1,15 @@
 <div *ngIf="fileUrl" class="custom-image-main">
     <img class="image"
         [ngClass]="{'ratio': ratio}"
-        *ngIf="type === IMAGE && fileUrl"
+        *ngIf="type === IMAGE && fileUrl && !cover"
         [src]="fileUrl"
         [alt]="alt"
-        [title]="title">
+        [title]="title"/>
+    <div class="image cover"
+       [ngClass]="{'ratio': ratio}"
+       *ngIf="type === IMAGE && fileUrl && cover"
+       [style.background-image]="fileUrl"
+         [title]="title"></div>
     <iframe class="youtube"
         *ngIf="type === YOUTUBE && fileUrl"
         [src]="fileUrl"

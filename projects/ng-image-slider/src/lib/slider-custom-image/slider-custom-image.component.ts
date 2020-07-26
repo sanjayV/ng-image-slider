@@ -32,6 +32,7 @@ export class SliderCustomImageComponent implements OnChanges {
     @Input() currentImageIndex: number;
     @Input() imageIndex: number;
     @Input() speed: number = 1;
+    @Input() cover: boolean = false;
     @Input() imageUrl;
     @Input() isVideo = false;
     @Input() alt: String = '';
@@ -54,6 +55,9 @@ export class SliderCustomImageComponent implements OnChanges {
                 (changes.imageUrl && changes.imageUrl.firstChange)
                 ||
                 (this.videoAutoPlay)
+            || (
+              changes.cover
+                )
                )) {
             this.setUrl();
         }
@@ -64,7 +68,7 @@ export class SliderCustomImageComponent implements OnChanges {
         this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
         this.fileExtension = url.split('.').pop().split(/\#|\?/)[0];
         if (this.imageSliderService.base64FileExtension(url)
-        && (validFileExtensions.indexOf(this.imageSliderService.base64FileExtension(url).toLowerCase()) > -1 
+        && (validFileExtensions.indexOf(this.imageSliderService.base64FileExtension(url).toLowerCase()) > -1
         || validVideoExtensions.indexOf(this.imageSliderService.base64FileExtension(url).toLowerCase()) > -1)) {
             this.fileExtension = this.imageSliderService.base64FileExtension(url);
         }
@@ -76,10 +80,17 @@ export class SliderCustomImageComponent implements OnChanges {
                 this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`${'https://www.youtube.com/embed/'}${match[2]}${this.videoAutoPlay ? '?autoplay=1&enablejsapi=1' : '?autoplay=0&enablejsapi=1'}${'&controls='}${this.showVideoControls}`);
             } else {
                 this.type = this.IMAGE;
+              if (this.cover ){
+                this.fileUrl = this.sanitizer.bypassSecurityTrustStyle(`url(https://img.youtube.com/vi/${match[2]}/0.jpg)`);
+              }else {
                 this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://img.youtube.com/vi/${match[2]}/0.jpg`);
+              }
             }
         } else if (this.fileExtension && validFileExtensions.indexOf(this.fileExtension.toLowerCase()) > -1) {
             this.type = this.IMAGE;
+          if (this.cover ){
+            this.fileUrl = this.sanitizer.bypassSecurityTrustStyle(`url(${url})`);
+          }
         } else if (this.fileExtension && validVideoExtensions.indexOf(this.fileExtension.toLowerCase()) > -1) {
             this.type = this.VIDEO;
             if (this.videoAutoPlay && document.getElementById(`video_${this.imageIndex}`)) {

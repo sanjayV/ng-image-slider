@@ -133,6 +133,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
     @Input() arrowKeyMove: boolean = true;
     @Input() manageImageRatio: boolean = false;
     @Input() showVideoControls: boolean = true;
+    @Input() cover: boolean = false;
 
     // @Outputs
     @Output() imageClick = new EventEmitter<number>();

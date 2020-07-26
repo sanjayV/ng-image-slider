@@ -16,6 +16,7 @@
             [videoAutoPlay]="true"
             [showVideoControls]="true"
             [paginationShow]="false"
+            [cover]="cover"
             (imageClick)="imageOnClick($event)"
             (arrowClick)="arrowOnClick($event)"
             (lightboxClose)="lightboxClose()"
@@ -65,6 +66,17 @@
                 </div>
             </td>
         </tr>
+      <tr>
+        <td>
+          <label class="title block">Make Images cover area:</label>
+        </td>
+        <td>
+          <label class="switch">
+            <input type="checkbox" checked [(ngModel)]="cover">
+            <span class="slider round"></span>
+          </label>
+        </td>
+      </tr>
         <tr>
             <td>
                 <label class="title block">Hide/Show Slider Arrow:</label>

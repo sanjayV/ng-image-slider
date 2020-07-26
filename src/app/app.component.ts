@@ -16,7 +16,9 @@ export class AppComponent {
     sliderImageWidth: Number = 250;
     sliderImageHeight: Number = 200;
     sliderArrowShow: Boolean = true;
-    sliderInfinite: Boolean = false;
+    cover: Boolean = false;
+
+  sliderInfinite: Boolean = false;
     sliderImagePopup: Boolean = true;
     sliderAutoSlide: Boolean = false;
     sliderSlideImage: Number = 1;
