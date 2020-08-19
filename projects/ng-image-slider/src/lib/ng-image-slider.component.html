@@ -17,19 +17,19 @@
                     (mouseenter)="stopSlideOnHover && imageMouseEnterHandler()"
                     (mouseleave)="stopSlideOnHover && imageAutoSlide()"
                     #imageDiv>
-                    <custom-img [imageUrl]="img.thumbImage || img.posterImage || img.video"
-                        [isVideo]="!!(img.posterImage || img.video)"
-                        [alt]="img.alt || img.title || ''"
-                        [title]="img.title || img.alt || ''"
+                    <custom-img [imageUrl]="img?.thumbImage || img?.posterImage || img?.video"
+                        [isVideo]="!!(img?.posterImage || img?.video)"
+                        [alt]="img?.alt || img?.title || ''"
+                        [title]="img?.title || img?.alt || ''"
                         [direction]="textDirection"
                         [ratio]="manageImageRatio">
                     </custom-img>
-                    <div [dir]="textDirection" class="caption" *ngIf="img.title">{{ img.title }}</div>
+                    <div [dir]="textDirection" class="caption" *ngIf="img?.title">{{ img?.title }}</div>
                 </div>
             </div>
             <div class="ng-image-slider-error"
                 *ngIf="!imageObj.length">
-                Provided images array not valid.
+                <span class="ng-image-slider-loader"></span>
             </div>
             <a *ngIf="showArrowButton && imageObj.length > 1"
                 [ngClass]="{'disable': sliderPrevDisable}"

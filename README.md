@@ -89,6 +89,14 @@ imageObject: Array<object> = [{
 ];
 ```
 
+#### **Note :
+For angular version 8 or less, use `"skipLibCheck": true` in `tsconfig.json` for prevent **ambient context** issue.
+```js
+"compilerOptions": {
+    "skipLibCheck": true
+}
+```
+
 ## API Reference (optional) :
 
 | Name | Type | Data Type | Description | Default |

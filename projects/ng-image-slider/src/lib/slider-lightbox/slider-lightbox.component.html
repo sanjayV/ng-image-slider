@@ -15,15 +15,15 @@
                     (touchend)="swipeLightboxImg($event, 'end')"
                     #lightboxImageDiv>
                     <custom-img
-                        [imageUrl]="img.image || img.video"
-                        [isVideo]="!!(img.posterImage || img.video)"
+                        [imageUrl]="img?.image || img?.video"
+                        [isVideo]="!!(img?.posterImage || img?.video)"
                         [currentImageIndex]="currentImageIndex"
                         [imageIndex]="i"
                         [speed]="speed"
                         [videoAutoPlay]="videoAutoPlay && i == currentImageIndex"
                         [showVideoControls]="showVideoControls ? 1 : 0"
-                        [alt]="img.alt || img.title || ''"
-                        [title]="img.title || img.alt || ''"
+                        [alt]="img?.alt || img?.title || ''"
+                        [title]="img?.title || img?.alt || ''"
                         [showVideo]="true"
                         [direction]="direction">
                     </custom-img>
