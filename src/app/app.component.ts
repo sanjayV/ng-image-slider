@@ -23,7 +23,6 @@ export class AppComponent {
     sliderSlideImage: Number = 1;
     sliderAnimationSpeed: any = 1;
     imageObject;
-    slideOrderEnable:boolean = true;
     slideOrderType:string = 'DESC';
 
     constructor(private heroService: HeroService) {

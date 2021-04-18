@@ -55,7 +55,6 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
     showArrowButton: boolean = true;
     textDirection: string = 'ltr';
     imageMargin: number = 3;
-    sliderOrderEnable:boolean = false;
     sliderOrderType:string ='ASC';
 
     // for swipe event
@@ -128,12 +127,6 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
     @Input() set showArrow(flag) {
         if (flag !== undefined && typeof flag === 'boolean') {
             this.showArrowButton = flag;
-        }
-    }
-
-    @Input() set orderEnable(flag:boolean){
-        if (flag !== undefined && typeof flag === 'boolean') {
-            this.sliderOrderEnable = flag;
         }
     }
 
@@ -252,45 +245,25 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
 
     setSliderImages(imgObj) {
         if (imgObj && imgObj instanceof Array && imgObj.length) {
+            const sliderOrderEnable = imgObj.find((img) => {
+                if (img.hasOwnProperty('order')) {
+                    return true
+                }
+            });
+
+            if(sliderOrderEnable){
+                imgObj = this.imageSliderService.orderArray(imgObj, this.sliderOrderType.toUpperCase());
+            }
+
             this.imageObj = imgObj.map((img, index) => {
                 img['index'] = index;
                 return img;
             });
-            if(this.sliderOrderEnable){
-                this.orderSlides();
-            }
             this.ligthboxImageObj = [...this.imageObj];
             this.totalImages = this.imageObj.length;
             // this.imageParentDivWidth = imgObj.length * this.sliderImageSizeWithPadding;
             this.setSliderWidth();
         }
-    }
-
-    orderSlides() {
-        this.imageObj.sort((ob1, ob2) => {
-            if (ob1['order'] === null || !ob1['order']) {
-                return 1;
-            }
-            else if (ob2['order'] === null || !ob2['order']) {
-                return -1;
-            }
-            else if (ob1['order'] > ob2['order']) {
-                if (this.sliderOrderType === 'DESC') {
-                    return -1;
-                } else {
-                    return 1;
-                }
-            }
-            else if (ob1['order'] < ob2['order']) {
-                
-                if (this.sliderOrderType === 'DESC') {
-                    return 1;
-                } else {
-                    return -1;
-                }
-            }
-        }
-        )
     }
 
     setSliderWidth() {
