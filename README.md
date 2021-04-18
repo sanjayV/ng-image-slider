@@ -62,7 +62,8 @@ imageObject: Array<object> = [{
         image: '.../iOe/xHHf4nf8AE75h3j1x64ZmZ//Z==', // Support base64 image
         thumbImage: '.../iOe/xHHf4nf8AE75h3j1x64ZmZ//Z==', // Support base64 image
         title: 'Image title', //Optional: You can use this key if want to show image with title
-        alt: 'Image alt' //Optional: You can use this key if want to show image with alt
+        alt: 'Image alt', //Optional: You can use this key if want to show image with alt
+        order: 1 //Optional: if you pass this key then slider images will be arrange according @input: slideOrderType
     }
 ];
 ```
@@ -113,6 +114,7 @@ For angular version 8 or less, use `"skipLibCheck": true` in `tsconfig.json` for
 | videoAutoPlay | @Input | boolean | Auto play popup video | false |
 | showVideoControls | @Input | boolean | Hide video control if value is `false` | true |
 | direction | @Input | string | Set text direction. You can pass **rtl** / **ltr** / **auto** | ltr |
+| slideOrderType | @Input | string | Arrange slider images in Ascending order by `ASC` and in Descending order by `DESC`. `order` key must be exist with image object. | ASC |
 | imageClick | @Output | n/a | Executes when click event on slider image. Return image index. | n/a |
 | arrowClick | @Output | n/a | Executes when click on slider left/right arrow. | n/a |
 | lightboxClose | @Output | n/a | Executes when lightbox close. | n/a |
