@@ -23,6 +23,8 @@ export class AppComponent {
     sliderSlideImage: Number = 1;
     sliderAnimationSpeed: any = 1;
     imageObject;
+    slideOrderEnable:boolean = true;
+    slideOrderType:string = 'DESC';
 
     constructor(private heroService: HeroService) {
         this.setImageObject();
@@ -37,11 +39,12 @@ export class AppComponent {
     }
 
     setImageObject() {
-        this.heroService.getImages().subscribe((data: any) => {
-        setTimeout(() => {
-            this.imageObject = data;
-        }, 3000);
-        });
+        // this.heroService.getImages().subscribe((data: any) => {
+        // setTimeout(() => {
+        //     this.imageObject = data;
+        // }, 3000);
+        // });
+        this.imageObject = this.heroService.getImagesWithOrder();
     }
 
     imageOnClick(index) {
