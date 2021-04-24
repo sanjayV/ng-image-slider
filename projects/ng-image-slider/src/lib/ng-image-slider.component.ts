@@ -61,6 +61,11 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
     private swipeCoord?: [number, number];
     private swipeTime?: number;
 
+    // for lightbox
+    ligthboxShow: boolean = false;
+    activeImageIndex: number = -1;
+    visiableImageIndex: number = 0;
+
     @ViewChild('sliderMain', { static: false }) sliderMain;
     @ViewChild('imageDiv', { static: false }) imageDiv;
 
@@ -140,17 +145,17 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
     @Input() arrowKeyMove: boolean = true;
     @Input() manageImageRatio: boolean = false;
     @Input() showVideoControls: boolean = true;
+    @Input() set defaultActiveImage(activeIndex: number) {
+        if (typeof activeIndex === 'number' && activeIndex > -1) {
+            this.activeImageIndex = activeIndex;
+        }
+    }
 
     // @Outputs
     @Output() imageClick = new EventEmitter<number>();
     @Output() arrowClick = new EventEmitter<string>();
     @Output() lightboxArrowClick = new EventEmitter<object>();
     @Output() lightboxClose = new EventEmitter<object>();
-
-    // for lightbox
-    ligthboxShow: boolean = false;
-    activeImageIndex: number = -1;
-    visiableImageIndex: number = 0;
 
     @HostListener('window:resize', ['$event'])
     onResize(event) {
