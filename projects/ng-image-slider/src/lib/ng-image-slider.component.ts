@@ -154,7 +154,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
 
     // @Outputs
     @Output() imageClick = new EventEmitter<number>();
-    @Output() arrowClick = new EventEmitter<string>();
+    @Output() arrowClick = new EventEmitter<object>();
     @Output() lightboxArrowClick = new EventEmitter<object>();
     @Output() lightboxClose = new EventEmitter<object>();
 
@@ -346,8 +346,8 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
                 this.prevImg();
             }
 
-            this.arrowClick.emit(PREV_ARROW_CLICK_MESSAGE);
-            this.sliderArrowDisableTeam();
+            //this.arrowClick.emit(PREV_ARROW_CLICK_MESSAGE);
+            this.sliderArrowDisableTeam(PREV_ARROW_CLICK_MESSAGE);
             this.getVisiableIndex();
         }
     }
@@ -360,8 +360,8 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
                 this.nextImg();
             }
 
-            this.arrowClick.emit(NEXT_ARROW_CLICK_MESSAGE);
-            this.sliderArrowDisableTeam();
+            //this.arrowClick.emit(NEXT_ARROW_CLICK_MESSAGE);
+            this.sliderArrowDisableTeam(NEXT_ARROW_CLICK_MESSAGE);
             this.getVisiableIndex();
         }
     }
@@ -419,17 +419,18 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
     /**
      * Disable slider left/right arrow when image moving
      */
-    sliderArrowDisableTeam() {
+    sliderArrowDisableTeam(msg) {
         this.sliderNextDisable = true;
         this.sliderPrevDisable = true;
         setTimeout(() => {
-            this.nextPrevSliderButtonDisable();
+            this.nextPrevSliderButtonDisable(msg);
         }, this.speed * 1000);
     }
 
-    nextPrevSliderButtonDisable() {
+    nextPrevSliderButtonDisable(msg?) {
         this.sliderNextDisable = false;
         this.sliderPrevDisable = false;
+        const actionMsg = {};
         if (!this.infinite) {
             if (this.imageParentDivWidth + this.leftPos <= this.sliderMainDivWidth) {
                 this.sliderNextDisable = true;
@@ -438,6 +439,16 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
             if (this.leftPos >= 0) {
                 this.sliderPrevDisable = true;
             }
+
+            actionMsg['prevDisable'] = this.sliderPrevDisable;
+            actionMsg['nextDisable'] = this.sliderNextDisable;
+        } 
+        
+        if (msg){
+            this.arrowClick.emit({
+                action: msg,
+                ...actionMsg
+            });
         }
     }
 
