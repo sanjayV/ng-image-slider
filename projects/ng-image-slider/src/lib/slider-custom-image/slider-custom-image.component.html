@@ -4,10 +4,12 @@
         *ngIf="type === IMAGE && fileUrl"
         [src]="fileUrl"
         [alt]="alt"
-        [title]="title">
+        [title]="title"
+        [attr.loading]="lazy == true ? 'lazy' : null">
     <iframe class="youtube"
         *ngIf="type === YOUTUBE && fileUrl"
         [src]="fileUrl"
+        [attr.loading]="lazy == true ? 'lazy' : null"
         frameborder="0"
         allow="autoplay"
         allowfullscreen></iframe>

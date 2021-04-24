@@ -22,7 +22,8 @@
                         [alt]="img?.alt || img?.title || ''"
                         [title]="img?.title || img?.alt || ''"
                         [direction]="textDirection"
-                        [ratio]="manageImageRatio">
+                        [ratio]="manageImageRatio"
+                        [lazy]="lazyLoading">
                     </custom-img>
                     <div [dir]="textDirection" class="caption" *ngIf="img?.title">{{ img?.title }}</div>
                 </div>

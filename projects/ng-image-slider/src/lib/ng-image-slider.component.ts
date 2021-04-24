@@ -150,6 +150,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
             this.activeImageIndex = activeIndex;
         }
     }
+    @Input() lazyLoading: boolean = false;
 
     // @Outputs
     @Output() imageClick = new EventEmitter<number>();
