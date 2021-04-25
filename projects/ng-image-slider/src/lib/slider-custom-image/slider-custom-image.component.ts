@@ -24,6 +24,7 @@ export class SliderCustomImageComponent implements OnChanges {
     fileUrl: SafeResourceUrl = '';
     fileExtension = '';
     type = this.IMAGE;
+    imageLoading:boolean = true;
 
     // @inputs
     @Input() showVideo: boolean = false;
@@ -62,6 +63,7 @@ export class SliderCustomImageComponent implements OnChanges {
 
     setUrl() {
         const url = this.imageUrl;
+        this.imageLoading = true;
         this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
         this.fileExtension = url.split('.').pop().split(/\#|\?/)[0];
         if (this.imageSliderService.base64FileExtension(url)

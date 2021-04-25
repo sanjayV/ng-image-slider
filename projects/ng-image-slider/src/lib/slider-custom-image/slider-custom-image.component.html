@@ -1,5 +1,6 @@
-<div *ngIf="fileUrl" class="custom-image-main">
+<div *ngIf="fileUrl" class="custom-image-main" [ngClass]="{'ng-fullimage-loading': imageLoading}">
     <img class="image"
+        (load)="imageLoading = false"
         [ngClass]="{'ratio': ratio}"
         *ngIf="type === IMAGE && fileUrl"
         [src]="fileUrl"
