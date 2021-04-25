@@ -115,8 +115,10 @@ For angular version 8 or less, use `"skipLibCheck": true` in `tsconfig.json` for
 | showVideoControls | @Input | boolean | Hide video control if value is `false` | true |
 | direction | @Input | string | Set text direction. You can pass **rtl** / **ltr** / **auto** | ltr |
 | slideOrderType | @Input | string | Arrange slider images in Ascending order by `ASC` and in Descending order by `DESC`. `order` key must be exist with image object. | ASC |
+| lazyLoading | @Input | boolean | Lazy load images and Iframe if true. | false |
+| defaultActiveImage | @Input | number | Set image as selected on load. | null |
 | imageClick | @Output | n/a | Executes when click event on slider image. Return image index. | n/a |
-| arrowClick | @Output | n/a | Executes when click on slider left/right arrow. | n/a |
+| arrowClick | @Output | n/a | Executes when click on slider left/right arrow. Returns current event name and next/previous button disabled status. | n/a |
 | lightboxClose | @Output | n/a | Executes when lightbox close. | n/a |
 | lightboxArrowClick | @Output | n/a | Executes when click on lightbox next/previous arrow. | n/a |
 
