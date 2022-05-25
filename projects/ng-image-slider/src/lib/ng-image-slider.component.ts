@@ -267,9 +267,16 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
             });
             this.ligthboxImageObj = [...this.imageObj];
             this.totalImages = this.imageObj.length;
-            // this.imageParentDivWidth = imgObj.length * this.sliderImageSizeWithPadding;
-            this.setSliderWidth();
+            // this.imageParentDivWidth = imgObj.length * this.sliderImageSizeWithPadding;    
+        }else {
+            this.imageObj = [];
+            this.ligthboxImageObj = [];
+            this.totalImages = 0;
+            this.imageParentDivWidth = 0;
+            this.activeImageIndex = 0;
         }
+      
+        this.setSliderWidth();
     }
 
     setSliderWidth() {
