@@ -293,18 +293,19 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
                 }
             }
         }
-
-        if (window && window.innerHeight
-            && this.sliderImageReceivedHeight) {
-            if (typeof this.sliderImageReceivedHeight === 'number') {
-                this.sliderImageHeight = this.sliderImageReceivedHeight;
-            } else if (typeof this.sliderImageReceivedHeight === 'string') {
-                if (this.sliderImageReceivedHeight.indexOf('px') >= 0) {
-                    this.sliderImageHeight = parseFloat(this.sliderImageReceivedHeight);
-                } else if (this.sliderImageReceivedHeight.indexOf('%') >= 0) {
-                    this.sliderImageHeight = +((window.innerHeight * parseFloat(this.sliderImageReceivedHeight)) / 100).toFixed(2);
-                } else if (parseFloat(this.sliderImageReceivedHeight)) {
-                    this.sliderImageHeight = parseFloat(this.sliderImageReceivedHeight);
+        if (isPlatformBrowser(PLATFORM_ID)) {
+            if (window && window.innerHeight
+                && this.sliderImageReceivedHeight) {
+                if (typeof this.sliderImageReceivedHeight === 'number') {
+                    this.sliderImageHeight = this.sliderImageReceivedHeight;
+                } else if (typeof this.sliderImageReceivedHeight === 'string') {
+                    if (this.sliderImageReceivedHeight.indexOf('px') >= 0) {
+                        this.sliderImageHeight = parseFloat(this.sliderImageReceivedHeight);
+                    } else if (this.sliderImageReceivedHeight.indexOf('%') >= 0) {
+                        this.sliderImageHeight = +((window.innerHeight * parseFloat(this.sliderImageReceivedHeight)) / 100).toFixed(2);
+                    } else if (parseFloat(this.sliderImageReceivedHeight)) {
+                        this.sliderImageHeight = parseFloat(this.sliderImageReceivedHeight);
+                    }
                 }
             }
         }
