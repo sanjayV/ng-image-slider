@@ -268,8 +268,15 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
             this.ligthboxImageObj = [...this.imageObj];
             this.totalImages = this.imageObj.length;
             // this.imageParentDivWidth = imgObj.length * this.sliderImageSizeWithPadding;
-            this.setSliderWidth();
+        } else {
+            this.imageObj = [];
+            this.ligthboxImageObj = [];
+            this.totalImages = 0;
+            this.imageParentDivWidth = 0;
+            this.activeImageIndex = 0;
         }
+
+        this.setSliderWidth();
     }
 
     setSliderWidth() {
@@ -443,8 +450,8 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
 
             actionMsg['prevDisable'] = this.sliderPrevDisable;
             actionMsg['nextDisable'] = this.sliderNextDisable;
-        } 
-        
+        }
+
         if (msg){
             this.arrowClick.emit({
                 action: msg,
