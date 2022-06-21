@@ -170,7 +170,10 @@
         }
     }
 }
-
+.close-outside{
+    height: 100% ;
+    width: 100% ;
+}
 @media (max-width: 1199px) {
     .ng-image-slider {
         .ng-image-slider-container {
