@@ -1,55 +1,47 @@
 {
-  "name": "ng-image-slider",
-  "version": "2.8.0",
-  "description": "Angular Image slider with lightbox. An Angular responsive image slider with lightbox popup. Also support youtube url, image base64 string and mp4 video urls and base64 string.",
-  "license": "MIT",
-  "scripts": {
-    "ng": "ng",
-    "start": "ng serve --port 4100 --host 0.0.0.0",
-    "build": "ng build ng-image-slider --watch --prod=false",
-    "build:prod": "ng build ng-image-slider --configuration=production --prod",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
-  },
-  "files": [
-    "dist/ng-image-slider"
-  ],
-  "dependencies": {
-    "@angular/animations": "^9.1.12",
-    "@angular/common": "^9.1.12",
-    "@angular/compiler": "^9.1.12",
-    "@angular/core": "^9.1.12",
-    "@angular/forms": "^9.1.12",
-    "@angular/platform-browser": "^9.1.12",
-    "@angular/platform-browser-dynamic": "^9.1.12",
-    "@angular/router": "^9.1.12",
-    "core-js": "^3.2.1",
-    "rxjs": "^6.6.0",
-    "tslib": "^1.13.0",
-    "zone.js": "~0.10.3"
-  },
-  "devDependencies": {
-    "@angular-devkit/build-angular": "~0.901.12",
-    "@angular-devkit/build-ng-packagr": "~0.901.12",
-    "@angular/cli": "^9.1.12",
-    "@angular/compiler-cli": "^9.1.12",
-    "@angular/language-service": "^9.1.12",
-    "@types/jasmine": "~3.4.0",
-    "@types/jasminewd2": "~2.0.2",
-    "@types/node": "~12.7.2",
-    "codelyzer": "^5.0.1",
-    "jasmine-core": "~3.4.0",
-    "jasmine-spec-reporter": "~4.2.1",
-    "karma": "~4.2.0",
-    "karma-chrome-launcher": "~3.1.0",
-    "karma-coverage-istanbul-reporter": "^2.1.0",
-    "karma-jasmine": "~2.0.1",
-    "karma-jasmine-html-reporter": "^1.4.2",
-    "ng-packagr": "^9.1.5",
-    "protractor": "~5.4.2",
-    "ts-node": "~8.3.0",
-    "tsickle": "^0.38.1",
-    "typescript": "~3.8.3"
+    "name": "ng-image-slider",
+    "version": "3.0.0",
+    "description": "Angular Image slider with lightbox. An Angular responsive image slider with lightbox popup. Also support youtube url, image base64 string and mp4 video urls and base64 string.",
+    "license": "MIT",
+    "scripts": {
+      "ng": "ng",
+      "start": "ng serve --port 4100 --host 0.0.0.0",
+      "build": "ng build ng-image-slider --watch --prod=false",
+      "build:prod": "ng build ng-image-slider --configuration=production --prod",
+      "test": "ng test",
+      "lint": "ng lint",
+      "e2e": "ng e2e"
+    },
+    "files": [
+      "dist/ng-image-slider"
+    ],
+    "dependencies": {
+      "@angular-devkit/schematics": "^14.0.2",
+      "@angular/animations": "^11.0.7",
+      "@angular/common": "^11.0.7",
+      "@angular/compiler": "^11.0.7",
+      "@angular/core": "^11.0.7",
+      "@angular/forms": "^11.0.7",
+      "@angular/platform-browser": "^11.0.7",
+      "@angular/platform-browser-dynamic": "^11.0.7",
+      "@angular/router": "^11.0.7",
+      "core-js": "^3.4.5",
+      "rxjs": "^6.5.3",
+      "tslib": "^2.0.0",
+      "zone.js": "~0.10.2"
+    },
+    "devDependencies": {
+      "@angular-devkit/build-angular": "~0.1100.7",
+      "@angular-devkit/core": "^11.0.7",
+      "@angular/cli": "^11.1.0",
+      "@angular/compiler-cli": "^11.0.7",
+      "@angular/language-service": "^11.0.7",
+      "@types/node": "^12.11.1",
+      "codelyzer": "^6.0.0",
+      "ng-packagr": "^11.0.0",
+      "protractor": "~7.0.0",
+      "ts-node": "~8.3.0",
+      "tslint": "~6.1.0",
+      "typescript": "~4.0.5"
+    }
   }
-}

@@ -3,6 +3,8 @@
 An Angular responsive image slider with lightbox popup.
 Also support youtube and mp4 video urls.
 
+(Compatible with Angular Version: 11)
+
 ## Features!
 
   - Responsive (support images width and height in both % and px)
@@ -139,11 +141,11 @@ import { NgImageSliderComponent } from 'ng-image-slider';
 class Sample {
     @ViewChild('nav') slider: NgImageSliderComponent;
     imageObject = [{...}]
-  
+
     prevImageClick() {
         this.slider.prev();
     }
-    
+
     nextImageClick() {
         this.slider.next();
     }
@@ -151,6 +153,6 @@ class Sample {
 ```
 
 ## License
-As Angular itself, this module is released under the permissive [MIT license](http://revolunet.mit-license.org). 
+As Angular itself, this module is released under the permissive [MIT license](http://revolunet.mit-license.org).
 
 Your contributions and suggestions are always welcome :)
