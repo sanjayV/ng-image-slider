@@ -1,47 +1,47 @@
 {
     "name": "ng-image-slider",
-    "version": "3.0.1",
+    "version": "4.0.0",
     "description": "Angular Image slider with lightbox. An Angular responsive image slider with lightbox popup. Also support youtube url, image base64 string and mp4 video urls and base64 string.",
     "license": "MIT",
     "scripts": {
-      "ng": "ng",
-      "start": "ng serve --port 4100 --host 0.0.0.0",
-      "build": "ng build ng-image-slider --watch --prod=false",
-      "build:prod": "ng build ng-image-slider --configuration=production --prod",
-      "test": "ng test",
-      "lint": "ng lint",
-      "e2e": "ng e2e"
+        "ng": "ng",
+        "start": "ng serve --port 4100 --host 0.0.0.0",
+        "build": "ng build ng-image-slider --watch --configuration production",
+        "build:prod": "ng build ng-image-slider --configuration production --prod",
+        "test": "ng test",
+        "lint": "ng lint",
+        "e2e": "ng e2e"
     },
     "files": [
-      "dist/ng-image-slider"
+        "dist/ng-image-slider"
     ],
     "dependencies": {
-      "@angular-devkit/schematics": "^14.0.2",
-      "@angular/animations": "^11.0.7",
-      "@angular/common": "^11.0.7",
-      "@angular/compiler": "^11.0.7",
-      "@angular/core": "^11.0.7",
-      "@angular/forms": "^11.0.7",
-      "@angular/platform-browser": "^11.0.7",
-      "@angular/platform-browser-dynamic": "^11.0.7",
-      "@angular/router": "^11.0.7",
-      "core-js": "^3.4.5",
-      "rxjs": "^6.5.3",
-      "tslib": "^2.0.0",
-      "zone.js": "~0.10.2"
+        "@angular-devkit/schematics": "^14.0.2",
+        "@angular/animations": "^12.2.16",
+        "@angular/common": "^12.2.16",
+        "@angular/compiler": "^12.2.16",
+        "@angular/core": "^12.2.16",
+        "@angular/forms": "^12.2.16",
+        "@angular/platform-browser": "^12.2.16",
+        "@angular/platform-browser-dynamic": "^12.2.16",
+        "@angular/router": "^12.2.16",
+        "core-js": "^3.4.5",
+        "rxjs": "^6.5.3",
+        "tslib": "^2.0.0",
+        "zone.js": "~0.11.4"
     },
     "devDependencies": {
-      "@angular-devkit/build-angular": "~0.1100.7",
-      "@angular-devkit/core": "^11.0.7",
-      "@angular/cli": "^11.1.0",
-      "@angular/compiler-cli": "^11.0.7",
-      "@angular/language-service": "^11.0.7",
-      "@types/node": "^12.11.1",
-      "codelyzer": "^6.0.0",
-      "ng-packagr": "^11.0.0",
-      "protractor": "~7.0.0",
-      "ts-node": "~8.3.0",
-      "tslint": "~6.1.0",
-      "typescript": "~4.0.5"
+        "@angular-devkit/build-angular": "~12.2.17",
+        "@angular-devkit/core": "^12.2.17",
+        "@angular/cli": "^12.2.17",
+        "@angular/compiler-cli": "^12.2.16",
+        "@angular/language-service": "^12.2.16",
+        "@types/node": "^12.11.1",
+        "codelyzer": "^6.0.0",
+        "ng-packagr": "^12.2.7",
+        "protractor": "~7.0.0",
+        "ts-node": "~8.3.0",
+        "tslint": "~6.1.0",
+        "typescript": "~4.3.5"
     }
-  }
+}
