@@ -167,7 +167,6 @@
       }
     }
   },
-  "defaultProject": "imageg-slider",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
