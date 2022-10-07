@@ -300,7 +300,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
                 }
             }
         }
-        if (isPlatformBrowser(PLATFORM_ID)) {
+        if (isPlatformBrowser(this.platformId)) {
             if (window && window.innerHeight
                 && this.sliderImageReceivedHeight) {
                 if (typeof this.sliderImageReceivedHeight === 'number') {
