@@ -319,7 +319,8 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
         this.sliderImageSizeWithPadding = this.sliderImageWidth + (this.imageMargin * 2);
         this.imageParentDivWidth = this.imageObj.length * this.sliderImageSizeWithPadding;
         if (this.imageDiv && this.imageDiv.nativeElement && this.imageDiv.nativeElement.offsetWidth) {
-            this.leftPos = this.infinite ? -1 * this.sliderImageSizeWithPadding * this.slideImageCount : 0;
+            const staticLeftPos = 0-((this.sliderImageSizeWithPadding * this.visiableImageIndex) + (this.imageMargin*2))
+            this.leftPos = this.infinite ? -1 * this.sliderImageSizeWithPadding * this.slideImageCount : staticLeftPos;
         }
         this.nextPrevSliderButtonDisable();
     }
