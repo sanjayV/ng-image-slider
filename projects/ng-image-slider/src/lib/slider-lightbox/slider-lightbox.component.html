@@ -14,7 +14,7 @@
                     (touchstart)="swipeLightboxImg($event, 'start')"
                     (touchend)="swipeLightboxImg($event, 'end')"
                     #lightboxImageDiv>
-                   <div class="close-outside" (click)="closeLightbox()"></div>
+                   <div class="close-outside" (click)="!img?.video && closeLightbox()"></div>
                     <custom-img
                         [imageUrl]="img?.image || img?.video"
                         [isVideo]="!!(img?.posterImage || img?.video)"
