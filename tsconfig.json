@@ -5,29 +5,18 @@
     "downlevelIteration": true,
     "importHelpers": true,
     "module": "esnext",
-    "outDir": "./dist/ng-image-slider",
+    "outDir": "./dist/ng-image-slider-v16",
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "target": "ES2022",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2017",
-      "dom"
-    ],
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["es2017", "dom"],
     "paths": {
-      "ng-image-slider": [
-        "dist/ng-image-slider"
-      ],
-      "ng-image-slider/*": [
-        "dist/ng-image-slider/*"
-      ],
-      "core-js/es7/reflect": [
-        "node_modules/core-js/proposals/reflect-metadata"
-      ]
+      "ng-image-slider-v16": ["dist/ng-image-slider-v16"],
+      "ng-image-slider-v16/*": ["dist/ng-image-slider-v16/*"],
+      "core-js/es7/reflect": ["node_modules/core-js/proposals/reflect-metadata"]
     },
     "useDefineForClassFields": false
   }
