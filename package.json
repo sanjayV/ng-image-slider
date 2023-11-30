@@ -13,7 +13,7 @@
     "e2e": "ng e2e"
   },
   "files": [
-    "dist/ng-image-slider-v16"
+    "dist/ng-image-slider"
   ],
   "dependencies": {
     "@angular-devkit/schematics": "^16.2.2",

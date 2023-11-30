@@ -25,7 +25,7 @@ Also support youtube and mp4 video urls.
 
 # Installation
 
-`npm install ng-image-slider-v16 --save`
+`npm install ng-image-slider --save`
 
 # Setup :
 
