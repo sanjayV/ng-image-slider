@@ -33,38 +33,38 @@ const NEXT_ARROW_CLICK_MESSAGE = 'next',
 })
 export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, AfterViewInit, OnDestroy {
     // for slider
-    sliderMainDivWidth: number = 0;
-    imageParentDivWidth: number = 0;
+    sliderMainDivWidth = 0;
+    imageParentDivWidth = 0;
     imageObj: Array<object> = [];
     ligthboxImageObj: Array<object> = [];
-    totalImages: number = 0;
-    leftPos: number = 0;
-    effectStyle: string = 'all 1s ease-in-out';
-    speed: number = 1; // default speed in second
-    sliderPrevDisable: boolean = false;
-    sliderNextDisable: boolean = false;
-    slideImageCount: number = 1;
-    sliderImageWidth: number = 205;
+    totalImages = 0;
+    leftPos = 0;
+    effectStyle = 'all 1s ease-in-out';
+    speed = 1; // default speed in second
+    sliderPrevDisable = false;
+    sliderNextDisable = false;
+    slideImageCount = 1;
+    sliderImageWidth = 205;
     sliderImageReceivedWidth: number | string = 205;
-    sliderImageHeight: number = 200;
+    sliderImageHeight = 200;
     sliderImageReceivedHeight: number | string = 205;
     sliderImageSizeWithPadding = 211;
-    autoSlideCount: number = 0;
-    stopSlideOnHover: boolean = true;
+    autoSlideCount = 0;
+    stopSlideOnHover = true;
     autoSlideInterval;
-    showArrowButton: boolean = true;
-    textDirection: string = 'ltr';
-    imageMargin: number = 3;
-    sliderOrderType:string ='ASC';
+    showArrowButton = true;
+    textDirection = 'ltr';
+    imageMargin = 3;
+    sliderOrderType = 'ASC';
 
     // for swipe event
     private swipeCoord?: [number, number];
     private swipeTime?: number;
 
     // for lightbox
-    ligthboxShow: boolean = false;
-    activeImageIndex: number = -1;
-    visiableImageIndex: number = 0;
+    ligthboxShow = false;
+    activeImageIndex = -1;
+    visiableImageIndex = 0;
 
     @ViewChild('sliderMain', { static: false }) sliderMain;
     @ViewChild('imageDiv', { static: false }) imageDiv;
@@ -86,8 +86,8 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
             }
         }
     }
-    @Input() infinite: boolean = false;
-    @Input() imagePopup: boolean = true;
+    @Input() infinite = false;
+    @Input() imagePopup = true;
     @Input()
     set direction(dir: string) {
         if (dir) {
@@ -135,22 +135,22 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
         }
     }
 
-    @Input() set orderType(data:string){
+    @Input() set orderType(data: string) {
         if (data !== undefined && typeof data === 'string') {
             this.sliderOrderType = data.toUpperCase();
         }
     }
-    @Input() videoAutoPlay: boolean = false;
-    @Input() paginationShow: boolean = false;
-    @Input() arrowKeyMove: boolean = true;
-    @Input() manageImageRatio: boolean = false;
-    @Input() showVideoControls: boolean = true;
+    @Input() videoAutoPlay = false;
+    @Input() paginationShow = false;
+    @Input() arrowKeyMove = true;
+    @Input() manageImageRatio = false;
+    @Input() showVideoControls = true;
     @Input() set defaultActiveImage(activeIndex: number) {
         if (typeof activeIndex === 'number' && activeIndex > -1) {
             this.activeImageIndex = activeIndex;
         }
     }
-    @Input() lazyLoading: boolean = false;
+    @Input() lazyLoading = false;
 
     // @Outputs
     @Output() imageClick = new EventEmitter<number>();
@@ -253,11 +253,11 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
         if (imgObj && imgObj instanceof Array && imgObj.length) {
             const sliderOrderEnable = imgObj.find((img) => {
                 if (img.hasOwnProperty('order')) {
-                    return true
+                    return true;
                 }
             });
 
-            if(sliderOrderEnable){
+            if (sliderOrderEnable) {
                 imgObj = this.imageSliderService.orderArray(imgObj, this.sliderOrderType.toUpperCase());
             }
 
@@ -319,7 +319,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
         this.sliderImageSizeWithPadding = this.sliderImageWidth + (this.imageMargin * 2);
         this.imageParentDivWidth = this.imageObj.length * this.sliderImageSizeWithPadding;
         if (this.imageDiv && this.imageDiv.nativeElement && this.imageDiv.nativeElement.offsetWidth) {
-            const staticLeftPos = 0-((this.sliderImageSizeWithPadding * this.visiableImageIndex) + (this.imageMargin*2))
+            const staticLeftPos = 0 - ((this.sliderImageSizeWithPadding * this.visiableImageIndex) + (this.imageMargin * 2));
             this.leftPos = this.infinite ? -1 * this.sliderImageSizeWithPadding * this.slideImageCount : staticLeftPos;
         }
         this.nextPrevSliderButtonDisable();
@@ -355,7 +355,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
                 this.prevImg();
             }
 
-            //this.arrowClick.emit(PREV_ARROW_CLICK_MESSAGE);
+            // this.arrowClick.emit(PREV_ARROW_CLICK_MESSAGE);
             this.sliderArrowDisableTeam(PREV_ARROW_CLICK_MESSAGE);
             this.getVisiableIndex();
         }
@@ -369,7 +369,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
                 this.nextImg();
             }
 
-            //this.arrowClick.emit(NEXT_ARROW_CLICK_MESSAGE);
+            // this.arrowClick.emit(NEXT_ARROW_CLICK_MESSAGE);
             this.sliderArrowDisableTeam(NEXT_ARROW_CLICK_MESSAGE);
             this.getVisiableIndex();
         }
@@ -453,7 +453,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
             actionMsg['nextDisable'] = this.sliderNextDisable;
         }
 
-        if (msg){
+        if (msg) {
             this.arrowClick.emit({
                 action: msg,
                 ...actionMsg
@@ -473,7 +473,7 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
     close() {
         this.ligthboxShow = false;
         this.elRef.nativeElement.ownerDocument.body.style.overflow = '';
-        this.lightboxClose.emit()
+        this.lightboxClose.emit();
         this.imageAutoSlide();
     }
 

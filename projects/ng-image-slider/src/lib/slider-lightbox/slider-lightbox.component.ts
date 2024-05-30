@@ -17,26 +17,26 @@ import {
 import { DOCUMENT } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 
-const LIGHTBOX_NEXT_ARROW_CLICK_MESSAGE = 'lightbox next',	
-    LIGHTBOX_PREV_ARROW_CLICK_MESSAGE = 'lightbox previous'
+const LIGHTBOX_NEXT_ARROW_CLICK_MESSAGE = 'lightbox next',
+    LIGHTBOX_PREV_ARROW_CLICK_MESSAGE = 'lightbox previous';
 
 @Component({
     selector: 'slider-lightbox',
     templateUrl: './slider-lightbox.component.html'
 })
 export class SliderLightboxComponent implements OnInit, AfterViewInit, OnDestroy {
-    totalImages: number = 0;
-    nextImageIndex: number = -1;
-    popupWidth: number = 1200;
-    marginLeft: number = 0;
-    imageFullscreenView: boolean = false;
-    lightboxPrevDisable: boolean = false;
-    lightboxNextDisable: boolean = false;
-    showLoading: boolean = true;
-    effectStyle: string = 'none';
-    speed: number = 1; // default speed in second
-    title: string = '';
-    currentImageIndex: number = 0;
+    totalImages = 0;
+    nextImageIndex = -1;
+    popupWidth = 1200;
+    marginLeft = 0;
+    imageFullscreenView = false;
+    lightboxPrevDisable = false;
+    lightboxNextDisable = false;
+    showLoading = true;
+    effectStyle = 'none';
+    speed = 1; // default speed in second
+    title = '';
+    currentImageIndex = 0;
 
     // for swipe event
     private swipeLightboxImgCoord?: [number, number];
@@ -55,18 +55,18 @@ export class SliderLightboxComponent implements OnInit, AfterViewInit, OnDestroy
         this.nextPrevDisable();
     }
     @Input()
-    set show(visiableFlag: boolean) {
-        this.imageFullscreenView = visiableFlag;
+    set show(visibleFlag: boolean) {
+        this.imageFullscreenView = visibleFlag;
         this.elRef.nativeElement.ownerDocument.body.style.overflow = '';
-        if (visiableFlag === true) {
+        if (visibleFlag === true) {
             this.elRef.nativeElement.ownerDocument.body.style.overflow = 'hidden';
             // this.getImageData();
             this.setPopupSliderWidth();
         }
     }
-    @Input() videoAutoPlay: boolean = false;
-    @Input() direction: string = 'ltr';
-    @Input() paginationShow: boolean = false;
+    @Input() videoAutoPlay = false;
+    @Input() direction = 'ltr';
+    @Input() paginationShow = false;
     @Input()
     set animationSpeed(data: number) {
         if (data
@@ -76,9 +76,9 @@ export class SliderLightboxComponent implements OnInit, AfterViewInit, OnDestroy
             this.speed = data;
         }
     }
-    @Input() infinite: boolean = false;
-    @Input() arrowKeyMove: boolean = true;
-    @Input() showVideoControls: boolean = true;
+    @Input() infinite = false;
+    @Input() arrowKeyMove = true;
+    @Input() showVideoControls = true;
 
     // @Output
     @Output() close = new EventEmitter<any>();

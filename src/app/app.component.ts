@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
-import { NgImageSliderModule, NgImageSliderComponent } from 'ng-image-slider';
-import { HeroService } from "./hero.service";
+import { HeroService } from './hero.service';
+import {NgImageSliderComponent} from '../../projects/ng-image-slider/src/lib/ng-image-slider.component';
 
 @Component({
     selector: 'app-root',
