@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { NgImageSliderService } from './../ng-image-slider.service';
+import { NgImageSliderService } from '../ng-image-slider.service';
 
 const youtubeRegExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/,
     validFileExtensions = ['jpeg', 'jpg', 'gif', 'png'],
@@ -24,22 +24,22 @@ export class SliderCustomImageComponent implements OnChanges {
     fileUrl: SafeResourceUrl = '';
     fileExtension = '';
     type = this.IMAGE;
-    imageLoading:boolean = true;
+    imageLoading = true;
 
     // @inputs
-    @Input() showVideo: boolean = false;
-    @Input() videoAutoPlay: boolean = false;
-    @Input() showVideoControls: number = 1;
+    @Input() showVideo = false;
+    @Input() videoAutoPlay = false;
+    @Input() showVideoControls = 1;
     @Input() currentImageIndex: number;
     @Input() imageIndex: number;
-    @Input() speed: number = 1;
+    @Input() speed = 1;
     @Input() imageUrl;
     @Input() isVideo = false;
     @Input() alt: String = '';
     @Input() title: String = '';
-    @Input() direction: string = 'ltr';
-    @Input() ratio: boolean = false;
-    @Input() lazy: boolean = false;
+    @Input() direction = 'ltr';
+    @Input() ratio = false;
+    @Input() lazy = false;
 
     constructor(
         public imageSliderService: NgImageSliderService,
@@ -67,7 +67,7 @@ export class SliderCustomImageComponent implements OnChanges {
         this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
         this.fileExtension = url.split('.').pop().split(/\#|\?/)[0];
         if (this.imageSliderService.base64FileExtension(url)
-        && (validFileExtensions.indexOf(this.imageSliderService.base64FileExtension(url).toLowerCase()) > -1 
+        && (validFileExtensions.indexOf(this.imageSliderService.base64FileExtension(url).toLowerCase()) > -1
         || validVideoExtensions.indexOf(this.imageSliderService.base64FileExtension(url).toLowerCase()) > -1)) {
             this.fileExtension = this.imageSliderService.base64FileExtension(url);
         }
@@ -86,7 +86,7 @@ export class SliderCustomImageComponent implements OnChanges {
         } else if (this.fileExtension && validVideoExtensions.indexOf(this.fileExtension.toLowerCase()) > -1) {
             this.type = this.VIDEO;
             if (this.videoAutoPlay && document.getElementById(`video_${this.imageIndex}`)) {
-                const videoObj:any = document.getElementById(`video_${this.imageIndex}`);
+                const videoObj: any = document.getElementById(`video_${this.imageIndex}`);
                 setTimeout(() => {
                     videoObj.play();
                 }, this.speed * 1000);
