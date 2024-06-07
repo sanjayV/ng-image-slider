@@ -52,7 +52,7 @@ export class SliderLightboxComponent implements OnInit, AfterViewInit, OnDestroy
         if (index !== undefined && index > -1 && index < this.images.length) {
             this.currentImageIndex = index;
         }
-        this.nextPrevDisable();
+        // this.nextPrevDisable();
     }
     @Input()
     set show(visiableFlag: boolean) {
@@ -130,7 +130,7 @@ export class SliderLightboxComponent implements OnInit, AfterViewInit, OnDestroy
             if (typeof (this.currentImageIndex) === 'number' && this.currentImageIndex !== undefined) {
                 this.marginLeft = -1 * this.popupWidth * this.currentImageIndex;
                 this.getImageData();
-                this.nextPrevDisable();
+                //this.nextPrevDisable();
                 setTimeout(() => {
                     this.showLoading = false;
                 }, 500);
@@ -143,45 +143,54 @@ export class SliderLightboxComponent implements OnInit, AfterViewInit, OnDestroy
     }
 
     prevImageLightbox() {
+        // If the current image index is the first image, then set the current image index to the last image index
+        if(this.infinite && this.currentImageIndex === 0) {
+            this.currentImageIndex = this.images.length;
+        }
         this.effectStyle = `all ${this.speed}s ease-in-out`;
-        if (this.currentImageIndex > 0 && !this.lightboxPrevDisable) {
+        if (this.currentImageIndex > 0 ) {//&& !this.lightboxPrevDisable
             this.currentImageIndex--;
             this.prevImage.emit(LIGHTBOX_PREV_ARROW_CLICK_MESSAGE);
             this.marginLeft = -1 * this.popupWidth * this.currentImageIndex;
             this.getImageData();
-            this.nextPrevDisable();
+            // this.nextPrevDisable();
         }
     }
 
     nextImageLightbox() {
+        // If the current image is the last image, then reset the current image index to -1
+        if(this.infinite && this.currentImageIndex === this.images.length - 1) {
+            this.currentImageIndex = -1;
+        }
+
         this.effectStyle = `all ${this.speed}s ease-in-out`;
-        if (this.currentImageIndex < this.images.length - 1 && !this.lightboxNextDisable) {
+        if (this.currentImageIndex < this.images.length - 1 ) {//&& !this.lightboxNextDisable
             this.currentImageIndex++;
             this.nextImage.emit(LIGHTBOX_NEXT_ARROW_CLICK_MESSAGE);
             this.marginLeft = -1 * this.popupWidth * this.currentImageIndex;
             this.getImageData();
-            this.nextPrevDisable();
+            //this.nextPrevDisable();
         }
     }
 
-    nextPrevDisable() {
-        this.lightboxNextDisable = true;
-        this.lightboxPrevDisable = true;
-        setTimeout(() => {
-            this.applyButtonDisableCondition();
-        }, this.speed * 1000);
-    }
+    // nextPrevDisable() {
+    //     this.lightboxNextDisable = true;
+    //     this.lightboxPrevDisable = true;
+    //     setTimeout(() => {
+    //         this.applyButtonDisableCondition();
+    //     }, this.speed * 1000);
+    // }
 
-    applyButtonDisableCondition() {
-        this.lightboxNextDisable = false;
-        this.lightboxPrevDisable = false;
-        if (!this.infinite && this.currentImageIndex >= this.images.length - 1) {
-            this.lightboxNextDisable = true;
-        }
-        if (!this.infinite && this.currentImageIndex <= 0) {
-            this.lightboxPrevDisable = true;
-        }
-    }
+    // applyButtonDisableCondition() {
+    //     this.lightboxNextDisable = false;
+    //     this.lightboxPrevDisable = false;
+    //     if (!this.infinite && this.currentImageIndex >= this.images.length - 1) {
+    //         this.lightboxNextDisable = true;
+    //     }
+    //     if (!this.infinite && this.currentImageIndex <= 0) {
+    //         this.lightboxPrevDisable = true;
+    //     }
+    // }
 
     getImageData() {
         if (this.images
