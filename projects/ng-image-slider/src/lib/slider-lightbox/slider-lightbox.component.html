@@ -23,16 +23,16 @@
                         [speed]="speed"
                         [videoAutoPlay]="videoAutoPlay && i == currentImageIndex"
                         [showVideoControls]="showVideoControls ? 1 : 0"
-                        [alt]="img?.alt || img?.title || ''"
-                        [title]="img?.title || img?.alt || ''"
+                        [alt]="img?.alt || ''"
+                        [title]="img?.title || ''"
                         [showVideo]="true"
                         [direction]="direction">
                     </custom-img>
                 </div>
             </div>
             <div [dir]="direction" [ngClass]="{'show': title, 'hide': !title}" class="caption">{{ title }}</div>
-            <a *ngIf="images.length > 1" [ngClass]="{'disable': lightboxPrevDisable}" class="prev icons prev-icon" (click)="prevImageLightbox()">&lsaquo;</a>
-            <a *ngIf="images.length > 1" [ngClass]="{'disable': lightboxNextDisable}" class="next icons next-icon" (click)="nextImageLightbox()">&rsaquo;</a>
+            <span *ngIf="images.length > 1" [ngClass]="{'disable': lightboxPrevDisable}" class="prev icons prev-icon" (click)="prevImageLightbox()">&lsaquo;</span>
+            <span *ngIf="images.length > 1" [ngClass]="{'disable': lightboxNextDisable}" class="next icons next-icon" (click)="nextImageLightbox()">&rsaquo;</span>
         </div>
     </div>
     <div *ngIf="paginationShow" class="popup-pagination">{{currentImageIndex + 1}} of {{totalImages}}</div>

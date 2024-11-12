@@ -19,8 +19,8 @@
                     #imageDiv>
                     <custom-img [imageUrl]="img?.thumbImage || img?.posterImage || img?.video"
                         [isVideo]="!!(img?.posterImage || img?.video)"
-                        [alt]="img?.alt || img?.title || ''"
-                        [title]="img?.title || img?.alt || ''"
+                        [alt]="img?.alt || ''"
+                        [title]="img?.title || ''"
                         [direction]="textDirection"
                         [ratio]="manageImageRatio"
                         [lazy]="lazyLoading">
@@ -32,18 +32,18 @@
                 *ngIf="!imageObj.length">
                 <span class="ng-image-slider-loader"></span>
             </div>
-            <a *ngIf="showArrowButton && imageObj.length > 1"
+            <span *ngIf="showArrowButton && imageObj.length > 1"
                 [ngClass]="{'disable': sliderPrevDisable}"
                 class="prev icons prev-icon"
                 (click)="prev()"
                 (mouseenter)="stopSlideOnHover && imageMouseEnterHandler()"
-                (mouseleave)="stopSlideOnHover && imageAutoSlide()">&lsaquo;</a>
-            <a *ngIf="showArrowButton && imageObj.length > 1"
+                (mouseleave)="stopSlideOnHover && imageAutoSlide()">&lsaquo;</span>
+            <span *ngIf="showArrowButton && imageObj.length > 1"
                 [ngClass]="{'disable': sliderNextDisable}"
                 class="next icons next-icon"
                 (click)="next()"
                 (mouseenter)="imageMouseEnterHandler()"
-                (mouseleave)="imageAutoSlide()">&rsaquo;</a>
+                (mouseleave)="imageAutoSlide()">&rsaquo;</span>
         </div>
         <div *ngIf="imageObj.length && paginationShow" class="ng-main-pagination">{{visiableImageIndex + 1}} of {{totalImages}}</div>
     </div>
