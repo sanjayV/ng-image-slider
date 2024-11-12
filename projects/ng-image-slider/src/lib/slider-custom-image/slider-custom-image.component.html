@@ -4,8 +4,8 @@
         [ngClass]="{'ratio': ratio}"
         *ngIf="type === IMAGE && fileUrl"
         [src]="fileUrl"
-        [alt]="alt"
-        [title]="title"
+        [attr.alt]="alt ? alt : null"
+        [attr.title]="title ? title : null"
         [attr.loading]="lazy == true ? 'lazy' : null">
     <iframe class="youtube"
         *ngIf="type === YOUTUBE && fileUrl"
