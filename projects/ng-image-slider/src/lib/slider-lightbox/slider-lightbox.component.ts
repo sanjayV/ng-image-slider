@@ -32,7 +32,7 @@ export class SliderLightboxComponent implements OnInit, AfterViewInit, OnDestroy
     imageFullscreenView: boolean = false;
     lightboxPrevDisable: boolean = false;
     lightboxNextDisable: boolean = false;
-    showLoading: boolean = true;
+    showLoading: boolean = false;
     effectStyle: string = 'none';
     speed: number = 1; // default speed in second
     title: string = '';
@@ -181,6 +181,7 @@ export class SliderLightboxComponent implements OnInit, AfterViewInit, OnDestroy
         if (!this.infinite && this.currentImageIndex <= 0) {
             this.lightboxPrevDisable = true;
         }
+        this.cdRef.detectChanges();
     }
 
     getImageData() {
