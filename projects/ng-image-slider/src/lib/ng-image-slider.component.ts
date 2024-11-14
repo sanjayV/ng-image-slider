@@ -56,6 +56,8 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
     textDirection: string = 'ltr';
     imageMargin: number = 3;
     sliderOrderType:string ='ASC';
+    fallbackMainImage: string;
+    fallbackThumbImage: string;
 
     // for swipe event
     private swipeCoord?: [number, number];
@@ -105,6 +107,16 @@ export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, After
         }
     }
     @Input() images: Array<object> = [];
+    @Input() set fallbackImage(images: object) {
+        if (images) {
+            if (images.hasOwnProperty('image')) {
+                this.fallbackMainImage = images['image'];
+            }
+            if (images.hasOwnProperty('thumbImage')) {
+                this.fallbackThumbImage = images['thumbImage'];
+            }
+        }
+    }
     @Input() set slideImage(count) {
         if (count && typeof count === 'number') {
             this.slideImageCount = Math.round(count);

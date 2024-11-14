@@ -6,7 +6,8 @@
         [src]="fileUrl"
         [attr.alt]="alt ? alt : null"
         [attr.title]="title ? title : null"
-        [attr.loading]="lazy == true ? 'lazy' : null">
+        [attr.loading]="lazy == true ? 'lazy' : null"
+        (error)="errorHandler($event)">
     <iframe class="youtube"
         *ngIf="type === YOUTUBE && fileUrl"
         [src]="fileUrl"

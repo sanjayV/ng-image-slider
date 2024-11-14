@@ -3,7 +3,7 @@
 An Angular responsive image slider with lightbox popup.
 Also support youtube and mp4 video urls.
 
-(Compatible with Angular Version: 17)
+(Compatible with Angular Version: 18)
 
 ## Features!
 
@@ -104,6 +104,7 @@ For angular version 8 or less, use `"skipLibCheck": true` in `tsconfig.json` for
 
 | Name | Type | Data Type | Description | Default |
 |------|------|-----------|-------------|---------|
+| fallbackImage | @Input  | object   | Sets fallback image for image load errors. See fallbackImage Input format below. | null |
 | infinite | @Input  | boolean   | Infinite sliding images if value is **true**. | false |
 | imagePopup | @Input  | boolean | Enable image lightBox popup option on slider image click. | true |
 | animationSpeed | @Input  | number | By this user can set slider animation speed. Minimum value is **0.1 second** and Maximum value is **5 second**. | 1 |
@@ -123,6 +124,14 @@ For angular version 8 or less, use `"skipLibCheck": true` in `tsconfig.json` for
 | arrowClick | @Output | n/a | Executes when click on slider left/right arrow. Returns current event name and next/previous button disabled status. | n/a |
 | lightboxClose | @Output | n/a | Executes when lightbox close. | n/a |
 | lightboxArrowClick | @Output | n/a | Executes when click on lightbox next/previous arrow. | n/a |
+
+## fallbackImage Input Format
+```
+{
+    "image": "./slider/mainImage.jpg",
+    "thumbImage": "./slider/thumbImage.jpg"
+}
+```
 
 
 ## Add custom navigation button
