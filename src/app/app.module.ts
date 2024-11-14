@@ -3,20 +3,22 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgImageSliderModule } from 'ng-image-slider';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from "@angular/common/http";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { HeroService } from "./hero.service";
 
 @NgModule({
     declarations: [
         AppComponent
     ],
+    bootstrap: [AppComponent],
     imports: [
         BrowserModule,
         FormsModule,
-        HttpClientModule,
         NgImageSliderModule
     ],
-    providers: [HeroService],
-    bootstrap: [AppComponent]
+    providers: [
+        HeroService,
+        provideHttpClient(withInterceptorsFromDi())
+    ]
 })
 export class AppModule { }
