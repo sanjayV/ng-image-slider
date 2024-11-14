@@ -23,7 +23,8 @@
                         [title]="img?.title || ''"
                         [direction]="textDirection"
                         [ratio]="manageImageRatio"
-                        [lazy]="lazyLoading">
+                        [lazy]="lazyLoading"
+                        [fallbackImage]="fallbackThumbImage">
                     </custom-img>
                     <div [dir]="textDirection" class="caption" *ngIf="img?.title">{{ img?.title }}</div>
                 </div>
@@ -60,6 +61,7 @@
         [show]="ligthboxShow"
         [direction]="textDirection"
         [videoAutoPlay]="videoAutoPlay"
+        [fallbackImage]="fallbackMainImage"
         (prevImage)="lightboxArrowClickHandler($event)"
         (nextImage)="lightboxArrowClickHandler($event)"
         (close)="close()">

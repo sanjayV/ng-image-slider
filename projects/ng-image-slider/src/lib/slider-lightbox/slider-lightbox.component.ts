@@ -79,6 +79,7 @@ export class SliderLightboxComponent implements OnInit, AfterViewInit, OnDestroy
     @Input() infinite: boolean = false;
     @Input() arrowKeyMove: boolean = true;
     @Input() showVideoControls: boolean = true;
+    @Input() fallbackImage: string;
 
     // @Output
     @Output() close = new EventEmitter<any>();

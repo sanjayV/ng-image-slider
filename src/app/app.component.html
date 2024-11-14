@@ -6,6 +6,7 @@
     <div class="margin-auto demo-div box-shadow" [ngStyle]="{'width':'100%'}">
         <ng-image-slider #nav
             [images]="imageObject"
+            [fallbackImage]="fallbackImageObject"
             [infinite]="sliderInfinite"
             [imagePopup]="sliderImagePopup"
             [showArrow]="sliderArrowShow"

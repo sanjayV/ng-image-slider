@@ -40,6 +40,7 @@ export class SliderCustomImageComponent implements OnChanges {
     @Input() direction: string = 'ltr';
     @Input() ratio: boolean = false;
     @Input() lazy: boolean = false;
+    @Input() fallbackImage: string;
 
     constructor(
         public imageSliderService: NgImageSliderService,
@@ -101,6 +102,13 @@ export class SliderCustomImageComponent implements OnChanges {
             } else {
                 event.srcElement.pause();
             }
+        }
+    }
+
+    // set fallback url if error in image load
+    async errorHandler(event) {
+        if (this.fallbackImage && await this.imageSliderService.isImageExist(this.fallbackImage)) {
+            event.target.src = this.fallbackImage;
         }
     }
 }

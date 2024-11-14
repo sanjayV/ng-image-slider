@@ -12,8 +12,8 @@ export class HeroService {
 data:any= 
     [
         {
-          "image": "https://picsum.photos/582/536",
-          "thumbImage": "https://picsum.photos/582/536",
+          "image": "https://1picsum.photos/582/536",
+          "thumbImage": "https://1picsum.photos/582/536",
           "title": "Image One-order-1",
           "alt": "Image One Alt",
           "order":2
@@ -68,5 +68,12 @@ data:any=
 
   getImagesWithOrder(){
     return this.data;
+  }
+
+  getFallbackImages() {
+    return {
+      "image": "https://picsum.photos/582/536/?blur",
+      "thumbImage": "https://picsum.photos/582/536/?blur"
+    };
   }
 }

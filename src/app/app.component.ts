@@ -23,6 +23,7 @@ export class AppComponent {
     sliderSlideImage: Number = 1;
     sliderAnimationSpeed: any = 1;
     imageObject;
+    fallbackImageObject;
     slideOrderType:string = 'DESC';
 
     constructor(private heroService: HeroService) {
@@ -44,6 +45,7 @@ export class AppComponent {
         // }, 3000);
         // });
         this.imageObject = this.heroService.getImagesWithOrder();
+        this.fallbackImageObject = this.heroService.getFallbackImages();
     }
 
     imageOnClick(index) {
