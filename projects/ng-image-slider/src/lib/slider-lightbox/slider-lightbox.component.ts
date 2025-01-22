@@ -22,7 +22,8 @@ const LIGHTBOX_NEXT_ARROW_CLICK_MESSAGE = 'lightbox next',
 
 @Component({
     selector: 'slider-lightbox',
-    templateUrl: './slider-lightbox.component.html'
+    templateUrl: './slider-lightbox.component.html',
+    standalone: false
 })
 export class SliderLightboxComponent implements OnInit, AfterViewInit, OnDestroy {
     totalImages: number = 0;
