@@ -15,7 +15,8 @@ const youtubeRegExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([
 
 @Component({
     selector: 'custom-img',
-    templateUrl: './slider-custom-image.component.html'
+    templateUrl: './slider-custom-image.component.html',
+    standalone: false
 })
 export class SliderCustomImageComponent implements OnChanges {
     YOUTUBE = 'youtube';

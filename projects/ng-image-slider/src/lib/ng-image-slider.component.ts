@@ -29,7 +29,8 @@ const NEXT_ARROW_CLICK_MESSAGE = 'next',
     selector: 'ng-image-slider',
     templateUrl: './ng-image-slider.component.html',
     styleUrls: ['./ng-image-slider.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class NgImageSliderComponent implements OnChanges, OnInit, DoCheck, AfterViewInit, OnDestroy {
     // for slider
